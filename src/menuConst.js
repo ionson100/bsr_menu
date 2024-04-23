@@ -82,6 +82,41 @@ function MenuConst() {
                 </MenuItem>
                 <MenuVerticalBand/>
             </div>
+            <div style={{width:"60px",background:"#faf7f7",marginLeft:"300px",border:" 1px solid #dedcdc"}}>
+                <MenuItem content='left' position='downLeft' className='editor-menu-root'>
+                    <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                    <MenuHorizontalBand/>
+                    <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                    <MenuHorizontalBand/>
+                    <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                    <MenuHorizontalBand/>
+                    <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                </MenuItem>
+                <MenuHorizontalBand/>
+                <MenuItem content='right' className='editor-menu-root' position='downRight' >
+                    <MenuItem content='Sub Menu' className='editor-menu-item' position='downRight'>
+                        <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                        <MenuHorizontalBand/>
+                        <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                        <MenuHorizontalBand/>
+                        <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                        <MenuHorizontalBand/>
+                        <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                    </MenuItem>
+                    <MenuHorizontalBand/>
+                    <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                    <MenuHorizontalBand/>
+                    <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                    <MenuHorizontalBand/>
+                    <MenuItem content='Sub Menu' className='editor-menu-item'/>
+                </MenuItem>
+                <MenuHorizontalBand/>
+                <MenuItem content='test' className='editor-menu-root'>
+                </MenuItem>
+                <MenuHorizontalBand/>
+                <MenuItem content='test' className='editor-menu-root'>
+                </MenuItem>
+            </div>
         </div>
     );
 }
