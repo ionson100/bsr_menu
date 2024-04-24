@@ -27,6 +27,7 @@ code {
 .editor-toolbar {
   display: flex;
 
+  background: darkgrey;
   height: 40px;
   border-bottom: 1px solid #dedcdc;
 
@@ -44,13 +45,7 @@ code {
 }
 
 
-.editor-menu-root:hover {
-  background: #e2dfdf;
-}
 
-.editor-menu-root:active {
-  background: #c9c9c9;
-}
 
 
 
@@ -63,7 +58,13 @@ code {
   padding: 5px 10px 5px 10px;
   cursor: pointer;
 }
+.editor-menu-root:hover {
+  background: #e2dfdf;
+}
 
+.editor-menu-root:active {
+  background: #c9c9c9;
+}
 
 
 .editor-menu-item {
@@ -100,6 +101,8 @@ code {
 }
 
 .editor-menu-root-v {
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
   text-align: center;
   width: 60px;
   border-radius: 3px;
@@ -113,6 +116,34 @@ code {
 .editor-menu-root-v:active {
   background: #c9c9c9;
 }
+
+.detail-pane {
+
+  margin: 5px;
+  background: #dedcdc;
+  border: 1px solid #dedcdc;
+  background: white;
+  display: none;
+
+
+}
+
+.editor-menu-root-2 {
+
+  margin:  4px;
+  background: #f3eded;
+  border-radius: 3px;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+}
+.editor-menu-root-2:hover {
+  background: #e2dfdf;
+}
+
+.editor-menu-root-2:active {
+  background: #c9c9c9;
+}
+
 
 
 

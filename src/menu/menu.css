@@ -23,3 +23,8 @@
 .menu-123-item:active{
     background: #c9c9c9;
 }
+div[disabled]
+{
+    pointer-events: none;
+    opacity: 0.7;
+}

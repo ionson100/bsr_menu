@@ -2,6 +2,7 @@ import './menu.css';
 import React, {Component} from "react";
 
 import PropTypes from "prop-types";
+// eslint-disable-next-line no-unused-vars
 import stylePropType from 'react-style-proptype';
 
 export const MenuHorizontalBand = () => {
@@ -14,78 +15,99 @@ export const MenuVerticalBand = () => {
         <div className='hr-123_vert'/>
     )
 }
-const _MyMenu={
-    state:false
-}
-
-
 
 
 const isFunction = value => value ? (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function) : false;
 
 export const MenuItem = class extends Component {
+
     constructor(props) {
         super(props);
-        this.position=this.props.position??'down'
+
+
+
+        this.position = this.props.position ?? 'down'
         this.content = this.props.content;
-        this.mRefBase = React.createRef();
-        this.mRefPane = React.createRef();
+        this.mRefMenu = React.createRef();
+        this.mRefWrapper=React.createRef();
+        this.mRefPopup = React.createRef();
         this.width = this.props.width;
         this.icon = this.props.icon
-        this.className = this.props.className??'menu-123-item'
-        this.onClick = this.props.onClick;
-        this.onMouseEnter = this.props.onMouseEnter
-        this.onMouseDown = this.props.onMouseDown
-        this.onMouseDownCapture = this.props.onMouseDownCapture
-        this.onMouseLeave = this.props.onMouseLeave
-        this.onMouseUp = this.props.onMouseUp
-        this.onMouseOverCapture = this.props.onMouseOverCapture
-        this.onMouseOutCapture = this.props.onMouseOutCapture
-        this.onMouseMoveCapture = this.props.onMouseMoveCapture
-        this.onMouseOver = this.props.onMouseOver
-        this.onMouseUpCapture = this.props.onMouseUpCapture
-        this.onMouseMove = this.props.onMouseMove
-        this.onMouseOut = this.props.onMouseOut
-        this.onSelect = this.props.onSelect
-        this.style = this.props.style
-        this.id = this.props.id
-        this.key = this.props.key
-        this.onKeyUp = this.props.onKeyUp
 
-        this.classNamePanel = this.props.classNamePanel;
+        this.onClick = this.props.onClick;
+        this.disabled=this.props.disabled;
+
+
+
         if (isFunction(this.content)) {
             this.content = this.content();
         }
+        this._MyMenu = {
+            state: false
+        }
+        if (this.props.behavior === "move") {
+            this._MyMenu.state = true;
+        }
+
 
 
     }
 
     visibilityPane() {
 
-        if(this.position==="down"){
-            const y = this.mRefBase.current.offsetTop + this.mRefBase.current.offsetHeight;
-            this.mRefPane.current.style.top = `${y}px`;
-            this.mRefPane.current.style.left = this.mRefBase.current.offsetLeft + "px";
+        if (this.position === "down") {
+            const y = this.mRefMenu.current.offsetTop + this.mRefMenu.current.offsetHeight;
+            this.mRefPopup.current.style.top = `${y}px`;
+            this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + "px";
         }
-        if(this.position==="downRight"){
-            const y = this.mRefBase.current.offsetTop;
-            this.mRefPane.current.style.top = `${y}px`;
-            this.mRefPane.current.style.left = this.mRefBase.current.offsetLeft+this.mRefBase.current.offsetWidth -5 + "px";
+        if (this.position === "top") {
+            const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight;
+            this.mRefPopup.current.style.top = `${y}px`;
+            this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + "px";
         }
-        if(this.position==='downLeft'){
-            const y = this.mRefBase.current.offsetTop;
-            this.mRefPane.current.style.top = `${y}px`;
-            this.mRefPane.current.style.left = this.mRefBase.current.offsetLeft-this.mRefPane.current.offsetWidth +5 + "px";
+        if (this.position === "downRight") {
+            const y = this.mRefMenu.current.offsetTop + 5;
+            this.mRefPopup.current.style.top = `${y}px`;
+            this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5 + "px";
+        }
+        if (this.position === "topRight") {
+            const y = this.mRefMenu.current.offsetTop -this.mRefPopup.current.offsetHeight+this.mRefMenu.current.offsetHeight-5;
+            this.mRefPopup.current.style.top = `${y}px`;
+            this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5 + "px";
+        }
+        if (this.position === 'downLeft') {
+            const y = this.mRefMenu.current.offsetTop + 5;
+            this.mRefPopup.current.style.top = `${y}px`;
+            this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5 + "px";
+        }
+        if (this.position === 'topLeft') {
+            const y = this.mRefMenu.current.offsetTop -this.mRefPopup.current.offsetHeight+this.mRefMenu.current.offsetHeight-5;
+            this.mRefPopup.current.style.top = `${y}px`;
+            this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5 + "px";
         }
 
         if (this.props.children) {
-            this.mRefPane.current.style.visibility = "visible"
+
+            this.mRefPopup.current.style.visibility = "visible"
+            this.mRefPopup.current.style.display = "block"
         }
     }
 
     click(e) {
-        _MyMenu.state = true;
-        this.visibilityPane()
+        if (this.position !== 'details') {
+            this._MyMenu.state = true;
+            this.visibilityPane()
+        } else {
+            if (!this.mRefPopup.current.style.display || this.mRefPopup.current.style.display === 'none') {
+                this.mRefPopup.current.style.display = 'block'
+
+            } else {
+                this.mRefPopup.current.style.display = 'none'
+
+            }
+
+        }
+
 
         if (this.onClick) {
             this.onClick(e)
@@ -95,14 +117,29 @@ export const MenuItem = class extends Component {
     }
 
     out(e) {
-        this.mRefPane.current.style.visibility = "hidden"
+
+
+        if (this.props.position !== 'details') {
+
+            this.mRefPopup.current.style.visibility = "hidden"
+
+            if (this.props.behavior === "click") {
+                setTimeout(() => {
+                    this._MyMenu.state = false;
+                }, 100)
+            }
+        }
+
+
+
         if (this.onMouseEnter) {
             this.onMouseEnter(e)
         }
     }
 
     move(e) {
-        if (_MyMenu.state === true) {
+
+        if (this._MyMenu.state === true) {
             this.visibilityPane()
 
         }
@@ -112,12 +149,10 @@ export const MenuItem = class extends Component {
     }
 
     movePane() {
-        this.mRefPane.current.style.visibility = "visible"
+
+        this.mRefPopup.current.style.visibility = "visible"
     }
 
-    componentDidMount() {
-        this.mRefPane.current.style.width = `${this.width}px`;
-    }
 
     renderInner() {
         if (this.content && !this.icon) {
@@ -135,88 +170,130 @@ export const MenuItem = class extends Component {
         }
     }
 
+    componentDidMount() {
+        this.mRefMenu.current.style.display='block'
+        this.mRefPopup.current.style.width = `${this.width}px`;
+        this.setDisabled(this.disabled,true)
+    }
+    setDisabled(b,force){
+        this.disabled=b;
+        if(b===true){
+            this.mRefWrapper.current.style.cursor='not-allowed'
+
+        }else{
+            this.mRefWrapper.current.style.cursor='default'
+        }
+        if(!force){
+            this.forceUpdate()
+        }
+    }
+    open(){
+        if(this.props.children){
+            this.mRefPopup.current.style.visibility = "visible"
+            this.mRefPopup.current.style.display = "block"
+        }
+
+    }
+    close(){
+        this.mRefPopup.current.style.visibility = "hidden"
+        this.mRefPopup.current.style.display = "none"
+    }
+
 
     render() {
-
-        //alert(this.props.children)
         return (
 
-            <>
-
-                <div ref={this.mRefBase}
-                     onSelect={this.onSelect}
-                     style={this.style}
-                     id={this.id}
-                     key={this.key}
-                     onKeyUp={this.onKeyUp}
+            <div ref={this.mRefWrapper}>
+                <div ref={this.mRefMenu}
+                     disabled={this.disabled}
+                     onSelect={this.props.onSelect}
+                     style={this.props.style}
+                     id={this.props.id}
+                     key={this.props.key}
+                     onKeyUp={this.props.onKeyUp}
                      onClick={this.click.bind(this)}
-                     onMouseEnter={this.onMouseEnter}
-                     onMouseDown={this.onMouseDown}
-                     onMouseDownCapture={this.onMouseDownCapture}
-                     onMouseLeave={this.onMouseLeave}
-                     onMouseUp={this.onMouseUp}
-                     onMouseOverCapture={this.onMouseOverCapture}
-                     onMouseOutCapture={this.onMouseOutCapture}
-                     onMouseMoveCapture={this.onMouseMoveCapture}
+                     onMouseEnter={this.props.onMouseEnter}
+                     onMouseDown={this.props.onMouseDown}
+                     onMouseDownCapture={this.props.onMouseDownCapture}
+                     onMouseLeave={this.props.onMouseLeave}
+                     onMouseUp={this.props.onMouseUp}
+                     onMouseOverCapture={this.props.onMouseOverCapture}
+                     onMouseOutCapture={this.props.onMouseOutCapture}
+                     onMouseMoveCapture={this.props.onMouseMoveCapture}
                      onMouseOver={this.onMouseOver}
-                     onMouseUpCapture={this.onMouseUpCapture}
+                     onMouseUpCapture={this.props.onMouseUpCapture}
                      onMouseMove={this.move.bind(this)}
                      onMouseOut={this.out.bind(this)}
-                     className={this.className}>
+                     accessKey={this.props.accessKey}
+                     title={this.props.title}
+                     tabIndex={this.props.tabIndex}
+                     className={this.props.className}>
                     {
                         this.renderInner()
                     }
                 </div>
                 <div
+                    disabled={false}
                     onMouseOut={this.out.bind(this)}
                     onMouseMove={this.movePane.bind(this)}
-                    ref={this.mRefPane}  //editor-menu-pane
-                    className='menu-123-pane'>
+                    ref={this.mRefPopup}  //editor-menu-pane
+                    className={this.props.popupClassName}>
                     {
                         this.props.children === undefined ? (<></>) : this.props.children
                     }
                 </div>
-
-
-            </>
+            </div>
 
         );
     }
 }
 MenuItem.propTypes = {
-    children:PropTypes.object,
-    content: PropTypes.object.isRequired | undefined,
-    width: PropTypes.number | undefined,
-    icon: PropTypes.object | undefined,
-    className: PropTypes.string | undefined,
-    onClick: PropTypes.func | undefined,
-    onMouseEnter: PropTypes.func | undefined,
-    onMouseDown: PropTypes.func | undefined,
-    onMouseDownCapture: PropTypes.func | undefined,
-    onMouseLeave: PropTypes.func | undefined,
-    onMouseUp: PropTypes.func | undefined,
-    onMouseOverCapture: PropTypes.func | undefined,
-    onMouseOutCapture: PropTypes.func | undefined,
-    onMouseMoveCapture: PropTypes.func | undefined,
-    onMouseOver: PropTypes.func | undefined,
-    onMouseUpCapture: PropTypes.func | undefined,
-    onMouseMove: PropTypes.func | undefined,
-    onMouseOut: PropTypes.func | undefined,
+    children: PropTypes.object,
+    content: PropTypes.object.isRequired,
+    width: PropTypes.number,
+    icon: PropTypes.object,
+    className: PropTypes.string,
+    onClick: PropTypes.func,
+    onMouseEnter: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onMouseDownCapture: PropTypes.func,
+    onMouseLeave: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onMouseOverCapture: PropTypes.func,
+    onMouseOutCapture: PropTypes.func,
+    onMouseMoveCapture: PropTypes.func,
+    onMouseOver: PropTypes.func,
+    onMouseUpCapture: PropTypes.func,
+    onMouseMove: PropTypes.func,
+    onMouseOut: PropTypes.func,
     style: stylePropType,
-    onSelect: PropTypes.func | undefined,
-    id: PropTypes.string | undefined,
-    key: PropTypes.string | undefined,
-    onKeyUp: PropTypes.func | undefined,
+    ref: PropTypes.element,
+    behavior: PropTypes.oneOf(['move', 'click']),
+    accessKey:PropTypes.string,
+    tabIndex:PropTypes.number,
 
 
-    classNamePanel: PropTypes.string | undefined,
-    position:PropTypes.oneOf(['down', 'downLeft',"downRight"]),
+    onSelect: PropTypes.func,
+    id: PropTypes.string,
+    key: PropTypes.string,
+    onKeyUp: PropTypes.func,
+    disabled:PropTypes.bool,
+    title:PropTypes.string,
+    timedOut:PropTypes.number,
+
+
+
+    popupClassName: PropTypes.string,
+    position: PropTypes.oneOf(['down','top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'details']),
 
 
 };
 MenuItem.defaultProps = {
+    timedOut:200,
+    disabled:false,
+    behavior: 'click',
     width: 200,
-    classNamePanel:'menu-123-pane'
+    popupClassName: 'menu-123-pane'
 };
 MenuItem.displayName = 'MenuItem';
 
