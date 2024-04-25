@@ -18,39 +18,46 @@ const buildContent = ({content, icon, iconOpen, iconClose, positionImage: positi
 
     if (content && !icon) {
         return (
-
-            <table>
-                <td className='content-123-text'>{content}</td>
-            </table>
+            <div className='container'>
+                <div  className='vertical-center'>
+                    <div className='content-123-text-center'>{content}</div>
+                </div>
+            </div>
         );
     }
     if (!content && icon) {
         return (
-            <table>
-                <td className='content-123-icon'>{icon}</td>
-            </table>
+            <div className='container'>
+                <div  className='center-icon'>
+                    {icon}
+                </div>
+            </div>
         )
     }
     if (content && icon && positionIcon === 'left') {
         return (
 
-            <table>
-                <td className='content-123-icon'>{icon}</td>
-                <td className='content-123-text'>{content}</td>
-            </table>
+
+            <div className='container'>
+                <div  className='vertical-center'>
+                    <div className='content-123-icon-left'>{icon}</div>
+                    <div className='content-123-text-right'>{content}</div>
+                </div>
+            </div>
+
 
         )
     }
     if (content && icon && positionIcon === 'right') {
         return (
-            <table>
+            <div className='container'>
+                <div  className='vertical-center'>
+                    <div className='content-123-text-left'>{content}</div>
+                    <div className='content-123-icon-right'>{icon}</div>
+                </div>
+            </div>
 
-                <td className='content-123-text'>{content}</td>
-                <td className='content-123-icon'>{icon}</td>
-
-
-            </table>
-        )
+    )
     }
 
 }

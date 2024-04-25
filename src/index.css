@@ -148,6 +148,21 @@ code {
 .editor-menu-root-2:active {
   background: #c9c9c9;
 }
+.m200{
+  height: 30px;
+
+  width: 200px;
+  background: white;
+  padding-left: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.m200:hover{
+  background: yellowgreen;
+}
+.m200:active{
+  background: #617f25;
+}
 
 
 

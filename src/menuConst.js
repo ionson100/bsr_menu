@@ -60,20 +60,15 @@ export class MenuConst extends Component {
 
                 <div className='editor-toolbar'>
                     <MenuItem
-
-                        icon={<FaChevronRight color='#c9c9c9' size={12}/>}
-                        positionIcon='right'
-
+                        className='m200'
                         accessKey='s'
                         behavior='move'
                         ref={this.mRefMenu}
-
-                        className='m200'
-                        style={{width: "200px", color: "#504f4f"}}
-                        content='asasddd ddddddddd'
+                        style={{width: "50px",padding:"0"}}
+                        icon={(<span>File</span>)}
                     >
                         <MenuItem
-                            className='m200'
+
                             style={{width:"200px"}}
                             accessKey='x'
                             icon={<FaChevronRight size={10}/>}
@@ -82,35 +77,36 @@ export class MenuConst extends Component {
                             positionPopup='downRight'
                             content='testing'
                         >
-                            <MenuItem content='Sub Menu' className='m200'/>
+                            <MenuItem content='Sub Menu' />
                             <MenuHorizontalBand/>
-                            <MenuItem content='Sub Menu' className='m200'/>
+                            <MenuItem content='Sub Menu' />
                             <MenuHorizontalBand/>
-                            <MenuItem content='Sub Menu' className='m200'/>
+                            <MenuItem content='Sub Menu' />
                             <MenuHorizontalBand/>
-                            <MenuItem content='Sub Menu' className='m200'/>
+                            <MenuItem content='Sub Menu' />
                         </MenuItem>
                         <MenuHorizontalBand/>
 
                     </MenuItem>
                     <MenuVerticalBand/>
                     <MenuItem
-                        className='m200'
-                        content={(<div style={{width: "50px", textAlign: "center"}}>File</div>)}
+
+                        style={{width:"50px"}}
+                        content={(<div style={{width: "auto", textAlign: "center"}}>File</div>)}
                     >
                         <MenuItem
-                            className='m200'
+
                             positionPopup='details'
-                            positionIcon='right'
+                            positionIcon='left'
                             icon={<FaChevronRight size={15}/>}
                             content='test125'>
-                            <MenuItem content='Sub Menu3' className='m200'/>
+                            <MenuItem content='Sub Menu3' />
                             <MenuHorizontalBand/>
-                            <MenuItem content='Sub Menu3' className='m200'/>
+                            <MenuItem content='Sub Menu3' />
                             <MenuHorizontalBand/>
-                            <MenuItem content='Sub Menu3' className='m200'/>
+                            <MenuItem content='Sub Menu3' />
                             <MenuHorizontalBand/>
-                            <MenuItem content='Sub Menu3' className='m200'/>
+                            <MenuItem content='Sub Menu3' />
 
                         </MenuItem>
                         <MenuHorizontalBand/>
@@ -155,13 +151,15 @@ export class MenuConst extends Component {
 
                     </MenuItem>
                     <MenuVerticalBand/>
-                    <MenuItem content='test'>
-
-
+                    <MenuItem
+                        style={{width:"50px",padding:"0"}}
+                        icon={(<div>File</div>)}
+                        content={undefined}
+                    >
                     </MenuItem>
                     <MenuVerticalBand/>
                 </div>
-                <div style={{width: "200px", background: "#faf7f7", marginLeft: "300px", border: " 1px solid #dedcdc"}}>
+                <div style={{width: "213px", background: "#faf7f7", marginLeft: "300px", border: " 1px solid #dedcdc"}}>
 
                     <MenuItem
 
@@ -210,7 +208,7 @@ export class MenuConst extends Component {
                         <MenuItem content='Sub Menu'></MenuItem>
                         <MenuHorizontalBand/>
                         <MenuItem content='Sub Menu move'>
-                            asausiasuusu
+
                         </MenuItem>
                     </MenuItem>
                     <MenuItem content='left' positionPopup='downLeft'/>
@@ -218,7 +216,8 @@ export class MenuConst extends Component {
                 </div>
 
                 <div style={{
-                    width: "200px",
+                    textAlign:"center",
+                    width: "213px",
                     background: "#faf7f7",
                     marginLeft: "300px",
                     marginTop: "300px",
