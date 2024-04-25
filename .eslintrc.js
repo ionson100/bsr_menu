@@ -32,6 +32,7 @@ module.exports = {
     "globals": {
         "window": true,
         "module": true
-    }
+    },
+    "parser": "@babel/eslint-parser"
 
 };
