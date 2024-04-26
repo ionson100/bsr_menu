@@ -77,13 +77,13 @@ export class MenuConst extends Component {
                             positionPopup='downRight'
                             content='testing'
                         >
-                            <MenuItem content='Sub Menu' />
+                            <MenuItem widthPopup={300}  content='Sub Menu' />
                             <MenuHorizontalBand/>
-                            <MenuItem content='Sub Menu' />
+                            <MenuItem widthPopup={300} content='Sub Menu' />
                             <MenuHorizontalBand/>
-                            <MenuItem content='Sub Menu' />
+                            <MenuItem widthPopup={300} content='Sub Menu' />
                             <MenuHorizontalBand/>
-                            <MenuItem content='Sub Menu' />
+                            <MenuItem widthPopup={300} content='Sub Menu' />
                         </MenuItem>
                         <MenuHorizontalBand/>
 
@@ -179,7 +179,7 @@ export class MenuConst extends Component {
                         positionPopup='details'
 
                     >
-                        <MenuItem content='Sub Menu'></MenuItem>
+                        <MenuItem content='Sub Menu' widthPopup={100}></MenuItem>
                         <MenuHorizontalBand/>
                         <MenuItem
                             positionIcon='right'

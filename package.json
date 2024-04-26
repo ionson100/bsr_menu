@@ -1,6 +1,6 @@
 {
-  "name": "bsrmenu",
-  "version": "0.1.2",
+  "name": "bsr_menu",
+  "version": "0.1.3",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -19,12 +19,14 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "cross-env": "^7.0.3",
-    "eslint": "8.22.0",
+
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.1.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "prop-types": "^15.8.1",
+    "react-style-proptype": "^3.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,11 +54,11 @@
     ]
   },
   "devDependencies": {
+    "eslint": "8.22.0",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "@babel/plugin-syntax-jsx": "^7.24.1",
-    "@babel/preset-react": "^7.24.1",
-    "prop-types": "^15.8.1",
-    "react-style-proptype": "^3.2.2"
+    "@babel/preset-react": "^7.24.1"
+
   }
 }

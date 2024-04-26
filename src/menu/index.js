@@ -173,8 +173,8 @@ export const MenuItem = class extends Component {
         }
 
         this.mRefMenu.current.style.display='block'
-        if(this.props.positionPopup!=='details'&&this.props.widthPopup){
-            this.mRefPopup.current.style.width = `${this.props.widthPopup}px`;
+        if(this.props.widthPopup){
+            this.mRefMenu.current.style.width = `${this.props.widthPopup}px`;
         }
 
         this.setDisabled(this.disabled,true)
@@ -225,6 +225,7 @@ export const MenuItem = class extends Component {
 
             <div ref={this.mRefWrapper}>
                 <div ref={this.mRefMenu}
+
 
                      disabled={this.disabled}
                      onSelect={this.props.onSelect}
