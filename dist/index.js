@@ -8,9 +8,12 @@ require("./menu.css");
 var _react = _interopRequireWildcard(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _reactStyleProptype = _interopRequireDefault(require("react-style-proptype"));
+var _contentBuilder = _interopRequireDefault(require("./contentBuilder"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+// eslint-disable-next-line no-unused-vars
+
 const MenuHorizontalBand = () => {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "hr-123"
@@ -23,168 +26,257 @@ const MenuVerticalBand = () => {
   });
 };
 exports.MenuVerticalBand = MenuVerticalBand;
-const _MyMenu = {
-  state: false
-};
 const isFunction = value => value ? Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function : false;
 const MenuItem = class extends _react.Component {
   constructor(props) {
-    var _this$props$position, _this$props$width, _this$props$className, _this$props$className2;
     super(props);
-    this.position = (_this$props$position = this.props.position) !== null && _this$props$position !== void 0 ? _this$props$position : 'down';
     this.content = this.props.content;
-    this.mRefBase = /*#__PURE__*/_react.default.createRef();
-    this.mRefPane = /*#__PURE__*/_react.default.createRef();
-    this.width = (_this$props$width = this.props.width) !== null && _this$props$width !== void 0 ? _this$props$width : 200;
+    this.mRefMenu = /*#__PURE__*/_react.default.createRef();
+    this.mRefWrapper = /*#__PURE__*/_react.default.createRef();
+    this.mRefPopup = /*#__PURE__*/_react.default.createRef();
     this.icon = this.props.icon;
-    this.className = (_this$props$className = this.props.className) !== null && _this$props$className !== void 0 ? _this$props$className : 'menu-123-item';
     this.onClick = this.props.onClick;
-    this.onMouseEnter = this.props.onMouseEnter;
-    this.onMouseDown = this.props.onMouseDown;
-    this.onMouseDownCapture = this.props.onMouseDownCapture;
-    this.onMouseLeave = this.props.onMouseLeave;
-    this.onMouseUp = this.props.onMouseUp;
-    this.onMouseOverCapture = this.props.onMouseOverCapture;
-    this.onMouseOutCapture = this.props.onMouseOutCapture;
-    this.onMouseMoveCapture = this.props.onMouseMoveCapture;
-    this.onMouseOver = this.props.onMouseOver;
-    this.onMouseUpCapture = this.props.onMouseUpCapture;
-    this.onMouseMove = this.props.onMouseMove;
-    this.onMouseOut = this.props.onMouseOut;
-    this.onSelect = this.props.onSelect;
-    this.style = this.props.style;
-    this.id = this.props.id;
-    this.key = this.props.key;
-    this.hidden = this.props.hidden;
-    this.onKeyUp = this.props.onKeyUp;
-    this.color = this.props.color;
-    this.classNamePanel = (_this$props$className2 = this.props.classNamePanel) !== null && _this$props$className2 !== void 0 ? _this$props$className2 : 'menu-123-pane';
+    this.disabled = this.props.disabled;
     if (isFunction(this.content)) {
       this.content = this.content();
     }
+    if (isFunction(this.icon)) {
+      this.icon = this.icon();
+    }
+    this._MyMenu = {
+      state: false
+    };
+    if (this.props.behavior === "move") {
+      this._MyMenu.state = true;
+    }
+    this.isOpenDetails = false;
   }
-  visibilityPane() {
-    if (this.position === "down") {
-      const y = this.mRefBase.current.offsetTop + this.mRefBase.current.offsetHeight;
-      this.mRefPane.current.style.top = "".concat(y, "px");
-      this.mRefPane.current.style.left = this.mRefBase.current.offsetLeft + "px";
+  _visibilityPane() {
+    if (this.props.positionPopup === "down") {
+      const y = this.mRefMenu.current.offsetTop + this.mRefMenu.current.offsetHeight;
+      this.mRefPopup.current.style.top = "".concat(y, "px");
+      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + "px";
     }
-    if (this.position === "downRight") {
-      const y = this.mRefBase.current.offsetTop;
-      this.mRefPane.current.style.top = "".concat(y, "px");
-      this.mRefPane.current.style.left = this.mRefBase.current.offsetLeft + this.mRefBase.current.offsetWidth - 5 + "px";
+    if (this.props.positionPopup === "top") {
+      const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight;
+      this.mRefPopup.current.style.top = "".concat(y, "px");
+      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + "px";
     }
-    if (this.position === 'downLeft') {
-      const y = this.mRefBase.current.offsetTop;
-      this.mRefPane.current.style.top = "".concat(y, "px");
-      this.mRefPane.current.style.left = this.mRefBase.current.offsetLeft - this.mRefPane.current.offsetWidth + 5 + "px";
+    if (this.props.positionPopup === "downRight") {
+      const y = this.mRefMenu.current.offsetTop + 5;
+      this.mRefPopup.current.style.top = "".concat(y, "px");
+      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5 + "px";
+    }
+    if (this.props.positionPopup === "topRight") {
+      const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
+      this.mRefPopup.current.style.top = "".concat(y, "px");
+      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5 + "px";
+    }
+    if (this.props.positionPopup === 'downLeft') {
+      const y = this.mRefMenu.current.offsetTop + 5;
+      this.mRefPopup.current.style.top = "".concat(y, "px");
+      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5 + "px";
+    }
+    if (this.props.positionPopup === 'topLeft') {
+      const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
+      this.mRefPopup.current.style.top = "".concat(y, "px");
+      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5 + "px";
     }
     if (this.props.children) {
-      this.mRefPane.current.style.visibility = "visible";
+      this.mRefPopup.current.style.visibility = "visible";
+      this.mRefPopup.current.style.display = "block";
     }
   }
-  click(e) {
-    _MyMenu.state = true;
-    this.visibilityPane();
+  _click(e) {
+    if (this.props.positionPopup !== 'details') {
+      this._MyMenu.state = true;
+      this._visibilityPane();
+    } else {
+      if (!this.mRefPopup.current.style.display || this.mRefPopup.current.style.display === 'none') {
+        this.mRefPopup.current.style.display = 'block';
+        this.isOpenDetails = true;
+      } else {
+        this.mRefPopup.current.style.display = 'none';
+        this.isOpenDetails = false;
+      }
+      if (this.isOpenDetails === true && this.props.onOpenPopup) {
+        this.props.onOpenPopup(this);
+      }
+      if (this.isOpenDetails === false && this.props.onClosePopup) {
+        this.props.onClosePopup(this);
+      }
+      if (this.props.iconClose && this.props.iconOpen) {
+        this.forceUpdate();
+      }
+    }
     if (this.onClick) {
       this.onClick(e);
     }
   }
   out(e) {
-    this.mRefPane.current.style.visibility = "hidden";
-    if (this.onMouseEnter) {
-      this.onMouseEnter(e);
+    if (this.props.positionPopup !== 'details') {
+      this.mRefPopup.current.style.visibility = "hidden";
+      if (this.props.behavior === "click") {
+        setTimeout(() => {
+          this._MyMenu.state = false;
+        }, 100);
+      }
+    }
+    if (this.props.onMouseOut) {
+      this.props.onMouseOut(e);
     }
   }
-  move(e) {
-    if (_MyMenu.state === true) {
-      this.visibilityPane();
+  _moveMenu(e) {
+    if (this._MyMenu.state === true) {
+      this._visibilityPane();
     }
-    if (this.onMouseMove) {
-      this.onMouseMove(e);
+    if (this.props.onMouseMove) {
+      this.props.onMouseMove(e);
     }
   }
-  movePane() {
-    this.mRefPane.current.style.visibility = "visible";
+  _movePopUp() {
+    this.mRefPopup.current.style.visibility = "visible";
   }
   componentDidMount() {
-    this.mRefPane.current.style.width = "".concat(this.width, "px");
+    if (this.props.positionPopup === 'details') {
+      this.mRefPopup.current.style.display = "none";
+    } else {
+      this.mRefPopup.current.style.display = "block";
+      this.mRefPopup.current.style.position = 'absolute';
+      this.mRefPopup.current.style.visibility = 'hidden';
+      this.mRefPopup.current.style.zIndex = 2;
+    }
+    this.mRefMenu.current.style.display = 'block';
+    if (this.props.positionPopup !== 'details' && this.props.widthPopup) {
+      this.mRefPopup.current.style.width = "".concat(this.props.widthPopup, "px");
+    }
+    this.setDisabled(this.disabled, true);
   }
-  renderInner() {
-    if (this.content && !this.icon) {
-      return this.content;
+  setDisabled(b, force) {
+    this.disabled = b;
+    if (b === true) {
+      this.mRefWrapper.current.style.cursor = 'not-allowed';
+    } else {
+      this.mRefWrapper.current.style.cursor = 'default';
     }
-    if (this.content && this.icon) {
-      return /*#__PURE__*/_react.default.createElement("div", {
-        style: {
-          display: "flex"
-        }
-      }, this.icon, " ", this.content);
+    if (!force) {
+      this.forceUpdate();
     }
-    if (!this.content && this.icon) {
-      return this.icon;
+  }
+  open() {
+    if (this.props.children) {
+      this.mRefPopup.current.style.visibility = "visible";
+      this.mRefPopup.current.style.display = "block";
+      this.isOpenDetails = true;
+      if (this.props.onOpenPopup) {
+        this.props.onOpenPopup(this);
+      }
+      if (this.props.iconClose && this.props.iconOpen) {
+        this.forceUpdate();
+      }
+    }
+  }
+  close() {
+    this.mRefPopup.current.style.visibility = "hidden";
+    this.mRefPopup.current.style.display = "none";
+    this.isOpenDetails = false;
+    if (this.props.onClosePopup) {
+      this.props.onClosePopup(this);
+    }
+    if (this.props.iconClose && this.props.iconOpen) {
+      this.forceUpdate();
     }
   }
   render() {
-    //alert(this.props.children)
-    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      ref: this.mRefBase,
-      onSelect: this.onSelect,
-      style: this.style,
-      id: this.id,
-      key: this.key,
-      hidden: this.hidden,
-      onKeyUp: this.onKeyUp,
-      color: this.color,
-      onClick: this.click.bind(this),
-      onMouseEnter: this.onMouseEnter,
-      onMouseDown: this.onMouseDown,
-      onMouseDownCapture: this.onMouseDownCapture,
-      onMouseLeave: this.onMouseLeave,
-      onMouseUp: this.onMouseUp,
-      onMouseOverCapture: this.onMouseOverCapture,
-      onMouseOutCapture: this.onMouseOutCapture,
-      onMouseMoveCapture: this.onMouseMoveCapture,
-      onMouseOver: this.onMouseOver,
-      onMouseUpCapture: this.onMouseUpCapture,
-      onMouseMove: this.move.bind(this),
+    return /*#__PURE__*/_react.default.createElement("div", {
+      ref: this.mRefWrapper
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      ref: this.mRefMenu,
+      disabled: this.disabled,
+      onSelect: this.props.onSelect,
+      style: this.props.style,
+      id: this.props.id,
+      onKeyUp: this.props.onKeyUp,
+      onClick: this._click.bind(this),
+      onMouseEnter: this.props.onMouseEnter,
+      onMouseDown: this.props.onMouseDown,
+      onMouseDownCapture: this.props.onMouseDownCapture,
+      onMouseLeave: this.props.onMouseLeave,
+      onMouseUp: this.props.onMouseUp,
+      onMouseOverCapture: this.props.onMouseOverCapture,
+      onMouseOutCapture: this.props.onMouseOutCapture,
+      onMouseMoveCapture: this.props.onMouseMoveCapture,
+      onMouseOver: this.props.onMouseOver,
+      onMouseUpCapture: this.props.onMouseUpCapture,
+      onMouseMove: this._moveMenu.bind(this),
       onMouseOut: this.out.bind(this),
-      className: this.className
-    }, this.renderInner()), /*#__PURE__*/_react.default.createElement("div", {
+      accessKey: this.props.accessKey,
+      title: this.props.title,
+      tabIndex: this.props.tabIndex,
+      className: this.props.className
+    }, (0, _contentBuilder.default)({
+      icon: this.icon,
+      content: this.content,
+      positionImage: this.props.positionIcon,
+      iconClose: this.props.iconClose,
+      iconOpen: this.props.iconOpen,
+      isOpenPanel: this.isOpenDetails
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      disabled: false,
       onMouseOut: this.out.bind(this),
-      onMouseMove: this.movePane.bind(this),
-      ref: this.mRefPane //editor-menu-pane
+      onMouseMove: this._movePopUp.bind(this),
+      ref: this.mRefPopup //editor-menu-pane
       ,
-      className: "menu-123-pane"
+      className: this.props.popupClassName
     }, this.props.children === undefined ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null) : this.props.children));
   }
 };
 exports.MenuItem = MenuItem;
 MenuItem.propTypes = {
-  content: _propTypes.default.object.isRequired | undefined,
-  width: _propTypes.default.number | undefined,
-  icon: _propTypes.default.object | undefined,
-  className: _propTypes.default.string | undefined,
-  onClick: _propTypes.default.func | undefined,
-  onMouseEnter: _propTypes.default.func | undefined,
-  onMouseDown: _propTypes.default.func | undefined,
-  onMouseDownCapture: _propTypes.default.func | undefined,
-  onMouseLeave: _propTypes.default.func | undefined,
-  onMouseUp: _propTypes.default.func | undefined,
-  onMouseOverCapture: _propTypes.default.func | undefined,
-  onMouseOutCapture: _propTypes.default.func | undefined,
-  onMouseMoveCapture: _propTypes.default.func | undefined,
-  onMouseOver: _propTypes.default.func | undefined,
-  onMouseUpCapture: _propTypes.default.func | undefined,
-  onMouseMove: _propTypes.default.func | undefined,
-  onMouseOut: _propTypes.default.func | undefined,
+  children: _propTypes.default.object,
+  content: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.element, _propTypes.default.func]),
+  widthPopup: _propTypes.default.number,
+  icon: _propTypes.default.element,
+  iconOpen: _propTypes.default.element,
+  iconClose: _propTypes.default.element,
+  className: _propTypes.default.string,
+  onClick: _propTypes.default.func,
+  onMouseEnter: _propTypes.default.func,
+  onMouseDown: _propTypes.default.func,
+  onMouseDownCapture: _propTypes.default.func,
+  onMouseLeave: _propTypes.default.func,
+  onMouseUp: _propTypes.default.func,
+  onMouseOverCapture: _propTypes.default.func,
+  onMouseOutCapture: _propTypes.default.func,
+  onMouseMoveCapture: _propTypes.default.func,
+  onMouseOver: _propTypes.default.func,
+  onMouseUpCapture: _propTypes.default.func,
+  onMouseMove: _propTypes.default.func,
+  onMouseOut: _propTypes.default.func,
+  onOpenPopup: _propTypes.default.func,
+  onClosePopup: _propTypes.default.func,
   style: _reactStyleProptype.default,
-  onSelect: _propTypes.default.func | undefined,
-  id: _propTypes.default.string | undefined,
-  key: _propTypes.default.string | undefined,
-  hidden: _propTypes.default.bool | undefined,
-  onKeyUp: _propTypes.default.func | undefined,
-  color: _propTypes.default.string | undefined,
-  classNamePanel: _propTypes.default.string | undefined,
-  position: _propTypes.default.oneOf(['down', 'downLeft', "downRight"])
+  ref: _propTypes.default.element,
+  behavior: _propTypes.default.oneOf(['move', 'click']),
+  accessKey: _propTypes.default.string,
+  tabIndex: _propTypes.default.number,
+  positionIcon: _propTypes.default.oneOf(['left', 'right']),
+  onSelect: _propTypes.default.func,
+  id: _propTypes.default.string,
+  key: _propTypes.default.string,
+  onKeyUp: _propTypes.default.func,
+  disabled: _propTypes.default.bool,
+  title: _propTypes.default.string,
+  popupClassName: _propTypes.default.string,
+  positionPopup: _propTypes.default.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'details'])
 };
+MenuItem.defaultProps = {
+  positionPopup: "down",
+  positionIcon: "left",
+  disabled: false,
+  behavior: 'click',
+  widthPopup: undefined,
+  popupClassName: 'popup-123',
+  className: 'menu-123-item'
+};
+MenuItem.displayName = 'MenuItem';

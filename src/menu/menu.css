@@ -1,9 +1,9 @@
 .menu-123-pane {
     border: 1px solid #dedcdc;
     background: white;
-    position: absolute;
-    visibility: hidden;
-    z-index: 2;
+    /*position: absolute;*/
+    /*visibility: hidden;*/
+    /*z-index: 2;*/
 }
 .hr-123_vert{
     border-left: 1px solid #dedcdc;
@@ -51,13 +51,17 @@ div[disabled]
 
     color: black;
 }
+.popup-123{
+    border: 1px solid #dedcdc;
+    background: white;
+}
 .detail-123-popup {
 
     margin-left: 1px;
     margin-right: 1px;
     background: #dedcdc;
     border: 1px solid #999494;
-    display: none;
+    /*display: none;*/
 }
 .container {
 

@@ -25,7 +25,7 @@ export const MenuItem = class extends Component {
     constructor(props) {
         super(props);
 
-        this.position = this.props.positionPopup
+
         this.content = this.props.content;
         this.mRefMenu = React.createRef();
         this.mRefWrapper=React.createRef();
@@ -37,6 +37,9 @@ export const MenuItem = class extends Component {
         if (isFunction(this.content)) {
             this.content = this.content();
         }
+        if(isFunction(this.icon)){
+            this.icon=this.icon();
+        }
         this._MyMenu = {
             state: false
         }
@@ -44,44 +47,39 @@ export const MenuItem = class extends Component {
             this._MyMenu.state = true;
         }
         this.isOpenDetails=false;
-        this.popupClassName=undefined;
-        if(this.props.positionPopup==='details'&&this.props.popupClassName==='menu-123-pane'){
-            this.popupClassName='detail-123-popup';
-        }else{
-            this.popupClassName=this.props.popupClassName;
-        }
+
 
 
     }
 
-    visibilityPane() {
+    _visibilityPane() {
 
-        if (this.position === "down") {
+        if (this.props.positionPopup === "down") {
             const y = this.mRefMenu.current.offsetTop + this.mRefMenu.current.offsetHeight;
             this.mRefPopup.current.style.top = `${y}px`;
             this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + "px";
         }
-        if (this.position === "top") {
+        if (this.props.positionPopup === "top") {
             const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight;
             this.mRefPopup.current.style.top = `${y}px`;
             this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + "px";
         }
-        if (this.position === "downRight") {
+        if (this.props.positionPopup === "downRight") {
             const y = this.mRefMenu.current.offsetTop + 5;
             this.mRefPopup.current.style.top = `${y}px`;
             this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5 + "px";
         }
-        if (this.position === "topRight") {
+        if (this.props.positionPopup === "topRight") {
             const y = this.mRefMenu.current.offsetTop -this.mRefPopup.current.offsetHeight+this.mRefMenu.current.offsetHeight-5;
             this.mRefPopup.current.style.top = `${y}px`;
             this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5 + "px";
         }
-        if (this.position === 'downLeft') {
+        if (this.props.positionPopup === 'downLeft') {
             const y = this.mRefMenu.current.offsetTop + 5;
             this.mRefPopup.current.style.top = `${y}px`;
             this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5 + "px";
         }
-        if (this.position === 'topLeft') {
+        if (this.props.positionPopup === 'topLeft') {
             const y = this.mRefMenu.current.offsetTop -this.mRefPopup.current.offsetHeight+this.mRefMenu.current.offsetHeight-5;
             this.mRefPopup.current.style.top = `${y}px`;
             this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5 + "px";
@@ -94,10 +92,10 @@ export const MenuItem = class extends Component {
         }
     }
 
-    click(e) {
-        if (this.position !== 'details') {
+    _click(e) {
+        if (this.props.positionPopup !== 'details') {
             this._MyMenu.state = true;
-            this.visibilityPane()
+            this._visibilityPane()
         } else {
             if (!this.mRefPopup.current.style.display || this.mRefPopup.current.style.display === 'none') {
                 this.mRefPopup.current.style.display = 'block'
@@ -146,10 +144,10 @@ export const MenuItem = class extends Component {
     }
 
 
-    move(e) {
+    _moveMenu(e) {
 
         if (this._MyMenu.state === true) {
-            this.visibilityPane()
+            this._visibilityPane()
 
         }
         if (this.props.onMouseMove) {
@@ -157,35 +155,30 @@ export const MenuItem = class extends Component {
         }
     }
 
-    movePane() {
+    _movePopUp() {
         this.mRefPopup.current.style.visibility = "visible"
     }
 
 
-    renderInner() {
 
-        // if (this.content && !this.icon) {
-        //     return this.content;
-        // }
-        // if (this.content && this.icon) {
-        //     return (
-        //         <div style={{display: "flex"}}>
-        //             {this.icon} {this.content}
-        //         </div>
-        //     )
-        // }
-        // if (!this.content && this.icon) {
-        //     return this.icon
-        // }
-    }
 
     componentDidMount() {
+        if(this.props.positionPopup==='details'){
+            this.mRefPopup.current.style.display="none"
+        }else{
+            this.mRefPopup.current.style.display="block"
+            this.mRefPopup.current.style.position='absolute'
+            this.mRefPopup.current.style.visibility='hidden'
+            this.mRefPopup.current.style.zIndex= 2;
+        }
+
         this.mRefMenu.current.style.display='block'
         if(this.props.positionPopup!=='details'&&this.props.widthPopup){
             this.mRefPopup.current.style.width = `${this.props.widthPopup}px`;
         }
 
         this.setDisabled(this.disabled,true)
+
     }
     setDisabled(b,force){
         this.disabled=b;
@@ -238,7 +231,7 @@ export const MenuItem = class extends Component {
                      style={this.props.style}
                      id={this.props.id}
                      onKeyUp={this.props.onKeyUp}
-                     onClick={this.click.bind(this)}
+                     onClick={this._click.bind(this)}
                      onMouseEnter={this.props.onMouseEnter}
                      onMouseDown={this.props.onMouseDown}
                      onMouseDownCapture={this.props.onMouseDownCapture}
@@ -249,7 +242,7 @@ export const MenuItem = class extends Component {
                      onMouseMoveCapture={this.props.onMouseMoveCapture}
                      onMouseOver={this.props.onMouseOver}
                      onMouseUpCapture={this.props.onMouseUpCapture}
-                     onMouseMove={this.move.bind(this)}
+                     onMouseMove={this._moveMenu.bind(this)}
                      onMouseOut={this.out.bind(this)}
                      accessKey={this.props.accessKey}
                      title={this.props.title}
@@ -271,9 +264,9 @@ export const MenuItem = class extends Component {
                 <div
                     disabled={false}
                     onMouseOut={this.out.bind(this)}
-                    onMouseMove={this.movePane.bind(this)}
+                    onMouseMove={this._movePopUp.bind(this)}
                     ref={this.mRefPopup}  //editor-menu-pane
-                    className={this.popupClassName}>
+                    className={this.props.popupClassName}>
                     {
                         this.props.children === undefined ? (<></>) : this.props.children
                     }
@@ -346,7 +339,7 @@ MenuItem.defaultProps = {
     disabled:false,
     behavior: 'click',
     widthPopup: undefined,
-    popupClassName: 'menu-123-pane',
+    popupClassName: 'popup-123',
     className:'menu-123-item'
 };
 MenuItem.displayName = 'MenuItem';

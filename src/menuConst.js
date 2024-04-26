@@ -178,16 +178,14 @@ export class MenuConst extends Component {
                         content='test popUp'
                         positionPopup='details'
 
-                    > <MenuItem content='Sub Menu'></MenuItem>
+                    >
+                        <MenuItem content='Sub Menu'></MenuItem>
                         <MenuHorizontalBand/>
                         <MenuItem
-
                             positionIcon='right'
                             icon={<FaAngleDoubleRight size={12}/>}
-
                             behavior='move'
                             positionPopup='downRight'
-
                             content='sdsdsd'
 
                         >
