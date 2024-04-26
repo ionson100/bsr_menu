@@ -1,5 +1,5 @@
 import './menu.css';
-import React, {Component} from "react";
+import React, {Children, Component} from "react";
 
 import PropTypes from "prop-types";
 // eslint-disable-next-line no-unused-vars
@@ -17,7 +17,7 @@ export const MenuVerticalBand = () => {
     )
 }
 
-
+const MyList=new Set();
 const isFunction = value => value ? (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function) : false;
 
 export const MenuItem = class extends Component {
@@ -85,6 +85,7 @@ export const MenuItem = class extends Component {
             this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5 + "px";
         }
 
+        MyList.add(this.mRefPopup.current)
         if (this.props.children) {
 
             this.mRefPopup.current.style.visibility = "visible"
@@ -93,6 +94,16 @@ export const MenuItem = class extends Component {
     }
 
     _click(e) {
+        if(Children.count(this.props.children)===0){
+            for (const item of MyList) {
+                console.log(item)
+                item.style.visibility='hidden'
+            }
+            if (this.onClick) {
+                this.onClick(e)
+            }
+            MyList.clear()
+        }
         if (this.props.positionPopup !== 'details') {
             this._MyMenu.state = true;
             this._visibilityPane()
@@ -118,9 +129,7 @@ export const MenuItem = class extends Component {
         }
 
 
-        if (this.onClick) {
-            this.onClick(e)
-        }
+
 
 
     }
@@ -176,6 +185,7 @@ export const MenuItem = class extends Component {
 
 
         this.setDisabled(this.disabled,true)
+
 
     }
     setDisabled(b,force){
