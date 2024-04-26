@@ -20,7 +20,7 @@ const buildContent = ({content, icon, iconOpen, iconClose, positionImage: positi
         return (
             <div className='container'>
                 <div  className='vertical-center'>
-                    <div className='content-123-text-center'>{content}</div>
+                    <div className='content-123-text-center t-over'>{content}</div>
                 </div>
             </div>
         );
@@ -41,7 +41,7 @@ const buildContent = ({content, icon, iconOpen, iconClose, positionImage: positi
             <div className='container'>
                 <div  className='vertical-center'>
                     <div className='content-123-icon-left'>{icon}</div>
-                    <div className='content-123-text-right'>{content}</div>
+                    <div className='content-123-text-right t-over'>{content}</div>
                 </div>
             </div>
 
@@ -52,7 +52,7 @@ const buildContent = ({content, icon, iconOpen, iconClose, positionImage: positi
         return (
             <div className='container'>
                 <div  className='vertical-center'>
-                    <div className='content-123-text-left'>{content}</div>
+                    <div className='content-123-text-left t-over'>{content}</div>
                     <div className='content-123-icon-right'>{icon}</div>
                 </div>
             </div>

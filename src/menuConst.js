@@ -78,9 +78,9 @@ export class MenuConst extends Component {
                             content='testing'
                         >
                             <MenuItem   content='Sub Menu' />
-                            <MenuHorizontalBand/>
+
                             <MenuItem  content='Sub Menu' />
-                            <MenuHorizontalBand/>
+
                             <MenuItem  content='Sub Menu' />
                             <MenuHorizontalBand/>
                             <MenuItem  content='Sub Menu' />
@@ -190,7 +190,7 @@ export class MenuConst extends Component {
 
                         >
                             <MenuItem content='Sub Menu'/>
-                            <MenuHorizontalBand/>
+
                             <MenuItem content='Sub Menu'/>
                             <MenuHorizontalBand/>
                             <MenuItem content='Sub Menu'/>

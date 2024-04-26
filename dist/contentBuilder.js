@@ -30,7 +30,7 @@ const buildContent = _ref => {
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "vertical-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "content-123-text-center"
+      className: "content-123-text-center t-over"
     }, content)));
   }
   if (!content && icon) {
@@ -48,7 +48,7 @@ const buildContent = _ref => {
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "content-123-icon-left"
     }, icon), /*#__PURE__*/_react.default.createElement("div", {
-      className: "content-123-text-right"
+      className: "content-123-text-right t-over"
     }, content)));
   }
   if (content && icon && positionIcon === 'right') {
@@ -57,7 +57,7 @@ const buildContent = _ref => {
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "vertical-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "content-123-text-left"
+      className: "content-123-text-left t-over"
     }, content), /*#__PURE__*/_react.default.createElement("div", {
       className: "content-123-icon-right"
     }, icon)));

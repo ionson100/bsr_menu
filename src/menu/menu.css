@@ -6,10 +6,13 @@
     /*z-index: 2;*/
 }
 .hr-123_vert{
+
     border-left: 1px solid #dedcdc;
 }
 .hr-123{
+    margin-top: 2px;
     border-top: 1px solid #dedcdc;
+    margin-bottom: 2px;
 }
 .menu-123-item {
     height: 30px;
@@ -30,6 +33,12 @@ div[disabled]
 {
     pointer-events: none;
     opacity: 0.7;
+}
+
+.t-over{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 .content-123-text-right{
     width: 100%;
@@ -53,7 +62,7 @@ div[disabled]
 }
 .popup-123{
     border: 1px solid #dedcdc;
-    background: #7b2626;
+    background: white;
 }
 .detail-123-popup {
 
