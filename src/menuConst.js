@@ -64,8 +64,8 @@ export class MenuConst extends Component {
                         accessKey='s'
                         behavior='move'
                         ref={this.mRefMenu}
-                        style={{width: "50px",padding:"0"}}
-                        icon={(<span>File</span>)}
+                        style={{padding:"0",width:"60px"}}
+                        icon='File'
                     >
                         <MenuItem
 
@@ -77,13 +77,13 @@ export class MenuConst extends Component {
                             positionPopup='downRight'
                             content='testing'
                         >
-                            <MenuItem widthPopup={300}  content='Sub Menu' />
+                            <MenuItem   content='Sub Menu' />
                             <MenuHorizontalBand/>
-                            <MenuItem widthPopup={300} content='Sub Menu' />
+                            <MenuItem  content='Sub Menu' />
                             <MenuHorizontalBand/>
-                            <MenuItem widthPopup={300} content='Sub Menu' />
+                            <MenuItem  content='Sub Menu' />
                             <MenuHorizontalBand/>
-                            <MenuItem widthPopup={300} content='Sub Menu' />
+                            <MenuItem  content='Sub Menu' />
                         </MenuItem>
                         <MenuHorizontalBand/>
 
@@ -179,7 +179,7 @@ export class MenuConst extends Component {
                         positionPopup='details'
 
                     >
-                        <MenuItem content='Sub Menu' widthPopup={100}></MenuItem>
+                        <MenuItem content='Sub Menu' ></MenuItem>
                         <MenuHorizontalBand/>
                         <MenuItem
                             positionIcon='right'

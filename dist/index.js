@@ -147,9 +147,6 @@ const MenuItem = class extends _react.Component {
       this.mRefPopup.current.style.zIndex = 2;
     }
     this.mRefMenu.current.style.display = 'block';
-    if (this.props.positionPopup !== 'details' && this.props.widthPopup) {
-      this.mRefPopup.current.style.width = "".concat(this.props.widthPopup, "px");
-    }
     this.setDisabled(this.disabled, true);
   }
   setDisabled(b, force) {
@@ -235,8 +232,7 @@ exports.MenuItem = MenuItem;
 MenuItem.propTypes = {
   children: _propTypes.default.object,
   content: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.element, _propTypes.default.func]),
-  widthPopup: _propTypes.default.number,
-  icon: _propTypes.default.element,
+  icon: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.element, _propTypes.default.func]),
   iconOpen: _propTypes.default.element,
   iconClose: _propTypes.default.element,
   className: _propTypes.default.string,
@@ -275,7 +271,6 @@ MenuItem.defaultProps = {
   positionIcon: "left",
   disabled: false,
   behavior: 'click',
-  widthPopup: undefined,
   popupClassName: 'popup-123',
   className: 'menu-123-item'
 };

@@ -173,9 +173,7 @@ export const MenuItem = class extends Component {
         }
 
         this.mRefMenu.current.style.display='block'
-        if(this.props.widthPopup){
-            this.mRefMenu.current.style.width = `${this.props.widthPopup}px`;
-        }
+
 
         this.setDisabled(this.disabled,true)
 
@@ -287,8 +285,12 @@ MenuItem.propTypes = {
         PropTypes.element,
         PropTypes.func,
     ]),
-    widthPopup: PropTypes.number,
-    icon: PropTypes.element,
+    icon: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.element,
+        PropTypes.func,
+    ]),
     iconOpen: PropTypes.element,
     iconClose: PropTypes.element,
     className: PropTypes.string,
@@ -339,7 +341,6 @@ MenuItem.defaultProps = {
 
     disabled:false,
     behavior: 'click',
-    widthPopup: undefined,
     popupClassName: 'popup-123',
     className:'menu-123-item'
 };
