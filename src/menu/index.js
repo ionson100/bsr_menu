@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // eslint-disable-next-line no-unused-vars
 import stylePropType from 'react-style-proptype';
 import buildContent from "./contentBuilder";
-import { ObserverItem,MyHubCore} from "./MyObserver";
+import {ObserverItem, MyObserver} from "./myObserver";
 
 export const MenuHorizontalBand = () => {
     return (
@@ -20,10 +20,12 @@ export const MenuVerticalBand = () => {
 
 
 
-const MyHub=MyHubCore()
+const MyHub={
+    hub:new MyObserver('#c9c9c9')
+}
 
 document.addEventListener("click", () => {
-    MyHub.clearClick()
+    MyHub.hub.clearClick()
 });
 console.log('*************init**********')
 const MyRootContext = React.createContext(undefined)
@@ -99,14 +101,13 @@ export const MenuItem = class extends Component {
 
 
         if (this.props.children) {
-            MyHub.Add(new ObserverItem(
+            MyHub.hub.Add(new ObserverItem(
                 {
                     id: this.id,
                     element: this.mRefPopup.current,
                     idRoot: this.context,
-                    behavior: this.props.behavior,
                     elementMenu:this.mRefMenu.current,
-                    name:this.props.content
+                    tag:this.props.tag
 
                 }
             ))
@@ -119,8 +120,8 @@ export const MenuItem = class extends Component {
     _click(e) {
         e.stopPropagation()
         if (Children.count(this.props.children) === 0) {
-            MyHub.ClickSelect(this.id, this.onClick)
-            return
+            MyHub.hub.ClickSelect(this.props.tag, this.onClick)
+            return;
         }
         if (this.props.positionPopup !== 'details') {
             this._MyMenu.state = true;
@@ -174,14 +175,13 @@ export const MenuItem = class extends Component {
     // eslint-disable-next-line no-unused-vars
     _moveMenu(e) {
 
-        MyHub.MoveMenu(new ObserverItem(
+        MyHub.hub.MoveMenu(new ObserverItem(
             {
                 id: this.id,
                 element: this.mRefPopup.current,
                 idRoot: this.context,
-                behavior: this.props.behavior,
                 elementMenu:this.mRefMenu.current,
-                name:this.props.content
+                tag:this.props.tag
             }
         ));
 
@@ -368,6 +368,11 @@ MenuItem.propTypes = {
     onKeyUp: PropTypes.func,
     disabled: PropTypes.bool,
     title: PropTypes.string,
+    tag:PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.element,
+        PropTypes.func,]),
 
 
     popupClassName: PropTypes.string,
@@ -382,7 +387,7 @@ MenuItem.defaultProps = {
     positionIcon: "left",
 
     disabled: false,
-    behavior: 'click',
+    behavior: 'move',
     popupClassName: 'popup-123',
     className: 'menu-123-item'
 };

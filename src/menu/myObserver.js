@@ -1,11 +1,12 @@
 export class ObserverItem {
-    // eslint-disable-next-line no-unused-vars
-    constructor({id, element, idRoot, behavior, elementMenu, name}) {
+
+    constructor({id, element, idRoot, elementMenu, name,tag}) {
         this.id = id;
         this.element = element;
         this.idRoot = idRoot ?? "superRoot"
         this.elementMenu = elementMenu;
         this.name = name;
+        this.tag=tag;
 
 
     }
@@ -18,6 +19,7 @@ export class MyObserver {
         this.listItem = []
         this.lastActionMoveId = undefined;
         this.lastActionAddId = undefined;
+        console.log('*************init**********')
     }
 
     Add(observerItem) {
@@ -29,10 +31,14 @@ export class MyObserver {
 
     _innerAdd(observerItem) {
         if (this._hasList(observerItem) === false) {
-            this.listItem.push(observerItem)
+
             if (observerItem.idRoot === "superRoot") {
+                if(this.root!==undefined){
+                    this._innerClearState();
+                }
                 this.root = observerItem.id;
             }
+            this.listItem.push(observerItem)
             observerItem.elementMenu.style.background = this.selectColor
         }
     }
@@ -42,17 +48,18 @@ export class MyObserver {
         o.elementMenu.style.background = '';
     }
 
-    ClickSelect(id, funClick) {
+    ClickSelect(tag, funClick) {
         this.listItem.forEach(a => {
             this._innerValue(a)
         })
         this._innerClearState()
         if (funClick) {
-            funClick(id)
+            funClick(tag)
         }
     }
 
     _innerClearState() {
+        this.root=undefined
         this.listItem.length = 0;
         this.lastActionMoveId = undefined;
         this.lastActionAddId = undefined;
@@ -101,10 +108,7 @@ export class MyObserver {
         this._innerClearState()
     }
 }
-const  h=new MyObserver()
-export  function MyHubCore(){
-    return h;
-}
+
 
 
 

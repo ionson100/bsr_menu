@@ -59,7 +59,34 @@ export class MenuConst extends Component {
 
 
                 <div className='editor-toolbar'>
-                    <MenuItem style={styleRoot} content='SuperRoot'>
+                    <MenuItem style={styleRoot} behavior='click' content='SuperRoot'>
+                        <MenuItem positionPopup='downRight' behavior='move' content='Level 2-1'>
+                            <MenuItem behavior='move' positionPopup='downRight' content='Level 3-1'>
+                                <MenuItem content='Level 4-1 click' tag='asss' onClick={(t)=>{
+
+                                    alert(t)
+                                }}>
+                                </MenuItem>
+                                <MenuItem content='Level 4-2'>
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem content='Level 2-2'>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem positionPopup='downRight' behavior='move' content='Level 2-1'>
+                            <MenuItem behavior='move' positionPopup='downRight' content='Level 2-1'>
+                                <MenuItem content='Level 4-1 list' onClick={()=>{
+
+                                }}>
+                                </MenuItem>
+                                <MenuItem content='Level 4-2'>
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem content='Level 2-2'>
+                            </MenuItem>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem style={styleRoot} behavior='click' content='SuperRoot'>
                         <MenuItem positionPopup='downRight' behavior='move' content='Level 2-1'>
                             <MenuItem behavior='move' positionPopup='downRight' content='Level 3-1'>
                                 <MenuItem content='Level 4-1 list' onClick={()=>{
