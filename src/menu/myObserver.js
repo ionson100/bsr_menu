@@ -7,14 +7,12 @@ export class ObserverItem {
         this.elementMenu = elementMenu;
         this.name = name;
         this.tag=tag;
-
-
     }
 }
 
  class MyObserver {
     constructor(classRoot,classItem) {
-        this.selectColor = 'red'
+
         this.root = undefined;
         this.listItem = []
         this.lastActionMoveId = undefined;
@@ -47,7 +45,6 @@ export class ObserverItem {
                 }
             }
             this.listItem.push(observerItem)
-            //observerItem.elementMenu.style.background = this.selectColor
         }
     }
 
@@ -59,7 +56,6 @@ export class ObserverItem {
             o.elementMenu.classList.remove(this.classItem)
         }
         o.element.style.visibility = 'hidden';
-       // o.elementMenu.style.background = '';
     }
 
     ClickSelect(tag, funClick) {

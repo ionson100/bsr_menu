@@ -163,6 +163,11 @@ code {
 .m200:active{
   background: #617f25;
 }
+.big{
+
+  width: 800px;
+  height: 400px;
+}
 
 
 

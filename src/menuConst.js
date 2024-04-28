@@ -61,6 +61,7 @@ export class MenuConst extends Component {
     constructor(props) {
         super(props);
         this.mRefMenu = React.createRef();
+        this.mRefMenuDisable = React.createRef();
         this.mRefMenuPop = React.createRef();
     }
 
@@ -72,11 +73,11 @@ export class MenuConst extends Component {
         return (
             <div>
                 <button onClick={() => {
-                    this.mRefMenu.current.setDisabled(true)
+                    this.mRefMenuDisable.current.setDisabled(true)
                 }}>Disabled
                 </button>
                 <button onClick={() => {
-                    this.mRefMenu.current.setDisabled(false)
+                    this.mRefMenuDisable.current.setDisabled(false)
                 }}>UnDisabled
                 </button>
 
@@ -102,8 +103,8 @@ export class MenuConst extends Component {
 
 
                 <div className='editor-toolbar'>
-                    <MenuItem style={styleRoot} behavior='click' content={Content('File')}>
-                        <MenuItem positionPopup='downRight' behavior='move'  content='Level 2-1' contentRight={<FaChevronRight/>}>
+                    <MenuItem ref={this.mRefMenu} style={styleRoot} behavior='click' content={Content('File')}>
+                        <MenuItem ref={this.mRefMenuDisable} positionPopup='downRight' behavior='move'  content='Level 2-1' contentRight={<FaChevronRight/>}>
                             <MenuItem behavior='move' positionPopup='downRight' contentLeft=' ' o content='Level 3-1'>
                                 <MenuItem className='big' content={ContentBig}  tag='asss' >
 
@@ -152,11 +153,17 @@ export class MenuConst extends Component {
                             </MenuItem>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem content="Test" positionPopup='details'>
-                        <MenuItem content='sdsd'></MenuItem>
-                        <MenuItem content='sdsd'></MenuItem>
-                        <MenuItem content='sdsd'></MenuItem>
-                        <MenuItem content='sdsd'></MenuItem>
+                    <MenuItem content="Test" positionPopup='dropDown' behavior='click'>
+                        <div style={{background:"white",height:"5px"}}></div>
+                        <MenuItem content='test open' positionPopup='downRight' contentRight={<FaChevronRight size={10}/>} behavior='move'>
+                            <MenuItem content='test' contentRight={<FaChevronRight/>}></MenuItem>
+                            <MenuItem content='test' contentRight={<FaChevronRight/>}></MenuItem>
+                            <MenuItem content='sdsderer' contentRight={<FaChevronRight/>}></MenuItem>
+                        </MenuItem>
+                        <MenuItem content='sdsd' contentRight={<FaChevronRight/>}></MenuItem>
+                        <MenuItem content='sdsd' contentRight={<FaChevronRight/>}></MenuItem>
+                        <MenuHorizontalBand/>
+                        <MenuItem content='sdsd' contentRight={<FaChevronRight/>}></MenuItem>
 
                     </MenuItem>
                 </div>
