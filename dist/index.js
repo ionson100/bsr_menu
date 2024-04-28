@@ -9,7 +9,7 @@ exports.MenuItem = void 0;
 exports.MenuVerticalBand = MenuVerticalBand;
 require("./menu.css");
 var _react = _interopRequireWildcard(require("react"));
-var _reactUuid = _interopRequireDefault(require("react-uuid"));
+var _uuid = require("uuid");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _reactStyleProptype = _interopRequireDefault(require("react-style-proptype"));
 var _contentBuilder = _interopRequireDefault(require("./contentBuilder"));
@@ -56,7 +56,7 @@ const MyRootContext = /*#__PURE__*/_react.default.createContext('superRoot');
 const MenuItem = exports.MenuItem = (_Class = class MenuItem extends _react.Component {
   constructor(props) {
     super(props);
-    this.id = (0, _reactUuid.default)();
+    this.id = (0, _uuid.v4)();
     this.mRefMenu = /*#__PURE__*/_react.default.createRef();
     this.mRefWrapper = /*#__PURE__*/_react.default.createRef();
     this.mRefPopup = /*#__PURE__*/_react.default.createRef();

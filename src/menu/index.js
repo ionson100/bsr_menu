@@ -1,6 +1,6 @@
 import './menu.css';
 import React, {Children, Component} from "react";
-import uuid from 'react-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import PropTypes from "prop-types";
 import stylePropType from 'react-style-proptype';
 import buildContent from "./contentBuilder";
@@ -47,7 +47,7 @@ export const MenuItem = class extends Component {
 
     constructor(props) {
         super(props);
-        this.id = uuid();
+        this.id = uuidv4();
         this.mRefMenu = React.createRef();
         this.mRefWrapper = React.createRef();
         this.mRefPopup = React.createRef();
