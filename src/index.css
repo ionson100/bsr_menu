@@ -168,6 +168,10 @@ code {
   width: 800px;
   height: 400px;
 }
+.divWide{
+  height: 4px;
+  background: white;
+}
 
 
 

@@ -8,67 +8,98 @@ require("./menu.css");
 var _react = _interopRequireDefault(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+const isFunction = value => value ? Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function : false;
 const buildContent = _ref => {
   let {
-    content,
-    icon,
-    iconOpen,
-    iconClose,
-    positionImage: positionIcon,
-    isOpenPanel
+    contentLeft,
+    contentCenter,
+    contentRight,
+    iconDropOpen,
+    iconDropClose,
+    openDrop
   } = _ref;
-  if (iconOpen && iconClose) {
-    if (isOpenPanel === true) {
-      icon = iconOpen;
-    } else {
-      icon = iconClose;
+  if (isFunction(contentLeft)) {
+    contentLeft = contentLeft();
+  }
+  if (isFunction(contentCenter)) {
+    contentCenter = contentCenter();
+  }
+  if (isFunction(contentRight)) {
+    contentRight = contentRight();
+  }
+  if (isFunction(iconDropOpen)) {
+    iconDropOpen = iconDropOpen();
+  }
+  if (isFunction(iconDropClose)) {
+    iconDropClose = iconDropClose();
+  }
+  if (iconDropClose && iconDropOpen) {
+    if (openDrop === true) {
+      contentRight = iconDropOpen;
+    } else if (openDrop === false) {
+      contentRight = iconDropClose;
     }
   }
-  if (content && !icon) {
+  if (!contentLeft && contentCenter && !contentRight) {
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "container"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "vertical-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "content-123-text-center t-over"
-    }, content)));
+      className: "content-123-center-100"
+    }, contentCenter)));
   }
-  if (!content && icon) {
+  if (contentLeft && contentCenter && !contentRight) {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "box"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "content-123-left-10"
+    }, contentLeft), /*#__PURE__*/_react.default.createElement("div", {
+      className: "content-123-center-90 t-over"
+    }, contentCenter));
+  }
+  if (contentLeft && contentCenter && contentRight) {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "box"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "content-123-left-10"
+    }, contentLeft), /*#__PURE__*/_react.default.createElement("div", {
+      className: "content-123-center-80 t-over"
+    }, contentCenter), /*#__PURE__*/_react.default.createElement("div", {
+      className: "content-123-right-10"
+    }, contentRight));
+  }
+  if (!contentLeft && contentCenter && contentRight) {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "box"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "  content-123-center-90 t-over"
+    }, contentCenter), /*#__PURE__*/_react.default.createElement("div", {
+      className: "content-123-right-10"
+    }, contentRight));
+  }
+  if (contentLeft && !contentCenter && !contentRight) {
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "container"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "center-icon"
-    }, icon));
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "content-123-left-100"
+    }, contentLeft)));
   }
-  if (content && icon && positionIcon === 'left') {
+  if (!contentLeft && !contentCenter && contentRight) {
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "container"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "vertical-center"
+      className: "center-icon"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "content-123-icon-left"
-    }, icon), /*#__PURE__*/_react.default.createElement("div", {
-      className: "content-123-text-right t-over"
-    }, content)));
-  }
-  if (content && icon && positionIcon === 'right') {
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "container"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "vertical-center"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "content-123-text-left t-over"
-    }, content), /*#__PURE__*/_react.default.createElement("div", {
-      className: "content-123-icon-right"
-    }, icon)));
+      className: "content-123-right-100"
+    }, contentRight)));
   }
 };
 buildContent.propTypes = {
-  content: _propTypes.default.object,
-  icon: _propTypes.default.element,
-  iconOpen: _propTypes.default.element,
-  iconClose: _propTypes.default.element,
-  positionImage: _propTypes.default.oneOf(['left', 'right']),
-  isOpenPanel: _propTypes.default.bool
+  contentCenter: _propTypes.default.object,
+  contentLeft: _propTypes.default.object,
+  contentRight: _propTypes.default.object
 };
 var _default = exports.default = buildContent;

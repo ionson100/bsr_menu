@@ -1,30 +1,31 @@
-.menu-123-pane {
-    border: 1px solid #dedcdc;
-    background: white;
-    /*position: absolute;*/
-    /*visibility: hidden;*/
-    /*z-index: 2;*/
-}
+
 .hr-123_vert{
+
     border-left: 1px solid #dedcdc;
 }
 .hr-123{
+    margin-top: 2px;
     border-top: 1px solid #dedcdc;
+    margin-bottom: 2px;
+}
+.hr-1233{
+    margin-top: 2px;
+    border-top: 1px solid #c53131;
+    margin-bottom: 2px;
 }
 .menu-123-item {
     height: 30px;
 
     width: 200px;
     background: white;
-    padding-left: 10px;
     font-size: 15px;
     cursor: pointer;
 }
 .menu-123-item:hover{
-    background: #f3fafd;
+    background: #d7d5d5;
 }
 .menu-123-item:active{
-    background: #c9c9c9;
+    background: #c2bebe;
 }
 div[disabled]
 {
@@ -37,42 +38,46 @@ div[disabled]
     overflow:hidden;
     text-overflow:ellipsis;
 }
-.content-123-text-right{
-    width: 100%;
-    padding-left: 5px;
-}
-.content-123-text-left{
-    width: 100%;
-}
-.content-123-text-center{
-    width: 100%;
-}
-.content-123-icon-right{
-    color: black;
-}
-.content-123-icon-left{
-    color: black;
-}
-.content-123-icon-center{
 
-    color: black;
-}
 .popup-123{
-    border: 1px solid #dedcdc;
-    background: #7b2626;
+    border: 1px solid #757474;
+    background: white;
 }
-.detail-123-popup {
 
-    margin-left: 1px;
-    margin-right: 1px;
-    background: #dedcdc;
-    border: 1px solid #999494;
-    /*display: none;*/
-}
 .container {
 
     height: 100%;
     position: relative;
+
+
+}
+/*contents*/
+.content-123-left-10{
+
+    text-align: center;
+    width: 10%;
+}
+.content-123-center-80{
+
+    padding-bottom: 3px;
+    width: 80%;
+}
+.content-123-right-10{
+    text-align: center;
+    width: 10%;
+}
+.content-123-center-100{
+ width: 100%;
+}
+.content-123-center-90{
+    width: 90%;
+   padding-bottom: 3px;
+    padding-left: 5px;
+}
+.content-123-left-100{
+
+}
+.content-123-right-100{
 
 }
 
@@ -92,4 +97,35 @@ div[disabled]
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+}
+.root-123{
+    background: #bdb7b7;
+}
+.item-123{
+    background: #d7d5d5;
+}
+.box {
+    display: flex;
+
+
+    height: 100%;
+
+    align-content: space-around;
+    align-items: center;
+    flex-direction:row;
+
+
+    justify-content: center;
+
+}
+.drop-123-open{
+    background: #c5c3c3;
+}
+
+.box2 {
+
+
+
+
+
 }

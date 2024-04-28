@@ -3,7 +3,7 @@ export class ObserverItem {
     constructor({id, element, idRoot, elementMenu, name,tag}) {
         this.id = id;
         this.element = element;
-        this.idRoot = idRoot ?? "superRoot"
+        this.idRoot = idRoot ;
         this.elementMenu = elementMenu;
         this.name = name;
         this.tag=tag;

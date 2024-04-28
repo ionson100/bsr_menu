@@ -2,7 +2,7 @@
 import {CloseMenu, MenuHorizontalBand, MenuItem, MenuVerticalBand} from "./menu";
 // eslint-disable-next-line no-unused-vars
 import {FaChevronRight} from "react-icons/fa";
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 // eslint-disable-next-line no-unused-vars
 
 
@@ -12,22 +12,23 @@ import {FaAngleDoubleRight} from "react-icons/fa";
 import {FaAngleDoubleDown} from "react-icons/fa";
 
 
-
 const styleRoot = {
     width: "200px"
 }
-function Content(name){
-    return(
-        <div style={{display:"flex"}}>
-            {<FaChevronRight style={{width:"20%",paddingTop:"2px"}}/>}
-            <div style={{width:"80%"}}>{name}</div>
-            {<FaChevronRight style={{width:"20%",paddingTop:"2px"}}/>}
+
+function Content(name) {
+    return (
+        <div style={{display: "flex"}}>
+            {<FaChevronRight style={{width: "20%", paddingTop: "2px"}}/>}
+            <div style={{width: "80%"}}>{name}</div>
+            {<FaChevronRight style={{width: "20%", paddingTop: "2px"}}/>}
         </div>
     )
 }
-function ContentBig(){
-    return(
-        <div className='big' onClick={(e)=>{
+
+function ContentBig() {
+    return (
+        <div className='big' onClick={(e) => {
             e.stopPropagation()
         }}>
             <table>
@@ -47,15 +48,74 @@ function ContentBig(){
                     <td>Mexico</td>
                 </tr>
             </table>
-            <button onClick={()=>{
-                CloseMenu(()=>{
+            <button onClick={() => {
+                CloseMenu(() => {
                     console.log("close menu")
                 });
-            }}> Close</button>
+            }}> Close
+            </button>
         </div>
 
     )
 }
+
+// eslint-disable-next-line no-unused-vars
+let chech = true;
+
+function CheckBox() {
+    const [x, setX] = useState(chech);
+
+    const soldCheckbox = ({target: {checked}}) => {
+        // console.log(x, checked);
+        setX(checked);
+    };
+    return (
+        <div>
+            <input type="checkbox" onClick={(e) => {
+                e.stopPropagation()
+            }} checked={x} onChange={soldCheckbox}/>
+        </div>
+    );
+}
+
+function Radio() {
+    const [value, setValue] = useState(1);
+
+    function chengeValue() {
+        setValue(event.target.value);
+    }
+
+    return <div style={{display: "block", paddingLeft: "95px"}}>
+        <div>
+
+            <label htmlFor="1">Regular 1</label>
+            <input type="radio" name="radio" value="1" onClick={(e) => {
+                e.stopPropagation()
+            }}
+                   checked={value == '1' ? true : false}
+                   onChange={chengeValue}/>
+        </div>
+        <div>
+            <label htmlFor="2">Regular 2</label>
+            <input type="radio" name="radio" value="2" onClick={(e) => {
+                e.stopPropagation()
+            }}
+                   checked={value == '2' ? true : false}
+                   onChange={chengeValue}/>
+        </div>
+        <div>
+            <label htmlFor="2">Regular 3</label>
+            <input type="radio" name="radio" value="3" content='asas' onClick={(e) => {
+                e.stopPropagation()
+            }}
+                   checked={value == '3' ? true : false}
+                   onChange={chengeValue}/>
+        </div>
+
+
+    </div>;
+}
+
 
 export class MenuConst extends Component {
     constructor(props) {
@@ -72,6 +132,7 @@ export class MenuConst extends Component {
     render() {
         return (
             <div>
+
                 <button onClick={() => {
                     this.mRefMenuDisable.current.setDisabled(true)
                 }}>Disabled
@@ -104,9 +165,10 @@ export class MenuConst extends Component {
 
                 <div className='editor-toolbar'>
                     <MenuItem ref={this.mRefMenu} style={styleRoot} behavior='click' content={Content('File')}>
-                        <MenuItem ref={this.mRefMenuDisable} positionPopup='downRight' behavior='move'  content='Level 2-1' contentRight={<FaChevronRight/>}>
+                        <MenuItem ref={this.mRefMenuDisable} positionPopup='downRight' behavior='move'
+                                  content='Level 2-1' contentRight={<FaChevronRight/>}>
                             <MenuItem behavior='move' positionPopup='downRight' contentLeft=' ' o content='Level 3-1'>
-                                <MenuItem className='big' content={ContentBig}  tag='asss' >
+                                <MenuItem className='big' content={ContentBig} tag='asss'>
 
                                 </MenuItem>
 
@@ -114,7 +176,8 @@ export class MenuConst extends Component {
                             <MenuItem contentLeft=' ' content='Level 2-2'>
                             </MenuItem>
                         </MenuItem>
-                        <MenuItem positionPopup='downRight' behavior='move' contentLeft=' '  content='Level 2-1' contentRight=' '>
+                        <MenuItem positionPopup='downRight' behavior='move' contentLeft=' ' content='Level 2-1'
+                                  contentRight=' '>
                             <MenuItem behavior='move' positionPopup='downRight' content='Level 2-1'>
                                 <MenuItem content='Level 4-1 list' onClick={() => {
 
@@ -153,17 +216,51 @@ export class MenuConst extends Component {
                             </MenuItem>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem content="Test" positionPopup='dropDown' behavior='click'>
-                        <div style={{background:"white",height:"5px"}}></div>
-                        <MenuItem content='test open' positionPopup='downRight' contentRight={<FaChevronRight size={10}/>} behavior='move'>
-                            <MenuItem content='test' contentRight={<FaChevronRight/>}></MenuItem>
-                            <MenuItem content='test' contentRight={<FaChevronRight/>}></MenuItem>
-                            <MenuItem content='sdsderer' contentRight={<FaChevronRight/>}></MenuItem>
+                    <MenuItem content="Test" positionPopup='dropDown' iconDropClose={<FaChevronRight/>}
+                              iconDropOpen={<FaAngleDoubleDown/>}  behavior='click'>
+                        <MenuHorizontalBand className='divWide'/>
+                        <MenuItem content='test open' positionPopup='downRight' contentRight={<FaChevronRight/>} behavior='move'>
+                            <MenuHorizontalBand className='divWide'/>
+                            <MenuItem content='test click' contentRight={<CheckBox/>} tag={3} onClick={() => {}}></MenuItem>
+                            <MenuHorizontalBand/>
+                            <MenuItem content='test' positionPopup='downRight' contentRight={<FaChevronRight/>}>
+                                <MenuItem positionPopup='downRight' behavior='move' content='Level 2-1'>
+                                    <MenuItem behavior='move' positionPopup='downRight' content='Level 3-1'>
+                                        <MenuItem content='Level 4-1 list' onClick={() => {
+
+                                        }}>
+                                        </MenuItem>
+                                        <MenuItem content='Level 4-2'>
+                                        </MenuItem>
+                                    </MenuItem>
+                                    <MenuItem content='Level 2-2'>
+                                    </MenuItem>
+                                </MenuItem>
+                                <MenuItem positionPopup='downRight' behavior='move' content='Level 2-1'>
+                                    <MenuItem behavior='move' positionPopup='downRight' content='Level 2-1'>
+                                        <MenuItem content='Level 4-1 list' onClick={() => {
+
+                                        }}>
+                                        </MenuItem>
+                                        <MenuItem content='Level 4-2'>
+                                        </MenuItem>
+                                    </MenuItem>
+                                    <MenuItem content='Level 2-2'>
+                                    </MenuItem>
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuHorizontalBand/>
+                            <MenuItem style={{height: "100px", width: "200px",}} className='sdd'
+                                      content={<Radio/>}></MenuItem>
                         </MenuItem>
                         <MenuItem content='sdsd' contentRight={<FaChevronRight/>}></MenuItem>
                         <MenuItem content='sdsd' contentRight={<FaChevronRight/>}></MenuItem>
                         <MenuHorizontalBand/>
-                        <MenuItem content='sdsd' contentRight={<FaChevronRight/>}></MenuItem>
+                        <MenuItem content='check' onClick={() => {
+
+                            alert(1)
+                        }} contentRight={<CheckBox/>}></MenuItem>
+                        <MenuHorizontalBand className='divWide'/>
 
                     </MenuItem>
                 </div>

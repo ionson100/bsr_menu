@@ -6,15 +6,24 @@ import stylePropType from 'react-style-proptype';
 import buildContent from "./contentBuilder";
 import {ObserverItem, InstanceHub} from "./myObserver";
 
-export const MenuHorizontalBand = () => {
+export function MenuHorizontalBand({className}) {
     return (
-        <div className='hr-123'/>
+        <div className={className ? className : 'hr-123'}/>
     )
 }
-export const MenuVerticalBand = () => {
+
+MenuHorizontalBand.propTypes = {
+    className: PropTypes.string
+}
+
+export function MenuVerticalBand({className}) {
     return (
-        <div className='hr-123_vert'/>
+        <div className={className ? className : 'hr-123_vert'}/>
     )
+}
+
+MenuVerticalBand.propTypes = {
+    className: PropTypes.string
 }
 
 
@@ -30,7 +39,7 @@ document.addEventListener("click", () => {
     MyHub.hub.clearClick()
 });
 
-const MyRootContext = React.createContext(undefined)
+const MyRootContext = React.createContext('superRoot')
 
 
 export const MenuItem = class extends Component {
@@ -51,7 +60,7 @@ export const MenuItem = class extends Component {
         if (this.props.behavior === "move") {
             this._MyMenu.state = true;
         }
-        this.dropOpen=false;
+        this.dropOpen = false;
     }
 
     _visibilityPane() {
@@ -105,16 +114,13 @@ export const MenuItem = class extends Component {
 
     _click(e) {
         e.stopPropagation()
-        if(this.props.positionPopup==='dropDown'){
-            if(this.dropOpen===false){
+        if (this.props.positionPopup === 'dropDown') {
+            if (this.dropOpen === false) {
                 this.open()
-                this.dropOpen=true;
-
-            }else if(this.dropOpen===true){
+            } else if (this.dropOpen === true) {
                 this.close()
-                this.dropOpen=false;
-                return;
             }
+            this.forceUpdate()
             return;
         }
         if (Children.count(this.props.children) === 0) {
@@ -176,14 +182,18 @@ export const MenuItem = class extends Component {
     open() {
         if (this.props.children) {
 
-            this.mRefPopup.current.style.position='relative'
+            this.mRefMenu.current.classList.add('drop-123-open')
+            this.mRefPopup.current.style.position = 'relative'
             this.mRefPopup.current.style.visibility = "visible"
+            this.dropOpen = true;
         }
     }
 
     close() {
+        this.mRefMenu.current.classList.remove('drop-123-open')
         this.mRefPopup.current.style.position = 'absolute'
         this.mRefPopup.current.style.visibility = "hidden"
+        this.dropOpen = false;
     }
 
 
@@ -219,6 +229,9 @@ export const MenuItem = class extends Component {
                                 contentLeft: this.props.contentLeft,
                                 contentCenter: this.props.content,
                                 contentRight: this.props.contentRight,
+                                iconDropClose: this.props.iconDropClose,
+                                iconDropOpen: this.props.iconDropOpen,
+                                openDrop: this.dropOpen
                             })
                     }
                 </div>
@@ -244,6 +257,11 @@ export const MenuItem = class extends Component {
 
 
 MenuItem.propTypes = {
+
+
+    accessKey: PropTypes.string,
+    behavior: PropTypes.oneOf(['move', 'click']),
+    className: PropTypes.string,
     children: PropTypes.object,
     content: PropTypes.oneOfType([
         PropTypes.string,
@@ -263,9 +281,17 @@ MenuItem.propTypes = {
         PropTypes.element,
         PropTypes.func,
     ]),
-
-
-    className: PropTypes.string,
+    disabled: PropTypes.bool,
+    id: PropTypes.string,
+    iconDropOpen: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.func,
+    ]),
+    iconDropClose: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.func,
+    ]),
+    key: PropTypes.string,
     onClick: PropTypes.func,
     onMouseEnter: PropTypes.func,
     onMouseDown: PropTypes.func,
@@ -279,24 +305,19 @@ MenuItem.propTypes = {
     onMouseUpCapture: PropTypes.func,
     onMouseMove: PropTypes.func,
     onMouseOut: PropTypes.func,
-    style: stylePropType,
-    ref: PropTypes.element,
-    behavior: PropTypes.oneOf(['move', 'click']),
-    accessKey: PropTypes.string,
-    tabIndex: PropTypes.number,
     onSelect: PropTypes.func,
-    id: PropTypes.string,
-    key: PropTypes.string,
     onKeyUp: PropTypes.func,
-    disabled: PropTypes.bool,
+    popupClassName: PropTypes.string,
+    positionPopup: PropTypes.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']),
+    ref: PropTypes.element,
+    style: stylePropType,
+    tabIndex: PropTypes.number,
     title: PropTypes.string,
     tag: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
         PropTypes.element,
         PropTypes.func,]),
-    popupClassName: PropTypes.string,
-    positionPopup: PropTypes.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft','dropDown']),
 };
 
 

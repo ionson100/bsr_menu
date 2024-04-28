@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 
 const isFunction = value => value ? (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function) : false;
 
-const buildContent = ({contentLeft, contentCenter, contentRight}) => {
+
+const buildContent = ({contentLeft, contentCenter, contentRight,iconDropOpen,iconDropClose,openDrop}) => {
 
     if (isFunction(contentLeft)) {
         contentLeft = contentLeft();
@@ -16,6 +17,20 @@ const buildContent = ({contentLeft, contentCenter, contentRight}) => {
     if (isFunction(contentRight)) {
         contentRight = contentRight();
     }
+    if (isFunction(iconDropOpen)) {
+        iconDropOpen = iconDropOpen();
+    }
+    if (isFunction(iconDropClose)) {
+        iconDropClose = iconDropClose();
+    }
+    if(iconDropClose&&iconDropOpen){
+        if(openDrop===true){
+            contentRight=iconDropOpen;
+        }else if(openDrop===false){
+            contentRight=iconDropClose;
+        }
+    }
+
 
     if (!contentLeft && contentCenter && !contentRight) {
         return (
@@ -79,7 +94,7 @@ const buildContent = ({contentLeft, contentCenter, contentRight}) => {
 }
 
 buildContent.propTypes = {
-    content: PropTypes.object,
+    contentCenter: PropTypes.object,
     contentLeft: PropTypes.object,
     contentRight: PropTypes.object,
 }

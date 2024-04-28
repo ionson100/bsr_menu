@@ -13,6 +13,18 @@
         <td>undefined</td>
         <td>param event click</td>
     </tr>
+<tr>
+        <td>iconDropClose</td>
+        <td>element|fun</td>
+        <td>undefined</td>
+        <td>icon close menu only for drobBox</td>
+    </tr>
+    <tr>
+        <td>iconDropOpen</td>
+        <td>element|fun</td>
+        <td>undefined</td>
+        <td>icon open menu only for drobBox</td>
+    </tr>
     <tr>
         <td>contentLeft</td>
         <td>string|element|number|fun</td>
@@ -67,6 +79,12 @@
         <td>MenuItem type object function</td>
         <td></td>
         <td>disabled state switching function</td>
+    </tr>
+ <tr>
+        <td>CloseMenu(callback)</td>
+        <td>function</td>
+        <td></td>
+        <td>close all open menu</td>
     </tr>
 </table>
 
