@@ -3,62 +3,138 @@ import React from "react";
 import PropTypes from "prop-types";
 
 
-const buildContent = ({content, icon, iconOpen, iconClose, positionImage: positionIcon, isOpenPanel}) => {
+const isFunction = value => value ? (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function) : false;
+
+const buildContent = ({contentLeft, contentCenter, contentRight, iconOpen, iconClose, isOpenPanel}) => {
 
 
+    if (isFunction(contentLeft)) {
+        contentLeft = contentLeft();
+    }
+    if (isFunction(contentCenter)) {
+        contentCenter = contentCenter();
+    }
+    if (isFunction(contentRight)) {
+        contentRight = contentRight();
+    }
+    if (isFunction(iconOpen)) {
+        iconOpen = iconOpen();
+    }
+    if (isFunction(iconClose)) {
+        iconClose = iconClose();
+    }
     if (iconOpen && iconClose) {
         if (isOpenPanel === true) {
-            icon = iconOpen
+            contentRight = iconOpen
         } else {
-            icon = iconClose
+            contentRight = iconClose
         }
 
     }
-
-
-    if (content && !icon) {
+    if (!contentLeft && contentCenter && !contentRight) {
         return (
             <div className='container'>
-                <div  className='vertical-center'>
-                    <div className='content-123-text-center t-over'>{content}</div>
-                </div>
-            </div>
-        );
-    }
-    if (!content && icon) {
-        return (
-            <div className='container'>
-                <div  className='center-icon'>
-                    {icon}
+                <div className='vertical-center'>
+                    <div className='content-123-center-100'>{contentCenter}</div>
                 </div>
             </div>
         )
     }
-    if (content && icon && positionIcon === 'left') {
+    if (contentLeft && contentCenter && !contentRight) {
         return (
-
-
             <div className='container'>
-                <div  className='vertical-center'>
-                    <div className='content-123-icon-left'>{icon}</div>
-                    <div className='content-123-text-right t-over'>{content}</div>
+                <div className='vertical-center'>
+                    <div className='content-123-left-10'>{contentLeft}</div>
+                    <div className='content-123-center-90 t-over'>{contentCenter}</div>
                 </div>
             </div>
-
-
         )
     }
-    if (content && icon && positionIcon === 'right') {
+    if (contentLeft && contentCenter && contentRight) {
         return (
             <div className='container'>
-                <div  className='vertical-center'>
-                    <div className='content-123-text-left t-over'>{content}</div>
-                    <div className='content-123-icon-right'>{icon}</div>
+                <div className='vertical-center'>
+                    <div className='content-123-left-10'>{contentLeft}</div>
+                    <div className='content-123-center-80 t-over'>{contentCenter}</div>
+                    <div className='content-123-right-10'>{contentRight}</div>
                 </div>
             </div>
-
-    )
+        )
     }
+    if (!contentLeft && contentCenter && contentRight) {
+        return (
+            <div className='container'>
+                <div className='vertical-center'>
+                    <div className='content-123-center-90 t-over'>{contentCenter}</div>
+                    <div className='content-123-right-10'>{contentRight}</div>
+                </div>
+            </div>
+        )
+    }
+    if (contentLeft && !contentCenter && !contentRight) {
+        return (
+            <div className='container'>
+                <div className='center-icon'>
+                    <div className='content-123-left-100'>{contentLeft}</div>
+                </div>
+            </div>
+        )
+    }
+
+    if (!contentLeft && !contentCenter && contentRight) {
+        return (
+            <div className='container'>
+                <div className='center-icon'>
+                    <div className='content-123-right-100'>{contentRight}</div>
+                </div>
+            </div>
+        )
+    }
+
+
+    // if (contentCenter && !contentLeft) {
+    //     return (
+    //         <div className='container'>
+    //             <div className='vertical-center'>
+    //                 <div className='content-123-text-center t-over'>{contentCenter}</div>
+    //             </div>
+    //         </div>
+    //     );
+    // }
+    // if (!contentCenter && contentLeft) {
+    //     return (
+    //         <div className='container'>
+    //             <div className='center-icon'>
+    //                 {contentLeft}
+    //             </div>
+    //         </div>
+    //     )
+    // }
+    // if (contentCenter && contentLeft) {
+    //     return (
+    //
+    //
+    //         <div className='container'>
+    //             <div className='vertical-center'>
+    //                 <div className='content-123-icon-left'>{contentLeft}</div>
+    //                 <div className='content-123-text-right t-over'>{contentCenter}</div>
+    //             </div>
+    //         </div>
+    //
+    //
+    //     )
+    // }
+    // if (contentCenter && contentLeft) {
+    //     return (
+    //         <div className='container'>
+    //             <div className='vertical-center'>
+    //                 <div className='content-123-text-left t-over'>{contentCenter}</div>
+    //                 <div className='content-123-icon-right'>{contentLeft}</div>
+    //             </div>
+    //         </div>
+    //
+    //     )
+    // }
 
 }
 buildContent.propTypes = {

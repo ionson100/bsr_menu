@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // eslint-disable-next-line no-unused-vars
 import stylePropType from 'react-style-proptype';
 import buildContent from "./contentBuilder";
-import {ObserverItem, MyObserver} from "./myObserver";
+import {ObserverItem, InstanceHub} from "./myObserver";
 
 export const MenuHorizontalBand = () => {
     return (
@@ -21,16 +21,19 @@ export const MenuVerticalBand = () => {
 
 
 const MyHub={
-    hub:new MyObserver('#c9c9c9')
+    hub:InstanceHub
+}
+export function CloseMenu(callback){
+    MyHub.hub.clearClick(callback)
 }
 
 document.addEventListener("click", () => {
     MyHub.hub.clearClick()
 });
-console.log('*************init**********')
+
 const MyRootContext = React.createContext(undefined)
 
-const isFunction = value => value ? (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function) : false;
+
 
 export const MenuItem = class extends Component {
     static contextType = MyRootContext;
@@ -40,20 +43,20 @@ export const MenuItem = class extends Component {
         this.id = uuid();
 
 
-        this.content = this.props.content;
+
         this.mRefMenu = React.createRef();
         this.mRefWrapper = React.createRef();
         this.mRefPopup = React.createRef();
 
-        this.icon = this.props.icon
+
         this.onClick = this.props.onClick;
         this.disabled = this.props.disabled;
-        if (isFunction(this.content)) {
-            this.content = this.content();
-        }
-        if (isFunction(this.icon)) {
-            this.icon = this.icon();
-        }
+        // if (isFunction(this.content)) {
+        //     this.content = this.content();
+        // }
+        // if (isFunction(this.contentLeft)) {
+        //     this.contentLeft = this.contentLeft();
+        // }
         this._MyMenu = {
             state: false
         }
@@ -291,9 +294,9 @@ export const MenuItem = class extends Component {
                     {
                         buildContent(
                             {
-                                icon: this.icon,
-                                content: this.content,
-                                positionImage: this.props.positionIcon,
+                                contentLeft: this.props.contentLeft,
+                                contentCenter: this.props.content,
+                                contentRight:this.props.contentRight,
                                 iconClose: this.props.iconClose,
                                 iconOpen: this.props.iconOpen,
                                 isOpenPanel: this.isOpenDetails
@@ -329,7 +332,13 @@ MenuItem.propTypes = {
         PropTypes.element,
         PropTypes.func,
     ]),
-    icon: PropTypes.oneOfType([
+    contentLeft: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.element,
+        PropTypes.func,
+    ]),
+    contentRight: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
         PropTypes.element,

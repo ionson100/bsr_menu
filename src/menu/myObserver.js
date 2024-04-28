@@ -12,14 +12,16 @@ export class ObserverItem {
     }
 }
 
-export class MyObserver {
-    constructor(selectColor) {
-        this.selectColor = selectColor
+ class MyObserver {
+    constructor(classRoot,classItem) {
+        this.selectColor = 'red'
         this.root = undefined;
         this.listItem = []
         this.lastActionMoveId = undefined;
         this.lastActionAddId = undefined;
-        console.log('*************init**********')
+        this.classRoot=classRoot;
+        this.classItem=classItem;
+
     }
 
     Add(observerItem) {
@@ -36,16 +38,28 @@ export class MyObserver {
                 if(this.root!==undefined){
                     this._innerClearState();
                 }
-                this.root = observerItem.id;
+                if(this.classRoot){
+                    observerItem.elementMenu.classList.add(this.classRoot)
+                }
+            }else{
+                if(this.classItem){
+                    observerItem.elementMenu.classList.add(this.classItem)
+                }
             }
             this.listItem.push(observerItem)
-            observerItem.elementMenu.style.background = this.selectColor
+            //observerItem.elementMenu.style.background = this.selectColor
         }
     }
 
     _innerValue(o) {
+        if(this.classRoot){
+            o.elementMenu.classList.remove(this.classRoot)
+        }
+        if(this.classItem){
+            o.elementMenu.classList.remove(this.classItem)
+        }
         o.element.style.visibility = 'hidden';
-        o.elementMenu.style.background = '';
+       // o.elementMenu.style.background = '';
     }
 
     ClickSelect(tag, funClick) {
@@ -100,14 +114,17 @@ export class MyObserver {
         this.lastActionMoveId = observerItem.id;
 
     }
-    clearClick(){
+    clearClick(callback){
         this.listItem.forEach(a => {
             this._innerValue(a)
         })
-
         this._innerClearState()
+        if(callback){
+            callback()
+        }
     }
 }
+ export const InstanceHub=new MyObserver('root-123','item-123')
 
 
 
