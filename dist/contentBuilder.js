@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 require("./menu.css");
 var _react = _interopRequireDefault(require("react"));
-var _propTypes = _interopRequireDefault(require("prop-types"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const isFunction = value => value ? Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function : false;
 const buildContent = _ref => {
@@ -96,10 +95,5 @@ const buildContent = _ref => {
       className: "content-123-right-100"
     }, contentRight)));
   }
-};
-buildContent.propTypes = {
-  contentCenter: _propTypes.default.object,
-  contentLeft: _propTypes.default.object,
-  contentRight: _propTypes.default.object
 };
 var _default = exports.default = buildContent;

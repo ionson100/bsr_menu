@@ -47,7 +47,7 @@
         <td>positionPopup</td>
         <td>string (['down','top', 'downLeft', 'downRight', 'topRight', 'topLeft','dropDown'])</td>
         <td> 'down' </td>
-        <td>Position  panel submenu (dropDown only vertical menu</td>
+        <td>Position  panel submenu (dropDown only vertical menu)</td>
     </tr>
     <tr>
         <td>behavior</td>

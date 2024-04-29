@@ -1,10 +1,11 @@
 import './menu.css';
-import React, {Children, Component} from "react";
+import React, {Children} from "react";
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from "prop-types";
 import stylePropType from 'react-style-proptype';
 import buildContent from "./contentBuilder";
 import {ObserverItem, InstanceHub} from "./myObserver";
+import Base, {MyRootContext} from "./base";
 
 export function MenuHorizontalBand({className}) {
     return (
@@ -39,11 +40,15 @@ document.addEventListener("click", () => {
     MyHub.hub.clearClick()
 });
 
-const MyRootContext = React.createContext('superRoot')
 
 
-export const MenuItem = class extends Component {
-    static contextType = MyRootContext;
+/**
+ * @extends {React.Component<Props, {}>}
+ */
+
+
+export const MenuItem = class extends Base {
+
 
     constructor(props) {
         super(props);
@@ -239,7 +244,7 @@ export const MenuItem = class extends Component {
                     disabled={false}
                     onMouseOut={this.props.onMouseOut}
                     onMouseMove={this._movePopUp.bind(this)}
-                    ref={this.mRefPopup}  //editor-menu-pane
+                    ref={this.mRefPopup}
                     className={this.props.popupClassName}>
                     {
                         this.props.children === undefined ? (<></>) : (
@@ -256,37 +261,54 @@ export const MenuItem = class extends Component {
 }
 
 
+
 MenuItem.propTypes = {
 
 
     accessKey: PropTypes.string,
+    /**
+     * The submenu opening behavior can be 'move' or 'click'.
+     * (mov: mouse move)
+     * (click: mouse click) .
+     * Default 'move'
+     */
     behavior: PropTypes.oneOf(['move', 'click']),
+    /**
+     * css class menu. default: 'menu-123-item'.
+     */
     className: PropTypes.string,
     children: PropTypes.object,
-    content: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.element,
-        PropTypes.func,
-    ]),
-    contentLeft: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.element,
-        PropTypes.func,
-    ]),
-    contentRight: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.element,
-        PropTypes.func,
-    ]),
+    /**
+     * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
+     * Can be determined individually.
+     */
+    content: PropTypes.any,
+    /**
+     * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
+     * Can be determined individually.
+     */
+    contentLeft: PropTypes.any,
+    /**
+     * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
+     * Can be determined individually.
+     */
+    contentRight: PropTypes.any,
+    /**
+     * Sign of an disabled menu, boolean value,
+     * default: false
+     */
     disabled: PropTypes.bool,
     id: PropTypes.string,
+    /**
+     * Only for menu where positionPopup='dropDown'.
+     */
     iconDropOpen: PropTypes.oneOfType([
         PropTypes.element,
         PropTypes.func,
     ]),
+    /**
+     * Only for menu where positionPopup='dropDown'.
+     */
     iconDropClose: PropTypes.oneOfType([
         PropTypes.element,
         PropTypes.func,
@@ -307,17 +329,20 @@ MenuItem.propTypes = {
     onMouseOut: PropTypes.func,
     onSelect: PropTypes.func,
     onKeyUp: PropTypes.func,
+    /**
+     * css class submenu panel. default:'popup-123'.
+     */
     popupClassName: PropTypes.string,
+    /**
+     * Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown'].
+     *  Default:'down'
+     */
     positionPopup: PropTypes.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']),
     ref: PropTypes.element,
     style: stylePropType,
     tabIndex: PropTypes.number,
     title: PropTypes.string,
-    tag: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.element,
-        PropTypes.func,]),
+    tag: PropTypes.any,
 };
 
 

@@ -1,6 +1,6 @@
 import './menu.css';
 import React from "react";
-import PropTypes from "prop-types";
+
 
 
 const isFunction = value => value ? (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function) : false;
@@ -93,9 +93,5 @@ const buildContent = ({contentLeft, contentCenter, contentRight,iconDropOpen,ico
     }
 }
 
-buildContent.propTypes = {
-    contentCenter: PropTypes.object,
-    contentLeft: PropTypes.object,
-    contentRight: PropTypes.object,
-}
+
 export default buildContent;

@@ -14,13 +14,10 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 var _reactStyleProptype = _interopRequireDefault(require("react-style-proptype"));
 var _contentBuilder = _interopRequireDefault(require("./contentBuilder"));
 var _myObserver = require("./myObserver");
-var _Class;
+var _base = _interopRequireWildcard(require("./base"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function MenuHorizontalBand(_ref) {
   let {
     className
@@ -52,8 +49,12 @@ function CloseMenu(callback) {
 document.addEventListener("click", () => {
   MyHub.hub.clearClick();
 });
-const MyRootContext = /*#__PURE__*/_react.default.createContext('superRoot');
-const MenuItem = exports.MenuItem = (_Class = class MenuItem extends _react.Component {
+
+/**
+ * @extends {React.Component<Props, {}>}
+ */
+
+const MenuItem = class extends _base.default {
   constructor(props) {
     super(props);
     this.id = (0, _uuid.v4)();
@@ -220,25 +221,56 @@ const MenuItem = exports.MenuItem = (_Class = class MenuItem extends _react.Comp
       disabled: false,
       onMouseOut: this.props.onMouseOut,
       onMouseMove: this._movePopUp.bind(this),
-      ref: this.mRefPopup //editor-menu-pane
-      ,
+      ref: this.mRefPopup,
       className: this.props.popupClassName
-    }, this.props.children === undefined ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null) : /*#__PURE__*/_react.default.createElement(MyRootContext.Provider, {
+    }, this.props.children === undefined ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null) : /*#__PURE__*/_react.default.createElement(_base.MyRootContext.Provider, {
       value: this.id
     }, this.props.children)));
   }
-}, _defineProperty(_Class, "contextType", MyRootContext), _Class);
+};
+exports.MenuItem = MenuItem;
 MenuItem.propTypes = {
   accessKey: _propTypes.default.string,
+  /**
+   * The submenu opening behavior can be 'move' or 'click'.
+   * (mov: mouse move)
+   * (click: mouse click) .
+   * Default 'move'
+   */
   behavior: _propTypes.default.oneOf(['move', 'click']),
+  /**
+   * css class menu. default: 'menu-123-item'.
+   */
   className: _propTypes.default.string,
   children: _propTypes.default.object,
-  content: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.element, _propTypes.default.func]),
-  contentLeft: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.element, _propTypes.default.func]),
-  contentRight: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.element, _propTypes.default.func]),
+  /**
+   * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
+   * Can be determined individually.
+   */
+  content: _propTypes.default.any,
+  /**
+   * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
+   * Can be determined individually.
+   */
+  contentLeft: _propTypes.default.any,
+  /**
+   * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
+   * Can be determined individually.
+   */
+  contentRight: _propTypes.default.any,
+  /**
+   * Sign of an disabled menu, boolean value,
+   * default: false
+   */
   disabled: _propTypes.default.bool,
   id: _propTypes.default.string,
+  /**
+   * Only for menu where positionPopup='dropDown'.
+   */
   iconDropOpen: _propTypes.default.oneOfType([_propTypes.default.element, _propTypes.default.func]),
+  /**
+   * Only for menu where positionPopup='dropDown'.
+   */
   iconDropClose: _propTypes.default.oneOfType([_propTypes.default.element, _propTypes.default.func]),
   key: _propTypes.default.string,
   onClick: _propTypes.default.func,
@@ -256,13 +288,20 @@ MenuItem.propTypes = {
   onMouseOut: _propTypes.default.func,
   onSelect: _propTypes.default.func,
   onKeyUp: _propTypes.default.func,
+  /**
+   * css class submenu panel. default:'popup-123'.
+   */
   popupClassName: _propTypes.default.string,
+  /**
+   * Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown'].
+   *  Default:'down'
+   */
   positionPopup: _propTypes.default.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']),
   ref: _propTypes.default.element,
   style: _reactStyleProptype.default,
   tabIndex: _propTypes.default.number,
   title: _propTypes.default.string,
-  tag: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.element, _propTypes.default.func])
+  tag: _propTypes.default.any
 };
 MenuItem.defaultProps = {
   positionPopup: "down",
