@@ -62,14 +62,16 @@ const MenuItem = class extends _base.default {
     this.mRefWrapper = /*#__PURE__*/_react.default.createRef();
     this.mRefPopup = /*#__PURE__*/_react.default.createRef();
     this.onClick = this.props.onClick;
-    this.disabled = this.props.disabled;
     this._MyMenu = {
       state: false
     };
     if (this.props.behavior === "move") {
       this._MyMenu.state = true;
     }
-    this.dropOpen = false;
+    this.state = {
+      disabled: this.props.disabled,
+      dropOpen: false
+    };
   }
   _visibilityPane() {
     if (this.props.positionPopup === "down") {
@@ -117,12 +119,11 @@ const MenuItem = class extends _base.default {
   _click(e) {
     e.stopPropagation();
     if (this.props.positionPopup === 'dropDown') {
-      if (this.dropOpen === false) {
+      if (this.state.dropOpen === false) {
         this.open();
-      } else if (this.dropOpen === true) {
+      } else if (this.state.dropOpen === true) {
         this.close();
       }
-      this.forceUpdate();
       return;
     }
     if (_react.Children.count(this.props.children) === 0) {
@@ -156,39 +157,47 @@ const MenuItem = class extends _base.default {
     this.mRefPopup.current.style.visibility = 'hidden';
     this.mRefPopup.current.style.zIndex = 2;
     this.mRefMenu.current.style.display = 'block';
-    this.setDisabled(this.disabled, true);
   }
-  setDisabled(b, force) {
-    this.disabled = b;
+  setDisabled(b) {
     if (b === true) {
       this.mRefWrapper.current.style.cursor = 'not-allowed';
     } else {
       this.mRefWrapper.current.style.cursor = 'default';
     }
-    if (!force) {
-      this.forceUpdate();
-    }
+    this.setState({
+      disabled: b,
+      dropOpen: this.state.dropOpen
+    });
   }
   open() {
     if (this.props.children) {
       this.mRefMenu.current.classList.add('drop-123-open');
       this.mRefPopup.current.style.position = 'relative';
       this.mRefPopup.current.style.visibility = "visible";
-      this.dropOpen = true;
+      this.setState({
+        disabled: this.state.disabled,
+        dropOpen: true
+      });
+
+      //this.dropOpen = true;
     }
   }
   close() {
     this.mRefMenu.current.classList.remove('drop-123-open');
     this.mRefPopup.current.style.position = 'absolute';
     this.mRefPopup.current.style.visibility = "hidden";
-    this.dropOpen = false;
+    this.setState({
+      disabled: this.state.disabled,
+      dropOpen: false
+    });
+    //this.dropOpen = false;
   }
   render() {
     return /*#__PURE__*/_react.default.createElement("div", {
       ref: this.mRefWrapper
     }, /*#__PURE__*/_react.default.createElement("div", {
       ref: this.mRefMenu,
-      disabled: this.disabled,
+      disabled: this.state.disabled,
       onSelect: this.props.onSelect,
       style: this.props.style,
       id: this.props.id,
@@ -216,7 +225,7 @@ const MenuItem = class extends _base.default {
       contentRight: this.props.contentRight,
       iconDropClose: this.props.iconDropClose,
       iconDropOpen: this.props.iconDropOpen,
-      openDrop: this.dropOpen
+      openDrop: this.state.dropOpen
     })), /*#__PURE__*/_react.default.createElement("div", {
       disabled: false,
       onMouseOut: this.props.onMouseOut,
@@ -231,46 +240,23 @@ const MenuItem = class extends _base.default {
 exports.MenuItem = MenuItem;
 MenuItem.propTypes = {
   accessKey: _propTypes.default.string,
-  /**
-   * The submenu opening behavior can be 'move' or 'click'.
-   * (mov: mouse move)
-   * (click: mouse click) .
-   * Default 'move'
-   */
+  /**The submenu opening behavior can be 'move' or 'click'. (mov: mouse move) (click: mouse click) . Default 'move'*/
   behavior: _propTypes.default.oneOf(['move', 'click']),
-  /**
-   * css class menu. default: 'menu-123-item'.
-   */
+  /**css class menu. default: 'menu-123-item'.*/
   className: _propTypes.default.string,
   children: _propTypes.default.object,
-  /**
-   * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
-   * Can be determined individually.
-   */
+  /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/
   content: _propTypes.default.any,
-  /**
-   * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
-   * Can be determined individually.
-   */
+  /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/
   contentLeft: _propTypes.default.any,
-  /**
-   * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
-   * Can be determined individually.
-   */
+  /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/
   contentRight: _propTypes.default.any,
-  /**
-   * Sign of an disabled menu, boolean value,
-   * default: false
-   */
+  /**Sign of an disabled menu, boolean value, default: false*/
   disabled: _propTypes.default.bool,
   id: _propTypes.default.string,
-  /**
-   * Only for menu where positionPopup='dropDown'.
-   */
+  /**Only for menu where positionPopup='dropDown'.*/
   iconDropOpen: _propTypes.default.oneOfType([_propTypes.default.element, _propTypes.default.func]),
-  /**
-   * Only for menu where positionPopup='dropDown'.
-   */
+  /**Only for menu where positionPopup='dropDown'.*/
   iconDropClose: _propTypes.default.oneOfType([_propTypes.default.element, _propTypes.default.func]),
   key: _propTypes.default.string,
   onClick: _propTypes.default.func,
@@ -288,14 +274,9 @@ MenuItem.propTypes = {
   onMouseOut: _propTypes.default.func,
   onSelect: _propTypes.default.func,
   onKeyUp: _propTypes.default.func,
-  /**
-   * css class submenu panel. default:'popup-123'.
-   */
+  /**css class submenu panel. default:'popup-123'.*/
   popupClassName: _propTypes.default.string,
-  /**
-   * Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown'].
-   *  Default:'down'
-   */
+  /**Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']. Default:'down'*/
   positionPopup: _propTypes.default.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']),
   ref: _propTypes.default.element,
   style: _reactStyleProptype.default,

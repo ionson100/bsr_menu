@@ -57,7 +57,7 @@ export const MenuItem = class extends Base {
         this.mRefWrapper = React.createRef();
         this.mRefPopup = React.createRef();
         this.onClick = this.props.onClick;
-        this.disabled = this.props.disabled;
+
 
         this._MyMenu = {
             state: false
@@ -65,7 +65,12 @@ export const MenuItem = class extends Base {
         if (this.props.behavior === "move") {
             this._MyMenu.state = true;
         }
-        this.dropOpen = false;
+        this.state=
+            {
+                disabled:this.props.disabled,
+                dropOpen:false
+            }
+
     }
 
     _visibilityPane() {
@@ -118,14 +123,15 @@ export const MenuItem = class extends Base {
 
 
     _click(e) {
+
         e.stopPropagation()
         if (this.props.positionPopup === 'dropDown') {
-            if (this.dropOpen === false) {
+            if (this.state.dropOpen === false) {
                 this.open()
-            } else if (this.dropOpen === true) {
+            } else if (this.state.dropOpen === true) {
                 this.close()
             }
-            this.forceUpdate()
+
             return;
         }
         if (Children.count(this.props.children) === 0) {
@@ -168,20 +174,20 @@ export const MenuItem = class extends Base {
         this.mRefPopup.current.style.visibility = 'hidden'
         this.mRefPopup.current.style.zIndex = 2;
         this.mRefMenu.current.style.display = 'block'
-        this.setDisabled(this.disabled, true)
     }
 
-    setDisabled(b, force) {
-        this.disabled = b;
+    setDisabled(b) {
         if (b === true) {
             this.mRefWrapper.current.style.cursor = 'not-allowed'
 
         } else {
             this.mRefWrapper.current.style.cursor = 'default'
         }
-        if (!force) {
-            this.forceUpdate()
-        }
+        this.setState({
+            disabled:b,
+            dropOpen:this.state.dropOpen
+        })
+
     }
 
     open() {
@@ -190,7 +196,12 @@ export const MenuItem = class extends Base {
             this.mRefMenu.current.classList.add('drop-123-open')
             this.mRefPopup.current.style.position = 'relative'
             this.mRefPopup.current.style.visibility = "visible"
-            this.dropOpen = true;
+            this.setState({
+                disabled:this.state.disabled,
+                dropOpen:true
+            })
+
+            //this.dropOpen = true;
         }
     }
 
@@ -198,7 +209,11 @@ export const MenuItem = class extends Base {
         this.mRefMenu.current.classList.remove('drop-123-open')
         this.mRefPopup.current.style.position = 'absolute'
         this.mRefPopup.current.style.visibility = "hidden"
-        this.dropOpen = false;
+        this.setState({
+            disabled:this.state.disabled,
+            dropOpen:false
+        })
+        //this.dropOpen = false;
     }
 
 
@@ -206,7 +221,7 @@ export const MenuItem = class extends Base {
         return (
             <div ref={this.mRefWrapper}>
                 <div ref={this.mRefMenu}
-                     disabled={this.disabled}
+                     disabled={this.state.disabled}
                      onSelect={this.props.onSelect}
                      style={this.props.style}
                      id={this.props.id}
@@ -236,7 +251,7 @@ export const MenuItem = class extends Base {
                                 contentRight: this.props.contentRight,
                                 iconDropClose: this.props.iconDropClose,
                                 iconDropOpen: this.props.iconDropOpen,
-                                openDrop: this.dropOpen
+                                openDrop: this.state.dropOpen
                             })
                     }
                 </div>
@@ -266,49 +281,26 @@ MenuItem.propTypes = {
 
 
     accessKey: PropTypes.string,
-    /**
-     * The submenu opening behavior can be 'move' or 'click'.
-     * (mov: mouse move)
-     * (click: mouse click) .
-     * Default 'move'
-     */
+    /**The submenu opening behavior can be 'move' or 'click'. (mov: mouse move) (click: mouse click) . Default 'move'*/
     behavior: PropTypes.oneOf(['move', 'click']),
-    /**
-     * css class menu. default: 'menu-123-item'.
-     */
+    /**css class menu. default: 'menu-123-item'.*/
     className: PropTypes.string,
     children: PropTypes.object,
-    /**
-     * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
-     * Can be determined individually.
-     */
+    /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/
     content: PropTypes.any,
-    /**
-     * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
-     * Can be determined individually.
-     */
+    /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/
     contentLeft: PropTypes.any,
-    /**
-     * The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight.
-     * Can be determined individually.
-     */
+    /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/
     contentRight: PropTypes.any,
-    /**
-     * Sign of an disabled menu, boolean value,
-     * default: false
-     */
+    /**Sign of an disabled menu, boolean value, default: false*/
     disabled: PropTypes.bool,
     id: PropTypes.string,
-    /**
-     * Only for menu where positionPopup='dropDown'.
-     */
+    /**Only for menu where positionPopup='dropDown'.*/
     iconDropOpen: PropTypes.oneOfType([
         PropTypes.element,
         PropTypes.func,
     ]),
-    /**
-     * Only for menu where positionPopup='dropDown'.
-     */
+    /**Only for menu where positionPopup='dropDown'.*/
     iconDropClose: PropTypes.oneOfType([
         PropTypes.element,
         PropTypes.func,
@@ -329,14 +321,9 @@ MenuItem.propTypes = {
     onMouseOut: PropTypes.func,
     onSelect: PropTypes.func,
     onKeyUp: PropTypes.func,
-    /**
-     * css class submenu panel. default:'popup-123'.
-     */
+    /**css class submenu panel. default:'popup-123'.*/
     popupClassName: PropTypes.string,
-    /**
-     * Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown'].
-     *  Default:'down'
-     */
+    /**Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']. Default:'down'*/
     positionPopup: PropTypes.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']),
     ref: PropTypes.element,
     style: stylePropType,
