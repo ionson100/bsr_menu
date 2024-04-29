@@ -1,11 +1,12 @@
 import './menu.css';
-import React, {Children} from "react";
+import React, {Children, Component} from "react";
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from "prop-types";
 import stylePropType from 'react-style-proptype';
 import buildContent from "./contentBuilder";
 import {ObserverItem, InstanceHub} from "./myObserver";
-import Base, {MyRootContext} from "./base";
+
+const MyRootContext = React.createContext('superRoot')
 
 export function MenuHorizontalBand({className}) {
     return (
@@ -36,6 +37,7 @@ export function CloseMenu(callback) {
     MyHub.hub.clearClick(callback)
 }
 
+
 document.addEventListener("click", () => {
     MyHub.hub.clearClick()
 });
@@ -47,7 +49,7 @@ document.addEventListener("click", () => {
  */
 
 
-export const MenuItem = class extends Base {
+export const MenuItem = class extends Component {
 
 
     constructor(props) {
@@ -183,10 +185,13 @@ export const MenuItem = class extends Base {
         } else {
             this.mRefWrapper.current.style.cursor = 'default'
         }
-        this.setState({
-            disabled:b,
-            dropOpen:this.state.dropOpen
-        })
+        this.setState((state) => {
+            return {counter: state.disabled=b};
+        });
+        // this.setState({
+        //     disabled:b,
+        //     dropOpen:this.state.dropOpen
+        // })
 
     }
 
@@ -196,10 +201,13 @@ export const MenuItem = class extends Base {
             this.mRefMenu.current.classList.add('drop-123-open')
             this.mRefPopup.current.style.position = 'relative'
             this.mRefPopup.current.style.visibility = "visible"
-            this.setState({
-                disabled:this.state.disabled,
-                dropOpen:true
-            })
+            this.setState((state) => {
+                return {counter: state.dropOpen=true};
+            });
+            // this.setState({
+            //     disabled:this.state.disabled,
+            //     dropOpen:true
+            // })
 
             //this.dropOpen = true;
         }
@@ -209,10 +217,14 @@ export const MenuItem = class extends Base {
         this.mRefMenu.current.classList.remove('drop-123-open')
         this.mRefPopup.current.style.position = 'absolute'
         this.mRefPopup.current.style.visibility = "hidden"
-        this.setState({
-            disabled:this.state.disabled,
-            dropOpen:false
-        })
+        this.setState((state) => {
+            return {counter: state.dropOpen=false};
+        });
+
+        // this.setState({
+        //     disabled:this.state.disabled,
+        //     dropOpen:false
+        // })
         //this.dropOpen = false;
     }
 
@@ -275,7 +287,7 @@ export const MenuItem = class extends Base {
     }
 }
 
-
+MenuItem.contextType = MyRootContext;
 
 MenuItem.propTypes = {
 
