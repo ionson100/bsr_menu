@@ -136,7 +136,7 @@ export const MenuItem = class extends Component {
             return;
         }
         if (Children.count(this.props.children) === 0) {
-            MyHub.hub.ClickSelect(this.props.tag,this.mRefMenu, this.onClick)
+            MyHub.hub.ClickSelect(this.props.tag,this.mRefMenu.current, this.onClick)
             return;
         }
         this._MyMenu.state = true;
