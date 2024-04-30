@@ -234,6 +234,7 @@ const MenuItem = class extends _react.Component {
       accessKey: this.props.accessKey,
       title: this.props.title,
       tabIndex: this.props.tabIndex,
+      "data-menu-tag": this.props.tag,
       className: this.props.className
     }, this.props.buildContent({
       contentLeft: this.props.contentLeft,

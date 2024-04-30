@@ -163,7 +163,7 @@ export class MenuConst extends Component {
 
 
                 <div className='editor-toolbar'>
-                    <MenuItem ref={this.mRefMenu} style={styleRoot} behavior='click' content={Content('File')}>
+                    <MenuItem ref={this.mRefMenu} style={styleRoot} behavior='click' tag={'23'} content={Content('File')}>
                         <MenuItem ref={this.mRefMenuDisable} positionPopup='downRight' behavior='move'
                                   content='Level 2-1' contentRight={<FaChevronRight/>}>
                             <MenuItem behavior='move' positionPopup='downRight' contentLeft=' ' o content='Level 3-1'>

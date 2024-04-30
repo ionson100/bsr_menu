@@ -253,6 +253,7 @@ export const MenuItem = class extends Component {
                      accessKey={this.props.accessKey}
                      title={this.props.title}
                      tabIndex={this.props.tabIndex}
+                     data-menu-tag={this.props.tag}
                      className={this.props.className}>
                     {
 
