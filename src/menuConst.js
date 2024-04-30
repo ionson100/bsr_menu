@@ -85,32 +85,31 @@ function Radio() {
         setValue(event.target.value);
     }
 
-    return <div style={{display: "block", paddingLeft: "95px"}}>
-        <div>
+    return <div style={{width:"200px",display:"table",marginLeft:"-10px"}}  >
 
-            <label htmlFor="1">Regular 1</label>
-            <input type="radio" name="radio" value="1" onClick={(e) => {
+        <div style={{display:"table-row",margin:"10px"}}>
+            <label style={{display:"table-cell",paddingLeft:"10px"}} >Regular 1</label>
+            <input  style={{display:"table-cell",marginLeft:90}} type="radio" name="radio" value="1" onClick={(e) => {
                 e.stopPropagation()
             }}
                    checked={value == '1' ? true : false}
                    onChange={chengeValue}/>
         </div>
-        <div>
-            <label htmlFor="2">Regular 2</label>
-            <input type="radio" name="radio" value="2" onClick={(e) => {
+        <div style={{display:"table-row"}}>
+            <label  style={{display:"table-cell",paddingLeft:"10px"}} >Regular 2</label>
+            <input   style={{display:"table-cell",marginLeft:90}} type="radio" name="radio" value="2" onClick={(e) => {
                 e.stopPropagation()
             }}
                    checked={value == '2' ? true : false}
                    onChange={chengeValue}/>
         </div>
-        <div>
-            <label htmlFor="2">Regular 3</label>
-            <input type="radio" name="radio" value="3" content='asas' onClick={(e) => {
-                e.stopPropagation()
-            }}
-                   checked={value == '3' ? true : false}
-                   onChange={chengeValue}/>
-        </div>
+
+
+
+
+
+
+
 
 
     </div>;
@@ -219,11 +218,11 @@ export class MenuConst extends Component {
                     <MenuItem content="Test" positionPopup='dropDown' iconDropClose={<FaChevronRight/>}
                               iconDropOpen={<FaAngleDoubleDown/>}  behavior='click'>
                         <MenuHorizontalBand className='divWide'/>
-                        <MenuItem content='test open' positionPopup='downRight' contentRight={<FaChevronRight/>} behavior='move'>
+                        <MenuItem content='test1' positionPopup='downRight' contentRight={<FaChevronRight/>} behavior='move'>
                             <MenuHorizontalBand className='divWide'/>
-                            <MenuItem content='test click' contentRight={<CheckBox/>} tag={3} onClick={() => {}}></MenuItem>
+                            <MenuItem content='menu form' contentRight={<CheckBox/>} tag={3} onClick={() => {}}></MenuItem>
                             <MenuHorizontalBand/>
-                            <MenuItem content='test' positionPopup='downRight' contentRight={<FaChevronRight/>}>
+                            <MenuItem content='menu 1' positionPopup='downRight' contentRight={<FaChevronRight/>}>
                                 <MenuItem positionPopup='downRight' behavior='move' content='Level 2-1'>
                                     <MenuItem behavior='move' positionPopup='downRight' content='Level 3-1'>
                                         <MenuItem content='Level 4-1 list' onClick={() => {
@@ -250,13 +249,13 @@ export class MenuConst extends Component {
                                 </MenuItem>
                             </MenuItem>
                             <MenuHorizontalBand/>
-                            <MenuItem style={{height: "100px", width: "200px",}} className='sdd'
+                            <MenuItem  className='radio'
                                       content={<Radio/>}></MenuItem>
                         </MenuItem>
-                        <MenuItem content='sdsd' contentRight={<FaChevronRight/>}></MenuItem>
-                        <MenuItem content='sdsd' contentRight={<FaChevronRight/>}></MenuItem>
+                        <MenuItem content='test2' contentRight={<FaChevronRight/>}></MenuItem>
+                        <MenuItem content='test3' contentRight={<FaChevronRight/>}></MenuItem>
                         <MenuHorizontalBand/>
-                        <MenuItem content='check' onClick={() => {
+                        <MenuItem content='test4 check' onClick={() => {
 
                             alert(1)
                         }} contentRight={<CheckBox/>}></MenuItem>

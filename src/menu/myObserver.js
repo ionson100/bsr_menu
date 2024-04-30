@@ -120,7 +120,7 @@ export class ObserverItem {
         }
     }
 }
- export const InstanceHub=new MyObserver('root-123','item-123')
+ export const InstanceHub=new MyObserver('root-123-selected','item-123-selected')
 
 
 

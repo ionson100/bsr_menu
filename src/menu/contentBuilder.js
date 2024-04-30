@@ -1,4 +1,3 @@
-import './menu.css';
 import React from "react";
 
 
@@ -6,7 +5,8 @@ import React from "react";
 const isFunction = value => value ? (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function) : false;
 
 
-const buildContent = ({contentLeft, contentCenter, contentRight,iconDropOpen,iconDropClose,openDrop}) => {
+// eslint-disable-next-line no-unused-vars
+const buildContent = ({contentLeft, contentCenter, contentRight,iconDropOpen,iconDropClose,isOpenDrop,id,tag}) => {
 
     if (isFunction(contentLeft)) {
         contentLeft = contentLeft();
@@ -24,9 +24,9 @@ const buildContent = ({contentLeft, contentCenter, contentRight,iconDropOpen,ico
         iconDropClose = iconDropClose();
     }
     if(iconDropClose&&iconDropOpen){
-        if(openDrop===true){
+        if(isOpenDrop===true){
             contentRight=iconDropOpen;
-        }else if(openDrop===false){
+        }else if(isOpenDrop===false){
             contentRight=iconDropClose;
         }
     }

@@ -1,6 +1,5 @@
 
 .hr-123_vert{
-
     border-left: 1px solid #dedcdc;
 }
 .hr-123{
@@ -8,37 +7,31 @@
     border-top: 1px solid #dedcdc;
     margin-bottom: 2px;
 }
-.hr-1233{
-    margin-top: 2px;
-    border-top: 1px solid #c53131;
-    margin-bottom: 2px;
-}
+/* styles menu core*/
 .menu-123-item {
     height: 30px;
-
     width: 200px;
-    background: white;
-    font-size: 15px;
     cursor: pointer;
 }
 .menu-123-item:hover{
-    background: #d7d5d5;
+    background: #fafaf7;
 }
 .menu-123-item:active{
-    background: #c2bebe;
+    background: #d5d2d2;
 }
+/*style disabled menu*/
 div[disabled]
 {
     pointer-events: none;
     opacity: 0.7;
 }
-
+/* override text */
 .t-over{
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
-
+/*style panel popup submenu*/
 .popup-123{
     border: 1px solid #757474;
     width: min-content;
@@ -46,21 +39,16 @@ div[disabled]
 }
 
 .container {
-
     height: 100%;
     position: relative;
-
-
 }
+
 /*contents*/
 .content-123-left-10{
-
     text-align: center;
     width: 10%;
 }
 .content-123-center-80{
-
-    padding-bottom: 3px;
     width: 80%;
 }
 .content-123-right-10{
@@ -72,15 +60,16 @@ div[disabled]
 }
 .content-123-center-90{
     width: 90%;
-   padding-bottom: 3px;
-    padding-left: 5px;
 }
 .content-123-left-100{
-
 }
+
 .content-123-right-100{
-
 }
+/*contents*/
+
+
+
 
 .vertical-center {
     width: 100%;
@@ -91,6 +80,7 @@ div[disabled]
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+/*usage only left or right container content  */
 .center-icon {
     margin: 0;
     position: absolute;
@@ -99,34 +89,25 @@ div[disabled]
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
-.root-123{
-    background: #bdb7b7;
+/*background selected root menu */
+.root-123-selected{
+    background: #d3cfcf;
 }
-.item-123{
-    background: #d7d5d5;
+/*background selected not root menu */
+.item-123-selected{
+    background: #e1dede;
 }
+
 .box {
     display: flex;
-
-
     height: 100%;
-
     align-content: space-around;
     align-items: center;
     flex-direction:row;
-
-
     justify-content: center;
-
 }
+/*background menu dropDow*/
 .drop-123-open{
     background: #c5c3c3;
 }
 
-.box2 {
-
-
-
-
-
-}

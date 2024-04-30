@@ -1,6 +1,6 @@
 import './menu.css';
 import React, {Children, Component} from "react";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import PropTypes from "prop-types";
 import stylePropType from 'react-style-proptype';
 import buildContent from "./contentBuilder";
@@ -43,7 +43,6 @@ document.addEventListener("click", () => {
 });
 
 
-
 /**
  * @extends {React.Component<Props, {}>}
  */
@@ -67,10 +66,10 @@ export const MenuItem = class extends Component {
         if (this.props.behavior === "move") {
             this._MyMenu.state = true;
         }
-        this.state=
+        this.state =
             {
-                disabled:this.props.disabled,
-                dropOpen:false
+                disabled: this.props.disabled,
+                dropOpen: false
             }
 
     }
@@ -186,7 +185,7 @@ export const MenuItem = class extends Component {
             this.mRefWrapper.current.style.cursor = 'default'
         }
         this.setState((state) => {
-            return {counter: state.disabled=b};
+            return {counter: state.disabled = b};
         });
         // this.setState({
         //     disabled:b,
@@ -202,7 +201,7 @@ export const MenuItem = class extends Component {
             this.mRefPopup.current.style.position = 'relative'
             this.mRefPopup.current.style.visibility = "visible"
             this.setState((state) => {
-                return {counter: state.dropOpen=true};
+                return {counter: state.dropOpen = true};
             });
             // this.setState({
             //     disabled:this.state.disabled,
@@ -218,7 +217,7 @@ export const MenuItem = class extends Component {
         this.mRefPopup.current.style.position = 'absolute'
         this.mRefPopup.current.style.visibility = "hidden"
         this.setState((state) => {
-            return {counter: state.dropOpen=false};
+            return {counter: state.dropOpen = false};
         });
 
         // this.setState({
@@ -256,15 +255,17 @@ export const MenuItem = class extends Component {
                      tabIndex={this.props.tabIndex}
                      className={this.props.className}>
                     {
-                        buildContent(
-                            {
-                                contentLeft: this.props.contentLeft,
-                                contentCenter: this.props.content,
-                                contentRight: this.props.contentRight,
-                                iconDropClose: this.props.iconDropClose,
-                                iconDropOpen: this.props.iconDropOpen,
-                                openDrop: this.state.dropOpen
-                            })
+
+                        this.props.buildContent({
+                            contentLeft: this.props.contentLeft,
+                            contentCenter: this.props.content,
+                            contentRight: this.props.contentRight,
+                            iconDropClose: this.props.iconDropClose,
+                            iconDropOpen: this.props.iconDropOpen,
+                            isOpenDrop: this.state.dropOpen,
+                            id: this.props.id,
+                            tag:this.props.tag
+                        })
                     }
                 </div>
                 <div
@@ -293,6 +294,7 @@ MenuItem.propTypes = {
 
 
     accessKey: PropTypes.string,
+    buildContent: PropTypes.func,
     /**The submenu opening behavior can be 'move' or 'click'. (mov: mouse move) (click: mouse click) . Default 'move'*/
     behavior: PropTypes.oneOf(['move', 'click']),
     /**css class menu. default: 'menu-123-item'.*/
@@ -350,7 +352,9 @@ MenuItem.defaultProps = {
     disabled: false,
     behavior: 'move',
     popupClassName: 'popup-123',
-    className: 'menu-123-item'
+    className: 'menu-123-item',
+    buildContent: buildContent
+
 };
 MenuItem.displayName = 'MenuItem';
 

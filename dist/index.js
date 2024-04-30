@@ -235,7 +235,14 @@ const MenuItem = class extends _react.Component {
       title: this.props.title,
       tabIndex: this.props.tabIndex,
       className: this.props.className
-    }, (0, _contentBuilder.default)({
+    }, this.props.buildContent ? this.props.buildContent({
+      contentLeft: this.props.contentLeft,
+      contentCenter: this.props.content,
+      contentRight: this.props.contentRight,
+      iconDropClose: this.props.iconDropClose,
+      iconDropOpen: this.props.iconDropOpen,
+      openDrop: this.state.dropOpen
+    }) : (0, _contentBuilder.default)({
       contentLeft: this.props.contentLeft,
       contentCenter: this.props.content,
       contentRight: this.props.contentRight,
@@ -257,6 +264,7 @@ exports.MenuItem = MenuItem;
 MenuItem.contextType = MyRootContext;
 MenuItem.propTypes = {
   accessKey: _propTypes.default.string,
+  buildContent: _propTypes.default.func,
   /**The submenu opening behavior can be 'move' or 'click'. (mov: mouse move) (click: mouse click) . Default 'move'*/
   behavior: _propTypes.default.oneOf(['move', 'click']),
   /**css class menu. default: 'menu-123-item'.*/

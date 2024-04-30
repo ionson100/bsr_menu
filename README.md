@@ -86,6 +86,12 @@
         <td></td>
         <td>close all open menu</td>
     </tr>
+ <tr>
+        <td>buildContent</td>
+        <td>function</td>
+        <td></td>
+        <td>menu content building function params:{contentLeft, contentCenter, contentRight,iconDropOpen,iconDropClose,isOpenDrop,id,tag}</td>
+    </tr>
 </table>
 
 ```javascript
