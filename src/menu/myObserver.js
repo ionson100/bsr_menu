@@ -58,13 +58,13 @@ export class ObserverItem {
         o.element.style.visibility = 'hidden';
     }
 
-    ClickSelect(tag, funClick) {
+    ClickSelect(tag, element, funClick) {
         this.listItem.forEach(a => {
             this._innerValue(a)
         })
         this._innerClearState()
         if (funClick) {
-            funClick(tag)
+            funClick(tag,element)
         }
     }
 

@@ -136,7 +136,7 @@ export const MenuItem = class extends Component {
             return;
         }
         if (Children.count(this.props.children) === 0) {
-            MyHub.hub.ClickSelect(this.props.tag, this.onClick)
+            MyHub.hub.ClickSelect(this.props.tag,this.mRefMenu, this.onClick)
             return;
         }
         this._MyMenu.state = true;
@@ -203,6 +203,9 @@ export const MenuItem = class extends Component {
             this.setState((state) => {
                 return {counter: state.dropOpen = true};
             });
+            if(this.props.onClick){
+                this.props.onClick(true)
+            }
             // this.setState({
             //     disabled:this.state.disabled,
             //     dropOpen:true
@@ -219,6 +222,9 @@ export const MenuItem = class extends Component {
         this.setState((state) => {
             return {counter: state.dropOpen = false};
         });
+        if(this.props.onClick){
+            this.props.onClick(false)
+        }
 
         // this.setState({
         //     disabled:this.state.disabled,

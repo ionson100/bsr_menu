@@ -127,7 +127,7 @@ const MenuItem = class extends _react.Component {
       return;
     }
     if (_react.Children.count(this.props.children) === 0) {
-      MyHub.hub.ClickSelect(this.props.tag, this.onClick);
+      MyHub.hub.ClickSelect(this.props.tag, this.mRefMenu, this.onClick);
       return;
     }
     this._MyMenu.state = true;
@@ -184,6 +184,9 @@ const MenuItem = class extends _react.Component {
           counter: state.dropOpen = true
         };
       });
+      if (this.props.onClick) {
+        this.props.onClick(true);
+      }
       // this.setState({
       //     disabled:this.state.disabled,
       //     dropOpen:true
@@ -201,6 +204,9 @@ const MenuItem = class extends _react.Component {
         counter: state.dropOpen = false
       };
     });
+    if (this.props.onClick) {
+      this.props.onClick(false);
+    }
 
     // this.setState({
     //     disabled:this.state.disabled,
