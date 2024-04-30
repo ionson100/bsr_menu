@@ -120,4 +120,4 @@ class MyObserver {
     }
   }
 }
-const InstanceHub = exports.InstanceHub = new MyObserver('root-123', 'item-123');
+const InstanceHub = exports.InstanceHub = new MyObserver('root-123-selected', 'item-123-selected');

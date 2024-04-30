@@ -7,6 +7,8 @@ exports.default = void 0;
 var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const isFunction = value => value ? Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function : false;
+
+// eslint-disable-next-line no-unused-vars
 const buildContent = _ref => {
   let {
     contentLeft,
@@ -14,7 +16,9 @@ const buildContent = _ref => {
     contentRight,
     iconDropOpen,
     iconDropClose,
-    openDrop
+    isOpenDrop,
+    id,
+    tag
   } = _ref;
   if (isFunction(contentLeft)) {
     contentLeft = contentLeft();
@@ -32,9 +36,9 @@ const buildContent = _ref => {
     iconDropClose = iconDropClose();
   }
   if (iconDropClose && iconDropOpen) {
-    if (openDrop === true) {
+    if (isOpenDrop === true) {
       contentRight = iconDropOpen;
-    } else if (openDrop === false) {
+    } else if (isOpenDrop === false) {
       contentRight = iconDropClose;
     }
   }

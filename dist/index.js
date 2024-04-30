@@ -235,20 +235,15 @@ const MenuItem = class extends _react.Component {
       title: this.props.title,
       tabIndex: this.props.tabIndex,
       className: this.props.className
-    }, this.props.buildContent ? this.props.buildContent({
+    }, this.props.buildContent({
       contentLeft: this.props.contentLeft,
       contentCenter: this.props.content,
       contentRight: this.props.contentRight,
       iconDropClose: this.props.iconDropClose,
       iconDropOpen: this.props.iconDropOpen,
-      openDrop: this.state.dropOpen
-    }) : (0, _contentBuilder.default)({
-      contentLeft: this.props.contentLeft,
-      contentCenter: this.props.content,
-      contentRight: this.props.contentRight,
-      iconDropClose: this.props.iconDropClose,
-      iconDropOpen: this.props.iconDropOpen,
-      openDrop: this.state.dropOpen
+      isOpenDrop: this.state.dropOpen,
+      id: this.props.id,
+      tag: this.props.tag
     })), /*#__PURE__*/_react.default.createElement("div", {
       disabled: false,
       onMouseOut: this.props.onMouseOut,
@@ -314,6 +309,7 @@ MenuItem.defaultProps = {
   disabled: false,
   behavior: 'move',
   popupClassName: 'popup-123',
-  className: 'menu-123-item'
+  className: 'menu-123-item',
+  buildContent: _contentBuilder.default
 };
 MenuItem.displayName = 'MenuItem';
