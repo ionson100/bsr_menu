@@ -76,6 +76,29 @@ export const MenuItem = class extends Component {
 
     }
 
+    get menu(){
+        return this.mRefMenu.current
+    }
+    set menu( value){
+         this.mRefMenu.current=value
+    }
+
+    get popUp(){
+        return this.mRefPopup.current;
+    }
+    set popUp(value){
+         this.mRefPopup.current=value;
+    }
+
+    get wrapper(){
+        return this.mRefWrapper.current;
+    }
+    set wrapper(value){
+        this.mRefWrapper.current=value;
+    }
+
+
+
     _resizeWindows() {
         if (this.mRefPopup.current.style.visibility === "visible") {
             this._visibilityPane(true)

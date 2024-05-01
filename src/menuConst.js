@@ -133,32 +133,33 @@ export class MenuConst extends Component {
             <div>
 
                 <button onClick={() => {
-                    this.mRefMenuDisable.current.setDisabled(true)
+                    this.mRefMenuDisable.current.SetDisabled(true)
                 }}>Disabled
                 </button>
                 <button onClick={() => {
-                    this.mRefMenuDisable.current.setDisabled(false)
+                    this.mRefMenuDisable.current.SetDisabled(false)
                 }}>UnDisabled
                 </button>
 
                 <button onClick={() => {
-                    this.mRefMenu.current.open()
+                    this.mRefMenu.current.Open()
                 }}>open
                 </button>
 
                 <button onClick={() => {
-                    this.mRefMenu.current.close()
+                    this.mRefMenu.current.Close()
                 }}>close
                 </button>
 
                 <button onClick={() => {
-                    this.mRefMenuPop.current.open()
-                }}>openPopUp
+
+                    this.mRefMenu.current.wrapper.style.display="none"
+                }}>DysplayNot
                 </button>
 
                 <button onClick={() => {
-                    this.mRefMenuPop.current.close()
-                }}>closePopUp
+                    this.mRefMenu.current.wrapper.style.display="block"
+                }}>DysplayYes
                 </button>
 
 
