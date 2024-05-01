@@ -75,7 +75,7 @@
         <td>css class for submenu panel</td>
     </tr>
      <tr>
-        <td>setDisabled(bool)</td>
+        <td>SetDisabled(bool)</td>
         <td>MenuItem type object function</td>
         <td></td>
         <td>disabled state switching function</td>

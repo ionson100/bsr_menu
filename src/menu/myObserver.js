@@ -1,12 +1,11 @@
 export class ObserverItem {
 
-    constructor({id, element, idRoot, elementMenu, name,tag}) {
+    constructor({id, element, idRoot, elementMenu}) {
         this.id = id;
         this.element = element;
         this.idRoot = idRoot ;
         this.elementMenu = elementMenu;
-        this.name = name;
-        this.tag=tag;
+
     }
 }
 

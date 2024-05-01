@@ -10,16 +10,12 @@ class ObserverItem {
       id,
       element,
       idRoot,
-      elementMenu,
-      name,
-      tag
+      elementMenu
     } = _ref;
     this.id = id;
     this.element = element;
     this.idRoot = idRoot;
     this.elementMenu = elementMenu;
-    this.name = name;
-    this.tag = tag;
   }
 }
 exports.ObserverItem = ObserverItem;

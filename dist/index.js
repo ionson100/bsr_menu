@@ -14,6 +14,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 var _reactStyleProptype = _interopRequireDefault(require("react-style-proptype"));
 var _contentBuilder = _interopRequireDefault(require("./contentBuilder"));
 var _myObserver = require("./myObserver");
+var _resizeFactory = require("./resizeFactory");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -73,36 +74,82 @@ const MenuItem = class extends _react.Component {
       dropOpen: false
     };
   }
-  _visibilityPane() {
-    if (this.props.positionPopup === "down") {
-      const y = this.mRefMenu.current.offsetTop + this.mRefMenu.current.offsetHeight;
-      this.mRefPopup.current.style.top = "".concat(y, "px");
-      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + "px";
+  _resizeWindows() {
+    if (this.mRefPopup.current.style.visibility === "visible") {
+      this._visibilityPane(true);
     }
-    if (this.props.positionPopup === "top") {
-      const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight;
-      this.mRefPopup.current.style.top = "".concat(y, "px");
-      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + "px";
+  }
+  _validateResizeRight(l) {
+    const width = window.innerWidth;
+    const rect = this.mRefPopup.current.getBoundingClientRect();
+    const res = width - (rect.left + this.mRefPopup.current.offsetWidth);
+    if (res < 0) {
+      const lt = l + parseInt(res);
+      this.mRefPopup.current.style.left = "".concat(lt, "px");
     }
-    if (this.props.positionPopup === "downRight") {
-      const y = this.mRefMenu.current.offsetTop + 5;
-      this.mRefPopup.current.style.top = "".concat(y, "px");
-      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5 + "px";
+  }
+  _validateResizeLeft() {
+    const rect = this.mRefPopup.current.getBoundingClientRect();
+    const res = rect.left; //-this.mRefPopup.current.offsetWidth
+    if (res < 0) {
+      this.mRefPopup.current.style.left = "0px";
     }
-    if (this.props.positionPopup === "topRight") {
-      const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
-      this.mRefPopup.current.style.top = "".concat(y, "px");
-      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5 + "px";
+  }
+  _visibilityPane(resizeWindows) {
+    if (!resizeWindows) {
+      if (!this.props.children) return;
+      if (this.mRefPopup.current.style.visibility === "visible") return;
     }
-    if (this.props.positionPopup === 'downLeft') {
-      const y = this.mRefMenu.current.offsetTop + 5;
-      this.mRefPopup.current.style.top = "".concat(y, "px");
-      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5 + "px";
-    }
-    if (this.props.positionPopup === 'topLeft') {
-      const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
-      this.mRefPopup.current.style.top = "".concat(y, "px");
-      this.mRefPopup.current.style.left = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5 + "px";
+    switch (this.props.positionPopup) {
+      case 'down':
+        {
+          const y = this.mRefMenu.current.offsetTop + this.mRefMenu.current.offsetHeight;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          this.mRefPopup.current.style.left = "".concat(this.mRefMenu.current.offsetLeft, "px");
+          break;
+        }
+      case 'top':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          this.mRefPopup.current.style.left = "".concat(this.mRefMenu.current.offsetLeft, "px");
+          break;
+        }
+      case 'downRight':
+        {
+          const y = this.mRefMenu.current.offsetTop + 5;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeRight(l);
+          break;
+        }
+      case 'topRight':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeRight(l);
+          break;
+        }
+      case 'downLeft':
+        {
+          const y = this.mRefMenu.current.offsetTop + 5;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeLeft(l);
+          break;
+        }
+      case 'topLeft':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          break;
+        }
     }
     if (this.props.children) {
       MyHub.hub.Add(new _myObserver.ObserverItem({
@@ -120,9 +167,9 @@ const MenuItem = class extends _react.Component {
     e.stopPropagation();
     if (this.props.positionPopup === 'dropDown') {
       if (this.state.dropOpen === false) {
-        this.open();
+        this.Open();
       } else if (this.state.dropOpen === true) {
-        this.close();
+        this.Close();
       }
       return;
     }
@@ -151,14 +198,18 @@ const MenuItem = class extends _react.Component {
   _movePopUp() {
     this.mRefPopup.current.style.visibility = "visible";
   }
+  componentWillUnmount() {
+    _resizeFactory.MapMenu.delete(this.id);
+  }
   componentDidMount() {
     this.mRefPopup.current.style.display = "block";
     this.mRefPopup.current.style.position = 'absolute';
     this.mRefPopup.current.style.visibility = 'hidden';
     this.mRefPopup.current.style.zIndex = 2;
     this.mRefMenu.current.style.display = 'block';
+    _resizeFactory.MapMenu.set(this.id, this);
   }
-  setDisabled(b) {
+  SetDisabled(b) {
     if (b === true) {
       this.mRefWrapper.current.style.cursor = 'not-allowed';
     } else {
@@ -169,12 +220,8 @@ const MenuItem = class extends _react.Component {
         counter: state.disabled = b
       };
     });
-    // this.setState({
-    //     disabled:b,
-    //     dropOpen:this.state.dropOpen
-    // })
   }
-  open() {
+  Open() {
     if (this.props.children) {
       this.mRefMenu.current.classList.add('drop-123-open');
       this.mRefPopup.current.style.position = 'relative';
@@ -185,17 +232,11 @@ const MenuItem = class extends _react.Component {
         };
       });
       if (this.props.onClick) {
-        this.props.onClick(true);
+        this.props.onClick(this.props.tag, this.mRefMenu.current, true);
       }
-      // this.setState({
-      //     disabled:this.state.disabled,
-      //     dropOpen:true
-      // })
-
-      //this.dropOpen = true;
     }
   }
-  close() {
+  Close() {
     this.mRefMenu.current.classList.remove('drop-123-open');
     this.mRefPopup.current.style.position = 'absolute';
     this.mRefPopup.current.style.visibility = "hidden";
@@ -205,14 +246,8 @@ const MenuItem = class extends _react.Component {
       };
     });
     if (this.props.onClick) {
-      this.props.onClick(false);
+      this.props.onClick(this.props.tag, this.mRefMenu.current, false);
     }
-
-    // this.setState({
-    //     disabled:this.state.disabled,
-    //     dropOpen:false
-    // })
-    //this.dropOpen = false;
   }
   render() {
     return /*#__PURE__*/_react.default.createElement("div", {

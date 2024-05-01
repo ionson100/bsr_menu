@@ -190,8 +190,8 @@ export class MenuConst extends Component {
                         </MenuItem>
                     </MenuItem>
                     <MenuItem style={styleRoot} behavior='click' contentRight='SuperRoot'>
-                        <MenuItem positionPopup='downRight' behavior='move' content='Level 2-1'>
-                            <MenuItem behavior='move' positionPopup='downRight' content='Level 3-1'>
+                        <MenuItem positionPopup='downLeft' behavior='move' content='Level 2-1'>
+                            <MenuItem behavior='move' positionPopup='downLeft' content='Level 3-1'>
                                 <MenuItem content='Level 4-1 list' onClick={() => {
 
                                 }}>
@@ -203,7 +203,7 @@ export class MenuConst extends Component {
                             </MenuItem>
                         </MenuItem>
                         <MenuItem positionPopup='downRight' behavior='move' content='Level 2-1'>
-                            <MenuItem behavior='move' positionPopup='downRight' content='Level 2-1'>
+                            <MenuItem behavior='move' positionPopup='downLeft' content='Level 2-1'>
                                 <MenuItem content='Level 4-1 list' onClick={() => {
 
                                 }}>
