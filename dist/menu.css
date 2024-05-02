@@ -110,4 +110,9 @@ div[disabled]
 .drop-123-open{
     background: #c5c3c3;
 }
+a[data-wrapper]:hover, a[data-wrapper]:visited, a[data-wrapper]:link, a[data-wrapper]:active
+{
+    text-decoration: none;
+    color: black;
+}
 

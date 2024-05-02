@@ -304,7 +304,7 @@ export const MenuItem = class extends Component {
 
     render() {
         return (
-            <div ref={this.mRefWrapper}>
+            <a href={this.props.url} data-wrapper ref={this.mRefWrapper}>
                 <div ref={this.mRefMenu}
                      disabled={this.state.disabled}
                      onSelect={this.props.onSelect}
@@ -357,7 +357,7 @@ export const MenuItem = class extends Component {
                         )
                     }
                 </div>
-            </div>
+            </a>
 
         );
     }
@@ -419,6 +419,7 @@ MenuItem.propTypes = {
     tabIndex: PropTypes.number,
     title: PropTypes.string,
     tag: PropTypes.any,
+    url:PropTypes.string
 };
 
 

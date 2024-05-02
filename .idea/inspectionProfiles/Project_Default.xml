@@ -21,5 +21,6 @@
     </inspection_tool>
     <inspection_tool class="JSClosureCompilerSyntax" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="JSUnusedLocalSymbols" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="JSValidateTypes" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
   </profile>
 </component>

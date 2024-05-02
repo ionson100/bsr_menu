@@ -97,6 +97,11 @@ const MenuItem = exports.MenuItem = (_Class_brand = /*#__PURE__*/new WeakSet(), 
   set wrapper(value) {
     this.mRefWrapper.current = value;
   }
+  _resizeWindows() {
+    if (this.mRefPopup.current.style.visibility === "visible") {
+      _assertClassBrand(_Class_brand, this, _visibilityPane).call(this, true);
+    }
+  }
   componentWillUnmount() {
     _resizeFactory.MapMenu.delete(this.id);
   }
@@ -149,7 +154,9 @@ const MenuItem = exports.MenuItem = (_Class_brand = /*#__PURE__*/new WeakSet(), 
     }
   }
   render() {
-    return /*#__PURE__*/_react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement("a", {
+      href: this.props.url,
+      "data-wrapper": true,
       ref: this.mRefWrapper
     }, /*#__PURE__*/_react.default.createElement("div", {
       ref: this.mRefMenu,
@@ -196,11 +203,6 @@ const MenuItem = exports.MenuItem = (_Class_brand = /*#__PURE__*/new WeakSet(), 
     }, this.props.children)));
   }
 });
-function _resizeWindows() {
-  if (this.mRefPopup.current.style.visibility === "visible") {
-    _assertClassBrand(_Class_brand, this, _visibilityPane).call(this, true);
-  }
-}
 function _validateResizeRight(l) {
   const width = window.innerWidth;
   const rect = this.mRefPopup.current.getBoundingClientRect();
@@ -303,9 +305,10 @@ function _click(e) {
   _assertClassBrand(_Class_brand, this, _visibilityPane).call(this);
 }
 function _moveMenu(e) {
+  const myThis = this;
   function inner() {
-    if (this._MyMenu.state === true) {
-      _assertClassBrand(_Class_brand, this, _visibilityPane).call(this);
+    if (myThis._MyMenu.state === true) {
+      _assertClassBrand(_Class_brand, myThis, _visibilityPane).call(myThis);
     }
   }
   MyHub.hub.MoveMenu(new _myObserver.ObserverItem({
@@ -314,7 +317,7 @@ function _moveMenu(e) {
     idRoot: this.context,
     elementMenu: this.mRefMenu.current,
     tag: this.props.tag
-  }), inner.bind(this));
+  }), inner);
   if (this.props.onMouseMove) {
     this.props.onMouseMove(e);
   }
@@ -368,7 +371,8 @@ MenuItem.propTypes = {
   style: _reactStyleProptype.default,
   tabIndex: _propTypes.default.number,
   title: _propTypes.default.string,
-  tag: _propTypes.default.any
+  tag: _propTypes.default.any,
+  url: _propTypes.default.string
 };
 MenuItem.defaultProps = {
   positionPopup: "down",
