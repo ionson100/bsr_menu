@@ -99,7 +99,7 @@ export const MenuItem = class extends Component {
 
 
 
-    #_resizeWindows() {
+    _resizeWindows() {
         if (this.mRefPopup.current.style.visibility === "visible") {
             this.#_visibilityPane(true)
 
