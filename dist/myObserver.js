@@ -84,7 +84,7 @@ class MyObserver {
     });
     return res;
   }
-  MoveMenu(observerItem) {
+  MoveMenu(observerItem, action) {
     if (this.lastActionMoveId === observerItem.id) return;
     const tempListRoot = [];
     let b = false;
@@ -105,6 +105,9 @@ class MyObserver {
       this._innerAdd(e);
     });
     this.lastActionMoveId = observerItem.id;
+    if (action) {
+      action.call();
+    }
   }
   clearClick(callback) {
     this.listItem.forEach(a => {

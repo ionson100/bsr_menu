@@ -83,7 +83,7 @@ export class ObserverItem {
         })
         return res;
     }
-    MoveMenu(observerItem) {
+    MoveMenu(observerItem,action) {
 
         if (this.lastActionMoveId === observerItem.id) return;
         const tempListRoot = [];
@@ -107,6 +107,9 @@ export class ObserverItem {
             this._innerAdd(e);
         })
         this.lastActionMoveId = observerItem.id;
+        if(action){
+            action.call()
+        }
 
     }
     clearClick(callback){

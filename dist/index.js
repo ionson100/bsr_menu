@@ -15,9 +15,13 @@ var _reactStyleProptype = _interopRequireDefault(require("react-style-proptype")
 var _contentBuilder = _interopRequireDefault(require("./contentBuilder"));
 var _myObserver = require("./myObserver");
 var _resizeFactory = require("./resizeFactory");
+var _Class_brand;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+function _assertClassBrand(e, t, n) { if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n; throw new TypeError("Private element is not present on this object"); }
 const MyRootContext = /*#__PURE__*/_react.default.createContext('superRoot');
 function MenuHorizontalBand(_ref) {
   let {
@@ -55,9 +59,10 @@ document.addEventListener("click", () => {
  * @extends {React.Component<Props, {}>}
  */
 
-const MenuItem = class extends _react.Component {
+const MenuItem = exports.MenuItem = (_Class_brand = /*#__PURE__*/new WeakSet(), class MenuItem extends _react.Component {
   constructor(props) {
     super(props);
+    _classPrivateMethodInitSpec(this, _Class_brand);
     this.id = (0, _uuid.v4)();
     this.mRefMenu = /*#__PURE__*/_react.default.createRef();
     this.mRefWrapper = /*#__PURE__*/_react.default.createRef();
@@ -91,130 +96,6 @@ const MenuItem = class extends _react.Component {
   }
   set wrapper(value) {
     this.mRefWrapper.current = value;
-  }
-  _resizeWindows() {
-    if (this.mRefPopup.current.style.visibility === "visible") {
-      this._visibilityPane(true);
-    }
-  }
-  _validateResizeRight(l) {
-    const width = window.innerWidth;
-    const rect = this.mRefPopup.current.getBoundingClientRect();
-    const res = width - (rect.left + this.mRefPopup.current.offsetWidth);
-    if (res < 0) {
-      const lt = l + parseInt(res);
-      this.mRefPopup.current.style.left = "".concat(lt, "px");
-    }
-  }
-  _validateResizeLeft() {
-    const rect = this.mRefPopup.current.getBoundingClientRect();
-    const res = rect.left; //-this.mRefPopup.current.offsetWidth
-    if (res < 0) {
-      this.mRefPopup.current.style.left = "0px";
-    }
-  }
-  _visibilityPane(resizeWindows) {
-    if (!resizeWindows) {
-      if (!this.props.children) return;
-      if (this.mRefPopup.current.style.visibility === "visible") return;
-    }
-    switch (this.props.positionPopup) {
-      case 'down':
-        {
-          const y = this.mRefMenu.current.offsetTop + this.mRefMenu.current.offsetHeight;
-          this.mRefPopup.current.style.top = "".concat(y, "px");
-          this.mRefPopup.current.style.left = "".concat(this.mRefMenu.current.offsetLeft, "px");
-          break;
-        }
-      case 'top':
-        {
-          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight;
-          this.mRefPopup.current.style.top = "".concat(y, "px");
-          this.mRefPopup.current.style.left = "".concat(this.mRefMenu.current.offsetLeft, "px");
-          break;
-        }
-      case 'downRight':
-        {
-          const y = this.mRefMenu.current.offsetTop + 5;
-          this.mRefPopup.current.style.top = "".concat(y, "px");
-          const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
-          this.mRefPopup.current.style.left = "".concat(l, "px");
-          this._validateResizeRight(l);
-          break;
-        }
-      case 'topRight':
-        {
-          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
-          this.mRefPopup.current.style.top = "".concat(y, "px");
-          const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
-          this.mRefPopup.current.style.left = "".concat(l, "px");
-          this._validateResizeRight(l);
-          break;
-        }
-      case 'downLeft':
-        {
-          const y = this.mRefMenu.current.offsetTop + 5;
-          this.mRefPopup.current.style.top = "".concat(y, "px");
-          const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
-          this.mRefPopup.current.style.left = "".concat(l, "px");
-          this._validateResizeLeft(l);
-          break;
-        }
-      case 'topLeft':
-        {
-          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
-          this.mRefPopup.current.style.top = "".concat(y, "px");
-          const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
-          this.mRefPopup.current.style.left = "".concat(l, "px");
-          break;
-        }
-    }
-    if (this.props.children) {
-      MyHub.hub.Add(new _myObserver.ObserverItem({
-        id: this.id,
-        element: this.mRefPopup.current,
-        idRoot: this.context,
-        elementMenu: this.mRefMenu.current,
-        tag: this.props.tag
-      }));
-      this.mRefPopup.current.style.visibility = "visible";
-      this.mRefPopup.current.style.display = "block";
-    }
-  }
-  _click(e) {
-    e.stopPropagation();
-    if (this.props.positionPopup === 'dropDown') {
-      if (this.state.dropOpen === false) {
-        this.Open();
-      } else if (this.state.dropOpen === true) {
-        this.Close();
-      }
-      return;
-    }
-    if (_react.Children.count(this.props.children) === 0) {
-      MyHub.hub.ClickSelect(this.props.tag, this.mRefMenu.current, this.onClick);
-      return;
-    }
-    this._MyMenu.state = true;
-    this._visibilityPane();
-  }
-  _moveMenu(e) {
-    MyHub.hub.MoveMenu(new _myObserver.ObserverItem({
-      id: this.id,
-      element: this.mRefPopup.current,
-      idRoot: this.context,
-      elementMenu: this.mRefMenu.current,
-      tag: this.props.tag
-    }));
-    if (this._MyMenu.state === true) {
-      this._visibilityPane();
-    }
-    if (this.props.onMouseMove) {
-      this.props.onMouseMove(e);
-    }
-  }
-  _movePopUp() {
-    this.mRefPopup.current.style.visibility = "visible";
   }
   componentWillUnmount() {
     _resizeFactory.MapMenu.delete(this.id);
@@ -277,7 +158,7 @@ const MenuItem = class extends _react.Component {
       style: this.props.style,
       id: this.props.id,
       onKeyUp: this.props.onKeyUp,
-      onClick: this._click.bind(this),
+      onClick: _assertClassBrand(_Class_brand, this, _click).bind(this),
       onMouseEnter: this.props.onMouseEnter,
       onMouseDown: this.props.onMouseDown,
       onMouseDownCapture: this.props.onMouseDownCapture,
@@ -288,7 +169,7 @@ const MenuItem = class extends _react.Component {
       onMouseMoveCapture: this.props.onMouseMoveCapture,
       onMouseOver: this.props.onMouseOver,
       onMouseUpCapture: this.props.onMouseUpCapture,
-      onMouseMove: this._moveMenu.bind(this),
+      onMouseMove: _assertClassBrand(_Class_brand, this, _moveMenu).bind(this),
       onMouseOut: this.props.onMouseOut,
       accessKey: this.props.accessKey,
       title: this.props.title,
@@ -307,15 +188,140 @@ const MenuItem = class extends _react.Component {
     })), /*#__PURE__*/_react.default.createElement("div", {
       disabled: false,
       onMouseOut: this.props.onMouseOut,
-      onMouseMove: this._movePopUp.bind(this),
+      onMouseMove: _assertClassBrand(_Class_brand, this, _movePopUp).bind(this),
       ref: this.mRefPopup,
       className: this.props.popupClassName
     }, this.props.children === undefined ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null) : /*#__PURE__*/_react.default.createElement(MyRootContext.Provider, {
       value: this.id
     }, this.props.children)));
   }
-};
-exports.MenuItem = MenuItem;
+});
+function _resizeWindows() {
+  if (this.mRefPopup.current.style.visibility === "visible") {
+    _assertClassBrand(_Class_brand, this, _visibilityPane).call(this, true);
+  }
+}
+function _validateResizeRight(l) {
+  const width = window.innerWidth;
+  const rect = this.mRefPopup.current.getBoundingClientRect();
+  const res = width - (rect.left + this.mRefPopup.current.offsetWidth);
+  if (res < 0) {
+    const lt = l + parseInt(res);
+    this.mRefPopup.current.style.left = "".concat(lt, "px");
+  }
+}
+function _validateResizeLeft() {
+  const rect = this.mRefPopup.current.getBoundingClientRect();
+  const res = rect.left; //-this.mRefPopup.current.offsetWidth
+  if (res < 0) {
+    this.mRefPopup.current.style.left = "0px";
+  }
+}
+function _visibilityPane(resizeWindows) {
+  if (!resizeWindows) {
+    if (!this.props.children) return;
+    if (this.mRefPopup.current.style.visibility === "visible") return;
+  }
+  switch (this.props.positionPopup) {
+    case 'down':
+      {
+        const y = this.mRefMenu.current.offsetTop + this.mRefMenu.current.offsetHeight;
+        this.mRefPopup.current.style.top = "".concat(y, "px");
+        this.mRefPopup.current.style.left = "".concat(this.mRefMenu.current.offsetLeft, "px");
+        break;
+      }
+    case 'top':
+      {
+        const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight;
+        this.mRefPopup.current.style.top = "".concat(y, "px");
+        this.mRefPopup.current.style.left = "".concat(this.mRefMenu.current.offsetLeft, "px");
+        break;
+      }
+    case 'downRight':
+      {
+        const y = this.mRefMenu.current.offsetTop + 5;
+        this.mRefPopup.current.style.top = "".concat(y, "px");
+        const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
+        this.mRefPopup.current.style.left = "".concat(l, "px");
+        _assertClassBrand(_Class_brand, this, _validateResizeRight).call(this, l);
+        break;
+      }
+    case 'topRight':
+      {
+        const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
+        this.mRefPopup.current.style.top = "".concat(y, "px");
+        const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
+        this.mRefPopup.current.style.left = "".concat(l, "px");
+        _assertClassBrand(_Class_brand, this, _validateResizeRight).call(this, l);
+        break;
+      }
+    case 'downLeft':
+      {
+        const y = this.mRefMenu.current.offsetTop + 5;
+        this.mRefPopup.current.style.top = "".concat(y, "px");
+        const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
+        this.mRefPopup.current.style.left = "".concat(l, "px");
+        _assertClassBrand(_Class_brand, this, _validateResizeLeft).call(this, l);
+        break;
+      }
+    case 'topLeft':
+      {
+        const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight + this.mRefMenu.current.offsetHeight - 5;
+        this.mRefPopup.current.style.top = "".concat(y, "px");
+        const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
+        this.mRefPopup.current.style.left = "".concat(l, "px");
+        break;
+      }
+  }
+  if (this.props.children) {
+    MyHub.hub.Add(new _myObserver.ObserverItem({
+      id: this.id,
+      element: this.mRefPopup.current,
+      idRoot: this.context,
+      elementMenu: this.mRefMenu.current,
+      tag: this.props.tag
+    }));
+    this.mRefPopup.current.style.visibility = "visible";
+    this.mRefPopup.current.style.display = "block";
+  }
+}
+function _click(e) {
+  e.stopPropagation();
+  if (this.props.positionPopup === 'dropDown') {
+    if (this.state.dropOpen === false) {
+      this.Open();
+    } else if (this.state.dropOpen === true) {
+      this.Close();
+    }
+    return;
+  }
+  if (_react.Children.count(this.props.children) === 0) {
+    MyHub.hub.ClickSelect(this.props.tag, this.mRefMenu.current, this.onClick);
+    return;
+  }
+  this._MyMenu.state = true;
+  _assertClassBrand(_Class_brand, this, _visibilityPane).call(this);
+}
+function _moveMenu(e) {
+  function inner() {
+    if (this._MyMenu.state === true) {
+      _assertClassBrand(_Class_brand, this, _visibilityPane).call(this);
+    }
+  }
+  MyHub.hub.MoveMenu(new _myObserver.ObserverItem({
+    id: this.id,
+    element: this.mRefPopup.current,
+    idRoot: this.context,
+    elementMenu: this.mRefMenu.current,
+    tag: this.props.tag
+  }), inner.bind(this));
+  if (this.props.onMouseMove) {
+    this.props.onMouseMove(e);
+  }
+}
+function _movePopUp() {
+  this.mRefPopup.current.style.visibility = "visible";
+}
 MenuItem.contextType = MyRootContext;
 MenuItem.propTypes = {
   accessKey: _propTypes.default.string,

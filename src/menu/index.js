@@ -99,14 +99,14 @@ export const MenuItem = class extends Component {
 
 
 
-    _resizeWindows() {
+    #_resizeWindows() {
         if (this.mRefPopup.current.style.visibility === "visible") {
-            this._visibilityPane(true)
+            this.#_visibilityPane(true)
 
         }
     }
 
-    _validateResizeRight(l) {
+    #_validateResizeRight(l) {
         const width = window.innerWidth
         const rect = this.mRefPopup.current.getBoundingClientRect();
         const res = width - (rect.left + this.mRefPopup.current.offsetWidth)
@@ -118,7 +118,7 @@ export const MenuItem = class extends Component {
     }
 
 
-    _validateResizeLeft() {
+    #_validateResizeLeft() {
         const rect = this.mRefPopup.current.getBoundingClientRect();
         const res = rect.left;//-this.mRefPopup.current.offsetWidth
         if (res < 0) {
@@ -127,7 +127,7 @@ export const MenuItem = class extends Component {
     }
 
 
-    _visibilityPane(resizeWindows) {
+    #_visibilityPane(resizeWindows) {
 
         if (!resizeWindows) {
             if (!this.props.children) return
@@ -151,7 +151,7 @@ export const MenuItem = class extends Component {
                 this.mRefPopup.current.style.top = `${y}px`;
                 const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5
                 this.mRefPopup.current.style.left = `${l}px`;
-                this._validateResizeRight(l)
+                this.#_validateResizeRight(l)
                 break
             }
             case 'topRight': {
@@ -159,7 +159,7 @@ export const MenuItem = class extends Component {
                 this.mRefPopup.current.style.top = `${y}px`;
                 const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
                 this.mRefPopup.current.style.left = `${l}px`;
-                this._validateResizeRight(l)
+                this.#_validateResizeRight(l)
                 break
             }
             case 'downLeft': {
@@ -167,7 +167,7 @@ export const MenuItem = class extends Component {
                 this.mRefPopup.current.style.top = `${y}px`;
                 const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5
                 this.mRefPopup.current.style.left = `${l}px`;
-                this._validateResizeLeft(l)
+                this.#_validateResizeLeft(l)
                 break
             }
             case 'topLeft': {
@@ -197,7 +197,7 @@ export const MenuItem = class extends Component {
     }
 
 
-    _click(e) {
+    #_click(e) {
 
         e.stopPropagation()
         if (this.props.positionPopup === 'dropDown') {
@@ -214,10 +214,17 @@ export const MenuItem = class extends Component {
             return;
         }
         this._MyMenu.state = true;
-        this._visibilityPane()
+        this.#_visibilityPane()
     }
 
-    _moveMenu(e) {
+    #_moveMenu(e) {
+
+        const myThis=this;
+        function inner(){
+            if (myThis._MyMenu.state === true) {
+                myThis.#_visibilityPane()
+            }
+        }
 
 
         MyHub.hub.MoveMenu(new ObserverItem(
@@ -228,18 +235,16 @@ export const MenuItem = class extends Component {
                 elementMenu: this.mRefMenu.current,
                 tag: this.props.tag
             }
-        ));
+        ),inner);
 
-        if (this._MyMenu.state === true) {
-            this._visibilityPane()
-        }
+
 
         if (this.props.onMouseMove) {
             this.props.onMouseMove(e)
         }
     }
 
-    _movePopUp() {
+    #_movePopUp() {
         this.mRefPopup.current.style.visibility = "visible"
     }
 
@@ -306,7 +311,7 @@ export const MenuItem = class extends Component {
                      style={this.props.style}
                      id={this.props.id}
                      onKeyUp={this.props.onKeyUp}
-                     onClick={this._click.bind(this)}
+                     onClick={this.#_click.bind(this)}
                      onMouseEnter={this.props.onMouseEnter}
                      onMouseDown={this.props.onMouseDown}
                      onMouseDownCapture={this.props.onMouseDownCapture}
@@ -317,7 +322,7 @@ export const MenuItem = class extends Component {
                      onMouseMoveCapture={this.props.onMouseMoveCapture}
                      onMouseOver={this.props.onMouseOver}
                      onMouseUpCapture={this.props.onMouseUpCapture}
-                     onMouseMove={this._moveMenu.bind(this)}
+                     onMouseMove={this.#_moveMenu.bind(this)}
                      onMouseOut={this.props.onMouseOut}
                      accessKey={this.props.accessKey}
                      title={this.props.title}
@@ -341,7 +346,7 @@ export const MenuItem = class extends Component {
                 <div
                     disabled={false}
                     onMouseOut={this.props.onMouseOut}
-                    onMouseMove={this._movePopUp.bind(this)}
+                    onMouseMove={this.#_movePopUp.bind(this)}
                     ref={this.mRefPopup}
                     className={this.props.popupClassName}>
                     {
