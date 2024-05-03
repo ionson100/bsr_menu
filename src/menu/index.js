@@ -60,6 +60,7 @@ export const MenuItem = class extends Component {
         this.mRefWrapper = React.createRef();
         this.mRefPopup = React.createRef();
         this.onClick = this.props.onClick;
+        this.stateDropMemu=false;
 
 
         this._MyMenu = {
@@ -277,6 +278,7 @@ export const MenuItem = class extends Component {
     Open() {
         if (this.props.children) {
 
+            this.stateDropMemu=true;
             this.mRefMenu.current.classList.add('drop-123-open')
             this.mRefPopup.current.style.position = 'relative'
             this.mRefPopup.current.style.visibility = "visible"
@@ -290,6 +292,7 @@ export const MenuItem = class extends Component {
     }
 
     Close() {
+        this.stateDropMemu=false;
         this.mRefMenu.current.classList.remove('drop-123-open')
         this.mRefPopup.current.style.position = 'absolute'
         this.mRefPopup.current.style.visibility = "hidden"
@@ -300,12 +303,24 @@ export const MenuItem = class extends Component {
             this.props.onClick(this.props.tag, this.mRefMenu.current, false)
         }
     }
+    getUrl(){
+        if(this.props.positionPopup==='dropDown'){
+
+            if(this.props.url){
+                return this.props.url+"&state="+this.stateDropMemu
+            }
+
+
+        }else{
+            return this.props.url;
+        }
+    }
 
 
     render() {
         return (
             <object>
-                <a href={this.props.url} data-wrapper ref={this.mRefWrapper}>
+                <a href={this.getUrl()} data-wrapper ref={this.mRefWrapper}>
                     <div ref={this.mRefMenu}
                          disabled={this.state.disabled}
                          onSelect={this.props.onSelect}

@@ -63,6 +63,7 @@ const MenuItem = class extends _react.Component {
     this.mRefWrapper = /*#__PURE__*/_react.default.createRef();
     this.mRefPopup = /*#__PURE__*/_react.default.createRef();
     this.onClick = this.props.onClick;
+    this.stateDropMemu = false;
     this._MyMenu = {
       state: false
     };
@@ -244,6 +245,7 @@ const MenuItem = class extends _react.Component {
   }
   Open() {
     if (this.props.children) {
+      this.stateDropMemu = true;
       this.mRefMenu.current.classList.add('drop-123-open');
       this.mRefPopup.current.style.position = 'relative';
       this.mRefPopup.current.style.visibility = "visible";
@@ -258,6 +260,7 @@ const MenuItem = class extends _react.Component {
     }
   }
   Close() {
+    this.stateDropMemu = false;
     this.mRefMenu.current.classList.remove('drop-123-open');
     this.mRefPopup.current.style.position = 'absolute';
     this.mRefPopup.current.style.visibility = "hidden";
@@ -270,9 +273,18 @@ const MenuItem = class extends _react.Component {
       this.props.onClick(this.props.tag, this.mRefMenu.current, false);
     }
   }
+  getUrl() {
+    if (this.props.positionPopup === 'dropDown') {
+      if (this.props.url) {
+        return this.props.url + "&state=" + this.stateDropMemu;
+      }
+    } else {
+      return this.props.url;
+    }
+  }
   render() {
     return /*#__PURE__*/_react.default.createElement("object", null, /*#__PURE__*/_react.default.createElement("a", {
-      href: this.props.url,
+      href: this.getUrl(),
       "data-wrapper": true,
       ref: this.mRefWrapper
     }, /*#__PURE__*/_react.default.createElement("div", {
