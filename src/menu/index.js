@@ -304,61 +304,64 @@ export const MenuItem = class extends Component {
 
     render() {
         return (
-            <a href={this.props.url} data-wrapper ref={this.mRefWrapper}>
-                <div ref={this.mRefMenu}
-                     disabled={this.state.disabled}
-                     onSelect={this.props.onSelect}
-                     style={this.props.style}
-                     id={this.props.id}
-                     onKeyUp={this.props.onKeyUp}
-                     onClick={this._click.bind(this)}
-                     onMouseEnter={this.props.onMouseEnter}
-                     onMouseDown={this.props.onMouseDown}
-                     onMouseDownCapture={this.props.onMouseDownCapture}
-                     onMouseLeave={this.props.onMouseLeave}
-                     onMouseUp={this.props.onMouseUp}
-                     onMouseOverCapture={this.props.onMouseOverCapture}
-                     onMouseOutCapture={this.props.onMouseOutCapture}
-                     onMouseMoveCapture={this.props.onMouseMoveCapture}
-                     onMouseOver={this.props.onMouseOver}
-                     onMouseUpCapture={this.props.onMouseUpCapture}
-                     onMouseMove={this._moveMenu.bind(this)}
-                     onMouseOut={this.props.onMouseOut}
-                     accessKey={this.props.accessKey}
-                     title={this.props.title}
-                     tabIndex={this.props.tabIndex}
-                     data-menu-tag={this.props.tag}
-                     className={this.props.className}>
-                    {
+            <object>
+                <a href={this.props.url} data-wrapper ref={this.mRefWrapper}>
+                    <div ref={this.mRefMenu}
+                         disabled={this.state.disabled}
+                         onSelect={this.props.onSelect}
+                         style={this.props.style}
+                         id={this.props.id}
+                         onKeyUp={this.props.onKeyUp}
+                         onClick={this._click.bind(this)}
+                         onMouseEnter={this.props.onMouseEnter}
+                         onMouseDown={this.props.onMouseDown}
+                         onMouseDownCapture={this.props.onMouseDownCapture}
+                         onMouseLeave={this.props.onMouseLeave}
+                         onMouseUp={this.props.onMouseUp}
+                         onMouseOverCapture={this.props.onMouseOverCapture}
+                         onMouseOutCapture={this.props.onMouseOutCapture}
+                         onMouseMoveCapture={this.props.onMouseMoveCapture}
+                         onMouseOver={this.props.onMouseOver}
+                         onMouseUpCapture={this.props.onMouseUpCapture}
+                         onMouseMove={this._moveMenu.bind(this)}
+                         onMouseOut={this.props.onMouseOut}
+                         accessKey={this.props.accessKey}
+                         title={this.props.title}
+                         tabIndex={this.props.tabIndex}
+                         data-menu-tag={this.props.tag}
+                         className={this.props.className}>
+                        {
 
-                        this.props.buildContent({
-                            contentLeft: this.props.contentLeft,
-                            contentCenter: this.props.content,
-                            contentRight: this.props.contentRight,
-                            iconDropClose: this.props.iconDropClose,
-                            iconDropOpen: this.props.iconDropOpen,
-                            isOpenDrop: this.state.dropOpen,
-                            id: this.props.id,
-                            tag: this.props.tag
-                        })
-                    }
-                </div>
-                <div
-                    data-memu-poopup={this.props.tag}
-                    disabled={false}
-                    onMouseOut={this.props.onMouseOut}
-                    onMouseMove={this._movePopUp.bind(this)}
-                    ref={this.mRefPopup}
-                    className={this.props.popupClassName}>
-                    {
-                        this.props.children === undefined ? (<></>) : (
-                            <MyRootContext.Provider value={this.id}>
-                                {this.props.children}
-                            </MyRootContext.Provider>
-                        )
-                    }
-                </div>
-            </a>
+                            this.props.buildContent({
+                                contentLeft: this.props.contentLeft,
+                                contentCenter: this.props.content,
+                                contentRight: this.props.contentRight,
+                                iconDropClose: this.props.iconDropClose,
+                                iconDropOpen: this.props.iconDropOpen,
+                                isOpenDrop: this.state.dropOpen,
+                                id: this.props.id,
+                                tag: this.props.tag
+                            })
+                        }
+                    </div>
+                    <div
+                        data-memu-poopup={this.props.tag}
+                        disabled={false}
+                        onMouseOut={this.props.onMouseOut}
+                        onMouseMove={this._movePopUp.bind(this)}
+                        ref={this.mRefPopup}
+                        className={this.props.popupClassName}>
+                        {
+                            this.props.children === undefined ? (<></>) : (
+                                <MyRootContext.Provider value={this.id}>
+                                    {this.props.children}
+                                </MyRootContext.Provider>
+                            )
+                        }
+                    </div>
+                </a>
+            </object>
+
 
         );
     }
@@ -375,7 +378,7 @@ MenuItem.propTypes = {
     behavior: PropTypes.oneOf(['move', 'click']),
     /**css class menu. default: 'menu-123-item'.*/
     className: PropTypes.string,
-    children: PropTypes.object,
+    children: PropTypes.node,
     /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/
     content: PropTypes.any,
     /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/

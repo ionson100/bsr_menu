@@ -271,7 +271,7 @@ const MenuItem = class extends _react.Component {
     }
   }
   render() {
-    return /*#__PURE__*/_react.default.createElement("a", {
+    return /*#__PURE__*/_react.default.createElement("object", null, /*#__PURE__*/_react.default.createElement("a", {
       href: this.props.url,
       "data-wrapper": true,
       ref: this.mRefWrapper
@@ -318,7 +318,7 @@ const MenuItem = class extends _react.Component {
       className: this.props.popupClassName
     }, this.props.children === undefined ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null) : /*#__PURE__*/_react.default.createElement(MyRootContext.Provider, {
       value: this.id
-    }, this.props.children)));
+    }, this.props.children))));
   }
 };
 exports.MenuItem = MenuItem;
@@ -330,7 +330,7 @@ MenuItem.propTypes = {
   behavior: _propTypes.default.oneOf(['move', 'click']),
   /**css class menu. default: 'menu-123-item'.*/
   className: _propTypes.default.string,
-  children: _propTypes.default.object,
+  children: _propTypes.default.node,
   /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/
   content: _propTypes.default.any,
   /**The visual content of the menu consists of three horizontal areas: contentLeft - content - contentRight. Can be determined individually.*/
