@@ -418,7 +418,7 @@ MenuItem.propTypes = {
     popupClassName: PropTypes.string,
     /**Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']. Default:'down'*/
     positionPopup: PropTypes.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']),
-    ref: PropTypes.element,
+
     style: stylePropType,
     tabIndex: PropTypes.number,
     title: PropTypes.string,
