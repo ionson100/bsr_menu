@@ -121,7 +121,7 @@ export class MenuConst extends Component {
         super(props);
         this.mRefMenu = React.createRef();
         this.mRefMenuDisable = React.createRef();
-        this.mRefMenuPop = React.createRef();
+        this.mRefMenuShow = React.createRef();
     }
 
     componentDidMount() {
@@ -134,39 +134,44 @@ export class MenuConst extends Component {
                 <a href="/asasas">sasasass</a>
 
                 <button onClick={() => {
-                    this.mRefMenuDisable.current.SetDisabled(true)
+                    this.mRefMenu.current.setDisabled(true)
                 }}>Disabled
                 </button>
                 <button onClick={() => {
-                    this.mRefMenuDisable.current.SetDisabled(false)
+                    this.mRefMenu.current.setDisabled(false)
                 }}>UnDisabled
                 </button>
 
                 <button onClick={() => {
-                    this.mRefMenu.current.Open()
+                    this.mRefMenu.current.open()
                 }}>open
                 </button>
 
                 <button onClick={() => {
-                    this.mRefMenu.current.Close()
+                    this.mRefMenu.current.close()
                 }}>close
                 </button>
 
                 <button onClick={() => {
 
-                    this.mRefMenu.current.wrapper.style.display="none"
+                    this.mRefMenuShow.current.setShow(false)
                 }}>DysplayNot
                 </button>
 
                 <button onClick={() => {
-                    this.mRefMenu.current.wrapper.style.display="block"
+                    this.mRefMenuShow.current.setShow(true)
                 }}>DysplayYes
+                </button>
+                <button onClick={() => {
+
+                    this.mRefMenu.current.setContent(undefined,"assa",undefined)
+                }}>content
                 </button>
 
 
                 <div className='editor-toolbar'>
-                    <MenuItem url="#sdd=234" ref={this.mRefMenu} style={styleRoot} behavior='click' tag={'23'} content={Content('File')}>
-                        <MenuItem ref={this.mRefMenuDisable} positionPopup='downRight' behavior='move'
+                    <MenuItem  url="#sdd=234" ref={this.mRefMenu} style={styleRoot} behavior='click' tag={'23'}  content={Content('File')}>
+                        <MenuItem ref={this.mRefMenuShow} positionPopup='downRight' behavior='move'
                                   content='Level 2-1' contentRight={<FaChevronRight/>}>
                             <MenuItem behavior='move' positionPopup='downRight' contentLeft=' ' o content='Level 3-1'>
                                 <MenuItem className='big' content={ContentBig} tag='asss'>

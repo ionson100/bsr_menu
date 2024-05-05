@@ -72,9 +72,15 @@ export const MenuItem = class extends Component {
         this.state =
             {
                 disabled: this.props.disabled,
-                dropOpen: false
+                dropOpen: false,
+                content:{
+                    contentLeft:this.props.contentLeft,
+                    content:this.props.content,
+                    contentRight:this.props.contentRight
+                },
+                url:this.props.url,
+                tag:this.props.tag
             }
-
     }
 
     get menu(){
@@ -189,7 +195,7 @@ export const MenuItem = class extends Component {
                     element: this.mRefPopup.current,
                     idRoot: this.context,
                     elementMenu: this.mRefMenu.current,
-                    tag: this.props.tag
+                    tag: this.state.tag
                 }
             ))
             this.mRefPopup.current.style.visibility = "visible"
@@ -203,15 +209,15 @@ export const MenuItem = class extends Component {
         e.stopPropagation()
         if (this.props.positionPopup === 'dropDown') {
             if (this.state.dropOpen === false) {
-                this.Open()
+                this.open()
             } else if (this.state.dropOpen === true) {
-                this.Close()
+                this.close()
             }
 
             return;
         }
         if (Children.count(this.props.children) === 0) {
-            MyHub.hub.ClickSelect(this.props.tag, this.mRefMenu.current, this.onClick)
+            MyHub.hub.ClickSelect(this.state.tag, this.mRefMenu.current, this.onClick)
             return;
         }
         this._MyMenu.state = true;
@@ -234,7 +240,7 @@ export const MenuItem = class extends Component {
                 element: this.mRefPopup.current,
                 idRoot: this.context,
                 elementMenu: this.mRefMenu.current,
-                tag: this.props.tag
+                tag: this.state.tag
             }
         ),inner);
 
@@ -263,66 +269,122 @@ export const MenuItem = class extends Component {
         MapMenu.set(this.id, this)
     }
 
-    SetDisabled(b) {
-        if (b === true) {
-            this.mRefWrapper.current.style.cursor = 'not-allowed'
 
+    /**
+     * Change show
+     * @param value {boolean} true-show, false-not show
+     */
+    setShow(value){
+
+        if(value===false){
+            this.mRefWrapper.current.style.display="none"
+        }
+        if(value===true){
+            this.mRefWrapper.current.style.display="inline"
+        }
+    }
+
+    /**
+     * Change disabled
+     * @param value {boolean} true-disable, false- not disable
+     */
+    setDisabled(value) {
+        if (value === true) {
+            this.mRefWrapper.current.style.cursor = 'not-allowed'
         } else {
             this.mRefWrapper.current.style.cursor = 'default'
         }
-        this.setState((state) => {
-            return {counter: state.disabled = b};
-        });
+        const s=Object.assign({}, this.state)
+        s.disabled=value;
+        this.setState(s);
+
     }
 
-    Open() {
+    open() {
         if (this.props.children) {
 
             this.stateDropMemu=true;
             this.mRefMenu.current.classList.add('drop-123-open')
             this.mRefPopup.current.style.position = 'relative'
             this.mRefPopup.current.style.visibility = "visible"
-            this.setState((state) => {
-                return {counter: state.dropOpen = true};
-            });
+            const s=Object.assign({}, this.state)
+            s.dropOpen = true;
+            this.setState(s);
             if (this.props.onClick) {
-                this.props.onClick(this.props.tag, this.mRefMenu.current, true)
+                this.props.onClick(this.state.tag, this.mRefMenu.current, true)
             }
         }
     }
 
-    Close() {
+    close() {
         this.stateDropMemu=false;
         this.mRefMenu.current.classList.remove('drop-123-open')
         this.mRefPopup.current.style.position = 'absolute'
         this.mRefPopup.current.style.visibility = "hidden"
-        this.setState((state) => {
-            return {counter: state.dropOpen = false};
-        });
+        const s=Object.assign({}, this.state)
+        s.dropOpen = false;
+        this.setState(s);
         if (this.props.onClick) {
-            this.props.onClick(this.props.tag, this.mRefMenu.current, false)
+            this.props.onClick(this.state.tag, this.mRefMenu.current, false)
         }
     }
-    getUrl(){
+
+    /**
+     * Change contents
+     * @param contentLeft {any}
+     * @param content {any}
+     * @param contentRich {any}
+     */
+    setContent(contentLeft, content, contentRich){
+        const s=Object.assign({}, this.state)
+        s.content= {
+            contentLeft:contentLeft,
+            content:content,
+            contentRich:contentRich
+        };
+        this.setState(s);
+    }
+
+    /**
+     * Change url
+     * @param url {string}
+     */
+    setUrl(url){
+        const s=Object.assign({}, this.state)
+        s.url=url;
+        this.setState(s);
+    }
+
+    /**
+     * Change tag
+     * @param tag {any}
+     */
+    SetTag(tag){
+        const s=Object.assign({}, this.state)
+        s.tag=tag;
+        this.setState(s);
+    }
+
+
+    _getUrl(){
         if(this.props.positionPopup==='dropDown'){
 
-            if(this.props.url){
-                return this.props.url+"&state="+this.stateDropMemu
+            if(this.state.url){
+                return this.state.url+"&state="+this.stateDropMemu
             }
-
-
         }else{
-            return this.props.url;
+            return this.state.url;
         }
     }
 
 
     render() {
+
         return (
             <object>
-                <a href={this.getUrl()} data-wrapper ref={this.mRefWrapper}>
+                <a href={this._getUrl()} data-wrapper ref={this.mRefWrapper}>
                     <div ref={this.mRefMenu}
-                         disabled={this.state.disabled}
+
                          onSelect={this.props.onSelect}
                          style={this.props.style}
                          id={this.props.id}
@@ -343,25 +405,26 @@ export const MenuItem = class extends Component {
                          accessKey={this.props.accessKey}
                          title={this.props.title}
                          tabIndex={this.props.tabIndex}
-                         data-menu-tag={this.props.tag}
+                         data-menu-tag={this.state.tag}
+                         disabled={this.state.disabled}
                          className={this.props.className}>
                         {
 
                             this.props.buildContent({
-                                contentLeft: this.props.contentLeft,
-                                contentCenter: this.props.content,
-                                contentRight: this.props.contentRight,
+                                contentLeft: this.state.content.contentLeft,
+                                contentCenter: this.state.content.content,
+                                contentRight: this.state.content.contentRight,
                                 iconDropClose: this.props.iconDropClose,
                                 iconDropOpen: this.props.iconDropOpen,
                                 isOpenDrop: this.state.dropOpen,
                                 id: this.props.id,
-                                tag: this.props.tag
+                                tag: this.state.tag
                             })
                         }
                     </div>
                     <div
-                        data-memu-poopup={this.props.tag}
-                        disabled={false}
+                        data-memu-poopup={this.state.tag}
+                        disabled={this.state.disabled}
                         onMouseOut={this.props.onMouseOut}
                         onMouseMove={this._movePopUp.bind(this)}
                         ref={this.mRefPopup}
@@ -381,6 +444,7 @@ export const MenuItem = class extends Component {
         );
     }
 }
+
 
 MenuItem.contextType = MyRootContext;
 
@@ -413,7 +477,7 @@ MenuItem.propTypes = {
         PropTypes.element,
         PropTypes.func,
     ]),
-    key: PropTypes.string,
+    //key: PropTypes.string,
     onClick: PropTypes.func,
     onMouseEnter: PropTypes.func,
     onMouseDown: PropTypes.func,
