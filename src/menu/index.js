@@ -9,7 +9,12 @@ import {MapMenu} from "./resizeFactory";
 
 const MyRootContext = React.createContext('superRoot')
 
-
+/**
+ * This component renders horizontal band
+ *
+ * @param {string} className
+ * @returns {ReactNode} A React element band as div
+ */
 export function MenuHorizontalBand({className}) {
     return (
         <div className={className ? className : 'hr-123'}/>
@@ -19,7 +24,12 @@ export function MenuHorizontalBand({className}) {
 MenuHorizontalBand.propTypes = {
     className: PropTypes.string
 }
-
+/**
+ * This component renders vertical band
+ *
+ * @param {string} className
+ * @returns {ReactNode} A React element band as div
+ */
 export function MenuVerticalBand({className}) {
     return (
         <div className={className ? className : 'hr-123_vert'}/>
@@ -35,6 +45,11 @@ const MyHub = {
     hub: InstanceHub
 }
 
+/**
+ * Close all open menu
+ * @param callback
+ * @constructor
+ */
 export function CloseMenu(callback) {
     MyHub.hub.clearClick(callback)
 }
@@ -81,6 +96,9 @@ export const MenuItem = class extends Component {
                 url:this.props.url,
                 tag:this.props.tag
             }
+        this._moveMenu=this._moveMenu.bind(this)
+        this._click=this._click.bind(this)
+
     }
 
     get menu(){
@@ -140,7 +158,12 @@ export const MenuItem = class extends Component {
             if (!this.props.children) return
             if (this.mRefPopup.current.style.visibility === "visible") return;
         }
+
         switch (this.props.positionPopup) {
+            case "dropDown":{
+
+                break
+            }
             case 'down': {
                 const y = this.mRefMenu.current.offsetTop + this.mRefMenu.current.offsetHeight;
                 this.mRefPopup.current.style.top = `${y}px`;
@@ -151,6 +174,38 @@ export const MenuItem = class extends Component {
                 const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight;
                 this.mRefPopup.current.style.top = `${y}px`;
                 this.mRefPopup.current.style.left = `${this.mRefMenu.current.offsetLeft}px`;
+                break
+            }
+            case 'middleRight':{
+                const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight/2;
+                this.mRefPopup.current.style.top = `${y}px`;
+                const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5
+                this.mRefPopup.current.style.left = `${l}px`;
+                this._validateResizeRight(l)
+                break
+            }
+            case 'middleRight3':{
+                const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight/3;
+                this.mRefPopup.current.style.top = `${y}px`;
+                const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5
+                this.mRefPopup.current.style.left = `${l}px`;
+                this._validateResizeRight(l)
+                break
+            }
+            case 'middleRight4':{
+                const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight/4;
+                this.mRefPopup.current.style.top = `${y}px`;
+                const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5
+                this.mRefPopup.current.style.left = `${l}px`;
+                this._validateResizeRight(l)
+                break
+            }
+            case 'middleRight5':{
+                const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight/6;
+                this.mRefPopup.current.style.top = `${y}px`;
+                const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5
+                this.mRefPopup.current.style.left = `${l}px`;
+                this._validateResizeRight(l)
                 break
             }
             case 'downRight': {
@@ -169,6 +224,41 @@ export const MenuItem = class extends Component {
                 this._validateResizeRight(l)
                 break
             }
+            case 'middleLeft':{
+                const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight/2;
+                this.mRefPopup.current.style.top = `${y}px`;
+                const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5
+                this.mRefPopup.current.style.left = `${l}px`;
+                this._validateResizeLeft(l)
+                break
+
+            }
+            case 'middleLeft3':{
+                const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight/3;
+                this.mRefPopup.current.style.top = `${y}px`;
+                const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5
+                this.mRefPopup.current.style.left = `${l}px`;
+                this._validateResizeLeft(l)
+                break
+            }
+            case 'middleLeft4':{
+                const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight/4;
+                this.mRefPopup.current.style.top = `${y}px`;
+                const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5
+                this.mRefPopup.current.style.left = `${l}px`;
+                this._validateResizeLeft(l)
+                break
+
+            }
+            case 'middleLeft5':{
+                const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight/6;
+                this.mRefPopup.current.style.top = `${y}px`;
+                const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5
+                this.mRefPopup.current.style.left = `${l}px`;
+                this._validateResizeLeft(l)
+                break
+            }
+
             case 'downLeft': {
                 const y = this.mRefMenu.current.offsetTop + 5;
                 this.mRefPopup.current.style.top = `${y}px`;
@@ -272,7 +362,8 @@ export const MenuItem = class extends Component {
 
     /**
      * Change show
-     * @param value {boolean} true-show, false-not show
+     * @constructor
+     * @param  {boolean} value true-show, false-not show
      */
     setShow(value){
 
@@ -284,9 +375,12 @@ export const MenuItem = class extends Component {
         }
     }
 
+
     /**
+     *
+     * @function
      * Change disabled
-     * @param value {boolean} true-disable, false- not disable
+     * @param  {boolean} value true-disable, false- not disable
      */
     setDisabled(value) {
         if (value === true) {
@@ -300,6 +394,11 @@ export const MenuItem = class extends Component {
 
     }
 
+
+    /**
+     * Open menu
+     * @function
+     */
     open() {
         if (this.props.children) {
 
@@ -316,6 +415,10 @@ export const MenuItem = class extends Component {
         }
     }
 
+    /**
+     * CloseMenu
+     * @function
+     */
     close() {
         this.stateDropMemu=false;
         this.mRefMenu.current.classList.remove('drop-123-open')
@@ -331,9 +434,9 @@ export const MenuItem = class extends Component {
 
     /**
      * Change contents
-     * @param contentLeft {any}
-     * @param content {any}
-     * @param contentRich {any}
+     * @param  {any} contentLeft
+     * @param {any} content
+     * @param  {any} contentRich
      */
     setContent(contentLeft, content, contentRich){
         const s=Object.assign({}, this.state)
@@ -347,7 +450,7 @@ export const MenuItem = class extends Component {
 
     /**
      * Change url
-     * @param url {string}
+     * @param {string} url
      */
     setUrl(url){
         const s=Object.assign({}, this.state)
@@ -357,9 +460,9 @@ export const MenuItem = class extends Component {
 
     /**
      * Change tag
-     * @param tag {any}
+     * @param  {any} tag
      */
-    SetTag(tag){
+    setTag(tag){
         const s=Object.assign({}, this.state)
         s.tag=tag;
         this.setState(s);
@@ -389,7 +492,7 @@ export const MenuItem = class extends Component {
                          style={this.props.style}
                          id={this.props.id}
                          onKeyUp={this.props.onKeyUp}
-                         onClick={this._click.bind(this)}
+                         onClick={this._click}
                          onMouseEnter={this.props.onMouseEnter}
                          onMouseDown={this.props.onMouseDown}
                          onMouseDownCapture={this.props.onMouseDownCapture}
@@ -400,7 +503,7 @@ export const MenuItem = class extends Component {
                          onMouseMoveCapture={this.props.onMouseMoveCapture}
                          onMouseOver={this.props.onMouseOver}
                          onMouseUpCapture={this.props.onMouseUpCapture}
-                         onMouseMove={this._moveMenu.bind(this)}
+                         onMouseMove={this._moveMenu}
                          onMouseOut={this.props.onMouseOut}
                          accessKey={this.props.accessKey}
                          title={this.props.title}
@@ -495,9 +598,8 @@ MenuItem.propTypes = {
     onKeyUp: PropTypes.func,
     /**css class submenu panel. default:'popup-123'.*/
     popupClassName: PropTypes.string,
-    /**Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']. Default:'down'*/
-    positionPopup: PropTypes.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']),
-
+    /**Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown','middleLeft','middleLeft3','middleLeft4','middleLeft5','middleRight','middleRight3','middleRight4','middleRight5']. Default:'down'*/
+    positionPopup: PropTypes.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown','middleLeft','middleLeft3','middleLeft4','middleLeft5','middleRight','middleRight3','middleRight4','middleRight5']),
     style: stylePropType,
     tabIndex: PropTypes.number,
     title: PropTypes.string,

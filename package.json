@@ -1,6 +1,6 @@
 {
   "name": "bsr_menu",
-  "version": "0.2.12",
+  "version": "0.2.14",
   "keywords": ["menu"],
   "homepage": "https://github.com/ionson100/bsr_menu",
   "bugs": "https://github.com/ionson100/bsr_menu/issues",
@@ -36,7 +36,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "cross-env NODE_ENV=production  babel  src/menu --out-dir dist --copy-files",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "publish:npm": "cross-env NODE_ENV=production  babel  src/menu --out-dir dist --copy-files"

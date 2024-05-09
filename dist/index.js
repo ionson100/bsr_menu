@@ -19,6 +19,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 const MyRootContext = /*#__PURE__*/_react.default.createContext('superRoot');
+
+/**
+ * This component renders horizontal band
+ *
+ * @param {string} className
+ * @returns {ReactNode} A React element band as div
+ */
 function MenuHorizontalBand(_ref) {
   let {
     className
@@ -30,6 +37,12 @@ function MenuHorizontalBand(_ref) {
 MenuHorizontalBand.propTypes = {
   className: _propTypes.default.string
 };
+/**
+ * This component renders vertical band
+ *
+ * @param {string} className
+ * @returns {ReactNode} A React element band as div
+ */
 function MenuVerticalBand(_ref2) {
   let {
     className
@@ -44,6 +57,12 @@ MenuVerticalBand.propTypes = {
 const MyHub = {
   hub: _myObserver.InstanceHub
 };
+
+/**
+ * Close all open menu
+ * @param callback
+ * @constructor
+ */
 function CloseMenu(callback) {
   MyHub.hub.clearClick(callback);
 }
@@ -81,6 +100,8 @@ const MenuItem = class extends _react.Component {
       url: this.props.url,
       tag: this.props.tag
     };
+    this._moveMenu = this._moveMenu.bind(this);
+    this._click = this._click.bind(this);
   }
   get menu() {
     return this.mRefMenu.current;
@@ -127,6 +148,10 @@ const MenuItem = class extends _react.Component {
       if (this.mRefPopup.current.style.visibility === "visible") return;
     }
     switch (this.props.positionPopup) {
+      case "dropDown":
+        {
+          break;
+        }
       case 'down':
         {
           const y = this.mRefMenu.current.offsetTop + this.mRefMenu.current.offsetHeight;
@@ -139,6 +164,42 @@ const MenuItem = class extends _react.Component {
           const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight;
           this.mRefPopup.current.style.top = "".concat(y, "px");
           this.mRefPopup.current.style.left = "".concat(this.mRefMenu.current.offsetLeft, "px");
+          break;
+        }
+      case 'middleRight':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight / 2;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeRight(l);
+          break;
+        }
+      case 'middleRight3':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight / 3;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeRight(l);
+          break;
+        }
+      case 'middleRight4':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight / 4;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeRight(l);
+          break;
+        }
+      case 'middleRight5':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight / 6;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeRight(l);
           break;
         }
       case 'downRight':
@@ -157,6 +218,42 @@ const MenuItem = class extends _react.Component {
           const l = this.mRefMenu.current.offsetLeft + this.mRefMenu.current.offsetWidth - 5;
           this.mRefPopup.current.style.left = "".concat(l, "px");
           this._validateResizeRight(l);
+          break;
+        }
+      case 'middleLeft':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight / 2;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeLeft(l);
+          break;
+        }
+      case 'middleLeft3':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight / 3;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeLeft(l);
+          break;
+        }
+      case 'middleLeft4':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight / 4;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeLeft(l);
+          break;
+        }
+      case 'middleLeft5':
+        {
+          const y = this.mRefMenu.current.offsetTop - this.mRefPopup.current.offsetHeight / 6;
+          this.mRefPopup.current.style.top = "".concat(y, "px");
+          const l = this.mRefMenu.current.offsetLeft - this.mRefPopup.current.offsetWidth + 5;
+          this.mRefPopup.current.style.left = "".concat(l, "px");
+          this._validateResizeLeft(l);
           break;
         }
       case 'downLeft':
@@ -241,7 +338,8 @@ const MenuItem = class extends _react.Component {
 
   /**
    * Change show
-   * @param value {boolean} true-show, false-not show
+   * @constructor
+   * @param  {boolean} value true-show, false-not show
    */
   setShow(value) {
     if (value === false) {
@@ -253,8 +351,10 @@ const MenuItem = class extends _react.Component {
   }
 
   /**
+   *
+   * @function
    * Change disabled
-   * @param value {boolean} true-disable, false- not disable
+   * @param  {boolean} value true-disable, false- not disable
    */
   setDisabled(value) {
     if (value === true) {
@@ -266,6 +366,11 @@ const MenuItem = class extends _react.Component {
     s.disabled = value;
     this.setState(s);
   }
+
+  /**
+   * Open menu
+   * @function
+   */
   open() {
     if (this.props.children) {
       this.stateDropMemu = true;
@@ -280,6 +385,11 @@ const MenuItem = class extends _react.Component {
       }
     }
   }
+
+  /**
+   * CloseMenu
+   * @function
+   */
   close() {
     this.stateDropMemu = false;
     this.mRefMenu.current.classList.remove('drop-123-open');
@@ -295,9 +405,9 @@ const MenuItem = class extends _react.Component {
 
   /**
    * Change contents
-   * @param contentLeft {any}
-   * @param content {any}
-   * @param contentRich {any}
+   * @param  {any} contentLeft
+   * @param {any} content
+   * @param  {any} contentRich
    */
   setContent(contentLeft, content, contentRich) {
     const s = Object.assign({}, this.state);
@@ -311,7 +421,7 @@ const MenuItem = class extends _react.Component {
 
   /**
    * Change url
-   * @param url {string}
+   * @param {string} url
    */
   setUrl(url) {
     const s = Object.assign({}, this.state);
@@ -321,9 +431,9 @@ const MenuItem = class extends _react.Component {
 
   /**
    * Change tag
-   * @param tag {any}
+   * @param  {any} tag
    */
-  SetTag(tag) {
+  setTag(tag) {
     const s = Object.assign({}, this.state);
     s.tag = tag;
     this.setState(s);
@@ -348,7 +458,7 @@ const MenuItem = class extends _react.Component {
       style: this.props.style,
       id: this.props.id,
       onKeyUp: this.props.onKeyUp,
-      onClick: this._click.bind(this),
+      onClick: this._click,
       onMouseEnter: this.props.onMouseEnter,
       onMouseDown: this.props.onMouseDown,
       onMouseDownCapture: this.props.onMouseDownCapture,
@@ -359,7 +469,7 @@ const MenuItem = class extends _react.Component {
       onMouseMoveCapture: this.props.onMouseMoveCapture,
       onMouseOver: this.props.onMouseOver,
       onMouseUpCapture: this.props.onMouseUpCapture,
-      onMouseMove: this._moveMenu.bind(this),
+      onMouseMove: this._moveMenu,
       onMouseOut: this.props.onMouseOut,
       accessKey: this.props.accessKey,
       title: this.props.title,
@@ -429,8 +539,8 @@ MenuItem.propTypes = {
   onKeyUp: _propTypes.default.func,
   /**css class submenu panel. default:'popup-123'.*/
   popupClassName: _propTypes.default.string,
-  /**Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']. Default:'down'*/
-  positionPopup: _propTypes.default.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown']),
+  /**Position of the sub menu panel, can take value: ['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown','middleLeft','middleLeft3','middleLeft4','middleLeft5','middleRight','middleRight3','middleRight4','middleRight5']. Default:'down'*/
+  positionPopup: _propTypes.default.oneOf(['down', 'top', 'downLeft', 'downRight', 'topRight', 'topLeft', 'dropDown', 'middleLeft', 'middleLeft3', 'middleLeft4', 'middleLeft5', 'middleRight', 'middleRight3', 'middleRight4', 'middleRight5']),
   style: _reactStyleProptype.default,
   tabIndex: _propTypes.default.number,
   title: _propTypes.default.string,
